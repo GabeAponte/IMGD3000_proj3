@@ -15,7 +15,7 @@ using namespace df;
 Reticle::Reticle() {
   setType("Reticle");
   setSolidness(df::SPECTRAL);
-  setAltitude(4); // Make Reticle in the foreground.
+  setAltitude(MAX_ALTITUDE); // Make Reticle in the foreground.
 
   // Reticle moves with mouse, so register.
 #ifdef DF_REGISTER_INTEREST
@@ -47,6 +47,6 @@ int Reticle::eventHandler(const df::Event *p_e) {
 
 // Draw reticle on window.
 int Reticle::draw() {
-  DM.drawCh(getPosition(), RETICLE_CHAR, df::Color::RED);
+  DM.drawCh(getPosition(), RETICLE_CHAR, df::RED);
   return 0;
 }

@@ -52,12 +52,12 @@ Saucer::~Saucer() {
 // Return 0 if ignored, else 1.
 int Saucer::eventHandler(const df::Event *p_e) {
 
-  if (p_e->getType() == OUT_EVENT) {
+  if (p_e->getType() == df::OUT_EVENT) {
     out();
     return 1;
   }
 
-  if (p_e->getType() == COLLISION_EVENT) {
+  if (p_e->getType() == df::COLLISION_EVENT) {
     const df::EventCollision *p_collision_event = dynamic_cast <df::EventCollision const *> (p_e);
     hit(p_collision_event);
     return 1;
@@ -68,7 +68,7 @@ int Saucer::eventHandler(const df::Event *p_e) {
     // Create explosion.
     Explosion *p_explosion = new Explosion;
     p_explosion -> setPosition(this -> getPosition());
- 
+
     // Delete self.
     WM.markForDelete(this);
  
@@ -150,11 +150,11 @@ void Saucer::moveToStart() {
     collision_list = WM.getCollisions(this, temp_pos);
   }
 #else
-/*  df::ObjectList collision_list = WM.getCollisions(this, temp_pos);
+  df::ObjectList collision_list = WM.getCollisions(this, temp_pos);
   while (!collision_list.isEmpty()) {
     temp_pos.setX(temp_pos.getX()+1);
     collision_list = WM.getCollisions(this, temp_pos);
-  }*/
+  }
 #endif
 
   WM.moveObject(this, temp_pos);

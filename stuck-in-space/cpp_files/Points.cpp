@@ -14,7 +14,7 @@
 Points::Points() {
   setLocation(df::TOP_RIGHT);
   setViewString(POINTS_STRING);
-  setColor(df::Color::YELLOW);
+  setColor(df::YELLOW);
   // Need to update score each second, so count "step" events.
 #ifdef DF_REGISTER_INTEREST
   registerInterest(df::STEP_EVENT);

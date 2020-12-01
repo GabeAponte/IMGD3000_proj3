@@ -27,7 +27,7 @@ Star::Star() {
 
 // Draw star window.
 int Star::draw() {
-  DM.drawCh(getPosition(), STAR_CHAR, df::Color::WHITE);
+  DM.drawCh(getPosition(), STAR_CHAR, df::WHITE);
   return 0;
 }
 
@@ -35,7 +35,7 @@ int Star::draw() {
 // Return 0 if ignored, else 1.
 int Star::eventHandler(const df::Event *p_e) {
 
-  if (p_e->getType() == OUT_EVENT) {
+  if (p_e->getType() == df::OUT_EVENT) {
     out();
     return 1;
   }

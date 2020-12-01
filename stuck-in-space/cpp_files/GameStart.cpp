@@ -82,7 +82,7 @@ void GameStart::start() {
   p_vo->setLocation(df::TOP_LEFT);
   p_vo->setViewString("Nukes");
   p_vo->setValue(1);
-  p_vo->setColor(df::Color::YELLOW);
+  p_vo->setColor(df::YELLOW);
 
   // Pause start music.
   p_music->pause();

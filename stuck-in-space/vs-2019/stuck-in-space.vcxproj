@@ -98,23 +98,31 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\sfml-2.5\include;..\..\dragonfly\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\sfml-2.5\lib;..\..\dragonfly\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\dragonfly-engine\include;..\..\sfml-2.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\dragonfly-engine\lib;..\..\sfml-2.5\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>..\..\dragonfly-engine\include;..\..\sfml-2.5\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\dragonfly-engine\lib;..\..\sfml-2.5\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\sfml-2.5\include;..\..\dragonfly\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\sfml-2.5\lib;..\..\dragonfly\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\dragonfly-engine\include;..\..\sfml-2.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\dragonfly-engine\lib;..\..\sfml-2.5\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\sfml-2.5\include;..\..\dragonfly\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\sfml-2.5\lib;..\..\dragonfly\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\dragonfly-engine\include;..\..\sfml-2.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\dragonfly-engine\lib;..\..\sfml-2.5\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

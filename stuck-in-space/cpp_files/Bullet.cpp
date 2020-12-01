@@ -32,12 +32,12 @@ Bullet::Bullet(df::Vector hero_pos) {
 // Return 0 if ignored, else 1.
 int Bullet::eventHandler(const df::Event *p_e) {
 
-  if (p_e->getType() == OUT_EVENT) {
+  if (p_e->getType() == df::OUT_EVENT) {
     out();
     return 1;
   }
 
-  if (p_e->getType() == COLLISION_EVENT) {
+  if (p_e->getType() == df::COLLISION_EVENT) {
     const df::EventCollision *p_collision_event = dynamic_cast <const df::EventCollision *> (p_e);
     hit(p_collision_event);
     return 1;
