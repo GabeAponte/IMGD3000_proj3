@@ -40,7 +40,7 @@ GameOver::GameOver() {
 
 // When done, game over so shut down.
 GameOver::~GameOver() {
-  WM.markForDelete(this);
+  //WM.markForDelete(this);
   GM.setGameOver();
 }
 
@@ -48,7 +48,7 @@ GameOver::~GameOver() {
 // Return 0 if ignored, else 1.
 int GameOver::eventHandler(const df::Event *p_e) {
 
-  if (p_e->getType() == STEP_EVENT) {
+  if (p_e->getType() == df::STEP_EVENT) {
     step();
     return 1;
   }

@@ -89,7 +89,7 @@ int Hero::eventHandler(const df::Event *p_e) {
     return 1;
   }
 
-  if (p_e->getType() == STEP_EVENT) {
+  if (p_e->getType() == df::STEP_EVENT) {
     step();
     return 1;
   }
