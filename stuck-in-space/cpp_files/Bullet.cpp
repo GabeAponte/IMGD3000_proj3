@@ -14,18 +14,13 @@
 
 using namespace df;
 
-Bullet::Bullet(df::Vector hero_pos) {
+Bullet::Bullet() {
 
   // Link to "bullet" sprite.
   setSprite("bullet");
 
   // Set other object properties.
   setType("Bullet");
-  setVelocity(df::Vector(1,0)); // Move 1 space right every game loop.
-
-  // Set starting location, based on hero's position passed in.
-  df::Vector p(hero_pos.getX()+3, hero_pos.getY());
-  setPosition(p);
 }
 
 // Handle event.

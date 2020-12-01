@@ -7,7 +7,6 @@
 
 // Engine includes.
 #include "EventCollision.h"
-#include "../header_files/EventNuke.h"
 #include "EventOut.h"
 #include "EventView.h"
 #include "LogManager.h"
@@ -18,6 +17,7 @@
 #include "../header_files/Explosion.h"
 #include "../header_files/Points.h"
 #include "../header_files/Saucer.h"
+#include "../header_files/EventOverloadShield.h"
 
 using namespace df;
 
@@ -63,7 +63,7 @@ int Saucer::eventHandler(const df::Event *p_e) {
     return 1;
   }
 
-  if (p_e->getType() == NUKE_EVENT) {
+  if (p_e->getType() == OVERLOAD_EVENT) {
  
     // Create explosion.
     Explosion *p_explosion = new Explosion;
@@ -118,14 +118,6 @@ void Saucer::hit(const df::EventCollision *p_collision_event) {
     // Saucers appear stay around perpetually.
     new Saucer;
   }
-
-  // If Hero, mark both objects for destruction.
-  if (((p_collision_event -> getObject1() -> getType()) == "Hero") || 
-      ((p_collision_event -> getObject2() -> getType()) == "Hero")) {
-    WM.markForDelete(p_collision_event -> getObject1());
-    WM.markForDelete(p_collision_event -> getObject2());
-  }
-
 }
 
 // Move Saucer to starting location on right side of window.

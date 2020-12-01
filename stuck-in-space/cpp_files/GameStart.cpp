@@ -27,11 +27,6 @@ GameStart::GameStart() {
 
   // Put in center of screen.
   setLocation(df::CENTER_CENTER);
-
-  // Register for "keyboard" event.
-#ifdef DF_REGISTER_INTEREST
-  registerInterest(df::KEYBOARD_EVENT);
-#endif
   
   // Play start music.
   p_music = RM.getMusic("start music");
@@ -74,15 +69,16 @@ void GameStart::start() {
 
   // Spawn some saucers to shoot.
   for (int i=0; i<16; i++)
-    new Saucer;
+   new Saucer;
 
   // Setup heads-up display.
   new Points;		                     // Points display.
-  df::ViewObject *p_vo = new df::ViewObject; // Count of nukes.
-  p_vo->setLocation(df::TOP_LEFT);
-  p_vo->setViewString("Nukes");
-  p_vo->setValue(1);
-  p_vo->setColor(df::YELLOW);
+
+  df::ViewObject* p_fuel = new df::ViewObject; // Shield display
+  p_fuel->setLocation(df::TOP_LEFT);
+  p_fuel->setViewString("Shield Integrity %");
+  p_fuel->setValue(100);
+  p_fuel->setColor(df::YELLOW);
 
   // Pause start music.
   p_music->pause();
@@ -90,7 +86,6 @@ void GameStart::start() {
   // When game starts, destroy this object.
   WM.markForDelete(this);
 }
-
 // Override default draw so as not to display "value".
 int GameStart::draw() {
   df::Object::draw();

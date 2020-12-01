@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\cpp_files\Bullet.cpp" />
-    <ClCompile Include="..\cpp_files\EventNuke.cpp" />
+    <ClCompile Include="..\cpp_files\EventOverloadShield.cpp" />
     <ClCompile Include="..\cpp_files\Explosion.cpp" />
     <ClCompile Include="..\game.cpp" />
     <ClCompile Include="..\cpp_files\GameOver.cpp" />
@@ -33,7 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Bullet.h" />
-    <ClInclude Include="..\header_files\EventNuke.h" />
+    <ClInclude Include="..\header_files\EventOverloadShield.h" />
     <ClInclude Include="..\header_files\Explosion.h" />
     <ClInclude Include="..\header_files\GameOver.h" />
     <ClInclude Include="..\header_files\GameStart.h" />

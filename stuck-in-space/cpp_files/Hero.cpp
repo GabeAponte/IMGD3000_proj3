@@ -13,140 +13,117 @@
 
 // Game includes.
 #include "../header_files/Bullet.h"
-#include "../header_files/EventNuke.h"
 #include "../header_files/Explosion.h"
 #include "../header_files/GameOver.h"
 #include "../header_files/Hero.h"
+#include "../header_files/EventOverloadShield.h"
 
 using namespace df;
 
 Hero::Hero() {
 
-  // Link to "ship" sprite.
-  setSprite("ship");
+    // Link to "ship" sprite.
+    setSprite("ship");
 
-  // Player controls hero, so register for input events.
-#ifdef DF_REGISTER_INTEREST
-  registerInterest(df::KEYBOARD_EVENT);
-  registerInterest(df::MSE_EVENT);
+    // Set object type.
+    setType("Hero");
 
-  // Need to update rate control each step.
-  registerInterest(df::STEP_EVENT);
-#endif
+    // Set starting location to center of screen.
+    setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 
-  // Set object type.
-  setType("Hero");
+    // Create reticle for firing bullets.
+    p_reticle = new Reticle();
+    p_reticle->draw();
 
-  // Set starting location.
-  df::Vector p(7, WM.getBoundary().getVertical()/2);
-  setPosition(p);
+    // Set attributes that control actions.
+    fire_slowdown = 15;
+    fire_countdown = fire_slowdown;
+    lives = 1;
+    shield_integrity = 100;
+    }
 
-  // Create reticle for firing bullets.
-  p_reticle = new Reticle();
-  p_reticle->draw();
-
-  // Set attributes that control actions.
-  move_slowdown = 2;
-  move_countdown = move_slowdown;
-  fire_slowdown = 30;
-  fire_countdown = fire_slowdown;
-  nuke_count = 1;
-}
-  
 Hero::~Hero() {
 
-  // Create GameOver object.
-  new GameOver;
-  
-  // Make big explosion.
-  for (int i=-8; i<=8; i+=5) {
-    for (int j=-5; j<=5; j+=3) {
-      df::Vector temp_pos = this->getPosition();
-      temp_pos.setX(this->getPosition().getX() + i);
-      temp_pos.setY(this->getPosition().getY() + j);
-      Explosion *p_explosion = new Explosion;
-      p_explosion -> setPosition(temp_pos);
+    // Mark Reticle for deletion.
+    WM.markForDelete(p_reticle);
+
+    // Create GameOver object.
+    new GameOver;
+
+    // Make big explosion.
+    for (int i = -8; i <= 8; i += 5) {
+        for (int j = -5; j <= 5; j += 3) {
+            df::Vector temp_pos = this->getPosition();
+            temp_pos.setX(this->getPosition().getX() + i);
+            temp_pos.setY(this->getPosition().getY() + j);
+            Explosion* p_explosion = new Explosion;
+            p_explosion->setPosition(temp_pos);
+        }
     }
-  }
- 
-  // Mark Reticle for deletion.
-  WM.markForDelete(p_reticle);
 }
- 
+
 // Handle event.
 // Return 0 if ignored, else 1.
-int Hero::eventHandler(const df::Event *p_e) {
+int Hero::eventHandler(const df::Event* p_e) {
 
-  if (p_e->getType() == df::KEYBOARD_EVENT) {
-    const df::EventKeyboard *p_keyboard_event = dynamic_cast <const df::EventKeyboard *> (p_e);
-    kbd(p_keyboard_event);
-    return 1;
-  }
+    // Keyboard event handler
+    if (p_e->getType() == df::KEYBOARD_EVENT) {
+        const df::EventKeyboard* p_keyboard_event = dynamic_cast <const df::EventKeyboard*> (p_e);
+        kbd(p_keyboard_event);
+        return 1;
+    }
 
-  if (p_e->getType() == df::MSE_EVENT) {
-    const df::EventMouse *p_mouse_event = dynamic_cast <const df::EventMouse *> (p_e);
-    mouse(p_mouse_event);
-    return 1;
-  }
+    // Mouse event handler
+    if (p_e->getType() == df::MSE_EVENT) {
+        const df::EventMouse* p_mouse_event = dynamic_cast <const df::EventMouse*> (p_e);
+        mouse(p_mouse_event);
+        return 1;
+    }
 
-  if (p_e->getType() == df::STEP_EVENT) {
-    step();
-    return 1;
-  }
- 
-  // If get here, have ignored this event.
-  return 0;
+    // Step event handler
+    if (p_e->getType() == df::STEP_EVENT) {
+        step();
+        return 1;
+    }
+
+    // Collision event handler
+    if (p_e->getType() == df::COLLISION_EVENT) {
+        const df::EventCollision* p_collision_event = dynamic_cast <df::EventCollision const*> (p_e);
+        hit(p_collision_event);
+        return 1;
+    }
+
+    // If get here, have ignored this event.
+    return 0;
 }
 
 // Take appropriate action according to mouse action.
-void Hero::mouse(const df::EventMouse *p_mouse_event) {
+void Hero::mouse(const df::EventMouse* p_mouse_event) {
 
-  // Pressed button?
-  if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
-      (p_mouse_event->getMouseButton() == df::Mouse::LEFT))
-    fire(p_mouse_event->getMousePosition());
+    // Pressed button?
+    if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
+        (p_mouse_event->getMouseButton() == df::Mouse::LEFT))
+        fire(p_mouse_event->getMousePosition());
 }
 
 // Take appropriate action according to key pressed.
-void Hero::kbd(const df::EventKeyboard *p_keyboard_event) {
+void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
 
-  switch(p_keyboard_event->getKey()) {
-  case df::Keyboard::W:       // up
-    if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-      move(-1);
-    break;
-  case df::Keyboard::S:       // down
-    if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-      move(+1);
-    break;
-  case df::Keyboard::SPACE:   // nuke!
-    if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
-      nuke();
-    break;
-  case df::Keyboard::Q:        // quit
-    if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
-      WM.markForDelete(this);
-    break;
-  default:
-    break;
-  };
+    switch (p_keyboard_event->getKey()) {
+    case df::Keyboard::Q:        // quit
+        if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
+            WM.markForDelete(this);
+        break;
 
-  return;
-}
+    case df::Keyboard::SPACE:   // space
+        if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
+            overloadShield();
+        break;
+    default:
+        break;
+    };
 
-// Move up or down.
-void Hero::move(int dy) {
-
-  // See if time to move.
-  if (move_countdown > 0)
     return;
-  move_countdown = move_slowdown;
-
-  // If stays on window, allow move.
-  df::Vector new_pos(getPosition().getX(), getPosition().getY() + dy);
-  if ((new_pos.getY() > 3) && 
-      (new_pos.getY() < WM.getBoundary().getVertical()-1))
-    WM.moveObject(this, new_pos);
 }
 
 // Fire bullet towards target.
@@ -158,10 +135,16 @@ void Hero::fire(df::Vector target) {
   fire_countdown = fire_slowdown;
 
   // Fire Bullet towards target.
-  Bullet *p = new Bullet(getPosition());
-  p->setVelocity(df::Vector(p->getVelocity().getX(),
-			    (target.getY() - getPosition().getY()) /
-			    (target.getX() - getPosition().getX())));
+  Bullet* bullet = new Bullet();
+
+  // Set bullet velocity
+  df::Vector v = target - getPosition();
+  v.normalize();
+  v.scale(1);
+  bullet->setVelocity((v));
+
+  // Set bullet starting position
+  bullet->setPosition(getPojectileStart(target));
 
   // Play "fire" sound.
   df::Sound *p_sound = RM.getSound("fire");
@@ -171,34 +154,117 @@ void Hero::fire(df::Vector target) {
 // Decrease rate restriction counters.
 void Hero::step() {
 
-  // Move countdown.
-  move_countdown--;
-  if (move_countdown < 0)
-    move_countdown = 0;
-
   // Fire countdown.
   fire_countdown--;
   if (fire_countdown < 0)
     fire_countdown = 0;
 }
 
-// Send "nuke" event to all objects.
-void Hero::nuke() {
+// Send "overloadShield" event to all objects.
+void Hero::overloadShield() {
 
   // Check if nukes left.
-  if (!nuke_count) 
+  if (shield_integrity == 0) 
     return;
-  nuke_count--;
 
-  // Create "nuke" event and send to interested Objects.
-  EventNuke nuke;
-  WM.onEvent(&nuke);
- 
-  // Send "view" event do decrease number of nukes to interested ViewObjects.
-  df::EventView ev("Nukes", -1, true);
-  WM.onEvent(&ev);
+  if (shield_integrity > 15) {
+    shield_integrity -= 15;
 
-  // Play "nuke" sound.
+    // Send "view" event do decrease shield interested ViewObjects.
+    df::EventView ev("Shield Integrity %", -15, true);
+    WM.onEvent(&ev);
+  }
+  else {
+      shield_integrity = 0;
+      lives = 0;
+      // Send "view" event do decrease shield interested ViewObjects.
+      df::EventView ev("Shield Integrity %", 0, false);
+      WM.onEvent(&ev);
+  }
+  
+  // Create "overload" event and send to interested Objects.
+  EventOverloadShield overload;
+  WM.onEvent(&overload);
+
+  // Play "overload" sound.
   df::Sound *p_sound = RM.getSound("nuke");
   p_sound->play();
+}
+
+// Get the vector position for where a weapon projectile should start from
+df::Vector Hero::getPojectileStart(df::Vector target)
+{
+    int xStart = 0;
+    int yStart = 0;
+
+    if ((target.getX() < this->getPosition().getX() + 7) && (target.getX() > this->getPosition().getX() - 7)) {
+        if (target.getY() > this->getPosition().getY()) {
+            xStart = 0;
+            yStart = 2;
+        }
+        else if (target.getY() < this->getPosition().getY()) {
+            xStart = 0;
+            yStart = -2;
+        }
+    }
+
+    else if (target.getX() > this->getPosition().getX()) {
+        xStart = 3;
+        yStart = 0;
+    }
+    else if (target.getX() < this->getPosition().getX()) {
+        xStart = -3;
+        yStart = 0;
+    }
+
+    return df::Vector(this->getPosition().getX() + xStart, this->getPosition().getY() + yStart);
+}
+
+/*
+* Hero was hit, so remove shield health
+*/
+void Hero::hit(const df::EventCollision* p_collision_event) {
+
+    // Check for saucer collision and update the hero / game
+    if (((p_collision_event->getObject1()->getType()) == "Saucer")
+        || ((p_collision_event->getObject2()->getType()) == "Saucer")) {
+
+
+        // Decrease the shield integrety by at most 10, only if it isn't already 0.
+        if (shield_integrity < 10) {
+            shield_integrity = 0;
+            df::EventView ev("Shield Integrity %", 0, false);
+            WM.onEvent(&ev);
+        }
+        else if (shield_integrity != 0) {
+            shield_integrity -= 10;
+            df::EventView ev("Shield Integrity %", -10, true);
+            WM.onEvent(&ev);
+        }
+
+        // Colision did not kill the hero
+        if (shield_integrity != 0 || (shield_integrity == 0 && lives == 1)) {
+
+            // Delete only the saucer
+            if (p_collision_event->getObject1()->getType() == "Saucer") {
+                WM.markForDelete(p_collision_event->getObject1());
+            }
+            if (p_collision_event->getObject2()->getType() == "Saucer") {
+                WM.markForDelete(p_collision_event->getObject2());
+            }
+        }
+
+        // Check hero still alive
+        if (shield_integrity == 0) {
+            if(lives == 0) {
+                 // Delete the hero and the saucer
+                WM.markForDelete(p_collision_event->getObject1());
+                WM.markForDelete(p_collision_event->getObject2());
+            } 
+            else {
+                // Hero will die next hit
+                lives = 0;
+            }
+        }
+    }
 }

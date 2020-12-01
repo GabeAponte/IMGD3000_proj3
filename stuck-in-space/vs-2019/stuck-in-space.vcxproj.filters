@@ -17,9 +17,6 @@
     <ClCompile Include="..\cpp_files\Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\cpp_files\EventNuke.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\cpp_files\Explosion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -47,15 +44,15 @@
     <ClCompile Include="..\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\cpp_files\EventOverloadShield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Star.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\header_files\Bullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\EventNuke.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\header_files\Explosion.h">
@@ -77,6 +74,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\header_files\Saucer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header_files\EventOverloadShield.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

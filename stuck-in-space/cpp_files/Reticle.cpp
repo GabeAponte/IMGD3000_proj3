@@ -17,11 +17,6 @@ Reticle::Reticle() {
   setSolidness(df::SPECTRAL);
   setAltitude(MAX_ALTITUDE); // Make Reticle in the foreground.
 
-  // Reticle moves with mouse, so register.
-#ifdef DF_REGISTER_INTEREST
-  registerInterest(df::MSE_EVENT);
-#endif
-
   // Start reticle in center of window.
   df::Vector p(WM.getBoundary().getHorizontal()/2,
 	       WM.getBoundary().getVertical()/2);

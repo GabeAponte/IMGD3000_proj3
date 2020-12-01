@@ -28,11 +28,6 @@ GameOver::GameOver() {
   // Put in center of window.
   setLocation(df::CENTER_CENTER);
   
-  // Register for step event.
-#ifdef DF_REGISTER_INTEREST
-  registerInterest(df::STEP_EVENT);
-#endif
-  
   // Play "game over" sound.
   df::Sound *p_sound = RM.getSound("game over");
   p_sound->play();
@@ -40,7 +35,6 @@ GameOver::GameOver() {
 
 // When done, game over so shut down.
 GameOver::~GameOver() {
-  //WM.markForDelete(this);
   GM.setGameOver();
 }
 
