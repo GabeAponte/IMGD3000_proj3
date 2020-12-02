@@ -1,19 +1,19 @@
 //
-// Saucer.h
+// Enemy.h
 //
  
 #include "Object.h"
 #include "EventCollision.h"
  
-class Saucer : public df::Object {
+class Enemy : public df::Object {
  
  private:
-  void moveToStart();
-  void out();
   void hit(const df::EventCollision *p_collision_event);
+  void targetHero(df::Vector position);
+  df::Vector randStartPos();
 
  public:
-  Saucer();
-  ~Saucer();
+  Enemy(df::Vector start_pos);
+  ~Enemy();
   int eventHandler(const df::Event *p_e);
 };

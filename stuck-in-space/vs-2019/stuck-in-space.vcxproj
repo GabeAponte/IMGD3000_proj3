@@ -28,7 +28,7 @@
     <ClCompile Include="..\cpp_files\Hero.cpp" />
     <ClCompile Include="..\cpp_files\Points.cpp" />
     <ClCompile Include="..\cpp_files\Reticle.cpp" />
-    <ClCompile Include="..\cpp_files\Saucer.cpp" />
+    <ClCompile Include="..\cpp_files\Enemy.cpp" />
     <ClCompile Include="..\cpp_files\Star.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -40,7 +40,7 @@
     <ClInclude Include="..\header_files\Hero.h" />
     <ClInclude Include="..\header_files\Points.h" />
     <ClInclude Include="..\header_files\Reticle.h" />
-    <ClInclude Include="..\header_files\Saucer.h" />
+    <ClInclude Include="..\header_files\Enemy.h" />
     <ClInclude Include="..\header_files\Star.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -10,7 +10,7 @@
 
 // Game includes.
 #include "../header_files/Bullet.h"
-#include "../header_files/Saucer.h"
+#include "../header_files/Enemy.h"
 
 using namespace df;
 
@@ -47,7 +47,7 @@ void Bullet::out() {
   WM.markForDelete(this);
 }
 
-// If Bullet hits Saucer, mark Saucer and Bullet for deletion.
+// If Bullet hits Enemy, mark Enemy and Bullet for deletion.
 void Bullet::hit(const df::EventCollision *p_collision_event) {
   if ((p_collision_event -> getObject1() -> getType() == "Saucer") || 
       (p_collision_event -> getObject2() -> getType() == "Saucer")) {

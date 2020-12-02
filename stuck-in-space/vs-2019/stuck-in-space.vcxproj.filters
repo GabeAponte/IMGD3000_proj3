@@ -35,9 +35,6 @@
     <ClCompile Include="..\cpp_files\Reticle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\cpp_files\Saucer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\cpp_files\Star.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\cpp_files\EventOverloadShield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cpp_files\Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,10 +73,10 @@
     <ClInclude Include="..\header_files\Points.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\header_files\Saucer.h">
+    <ClInclude Include="..\header_files\EventOverloadShield.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\header_files\EventOverloadShield.h">
+    <ClInclude Include="..\header_files\Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
