@@ -11,6 +11,8 @@
 #include "ResourceManager.h"
 #include "WorldManager.h"
 
+#include <iostream>
+
 // Game includes.
 #include "../header_files/Bullet.h"
 #include "../header_files/Explosion.h"
@@ -23,7 +25,9 @@ using namespace df;
 Hero::Hero() {
 
     // Link to "ship" sprite.
-    setSprite("ship");
+    setSprite("player");
+    setBox(Box(Vector(-HITBOX_WIDTH/2,-HITBOX_HEIGHT/2), HITBOX_WIDTH, HITBOX_HEIGHT)); // custom collision box
+    setAnimationState(false);
 
     // Set object type.
     setType("Hero");
@@ -158,6 +162,9 @@ void Hero::step() {
   fire_countdown--;
   if (fire_countdown < 0)
     fire_countdown = 0;
+
+  // Update sprite
+  updateSprite();
 }
 
 // Send "overloadShield" event to all objects.
@@ -196,24 +203,24 @@ df::Vector Hero::getPojectileStart(df::Vector target)
 {
     int xStart = 0;
     int yStart = 0;
-
-    if ((target.getX() < this->getPosition().getX() + 7) && (target.getX() > this->getPosition().getX() - 7)) {
+    Box thisBox = getWorldBox(this);
+    if ((target.getX() > thisBox.getCorner().getX()) && (target.getX() < thisBox.getCorner().getX()+thisBox.getHorizontal())) {
         if (target.getY() > this->getPosition().getY()) {
             xStart = 0;
-            yStart = 2;
+            yStart = 1 + HITBOX_HEIGHT/2;
         }
         else if (target.getY() < this->getPosition().getY()) {
             xStart = 0;
-            yStart = -2;
+            yStart = -1 - HITBOX_HEIGHT/2;
         }
     }
 
     else if (target.getX() > this->getPosition().getX()) {
-        xStart = 3;
+        xStart = 2 + HITBOX_WIDTH/2;
         yStart = 0;
     }
     else if (target.getX() < this->getPosition().getX()) {
-        xStart = -3;
+        xStart = -2 - HITBOX_WIDTH/2;
         yStart = 0;
     }
 
@@ -267,4 +274,29 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
             }
         }
     }
+}
+
+void Hero::updateSprite()
+{
+    float xPos = getPosition().getX();
+    float xReticle = p_reticle->getPosition().getX();
+    int new_index = 2;
+    if (xReticle < xPos - FAR_LOOK_THRESHOLD)
+    {
+        new_index = 0;
+    }
+    else if (xReticle < xPos - NEAR_LOOK_THRESHOLD)
+    {
+        new_index = 1;
+    }
+    else if (xReticle > xPos + FAR_LOOK_THRESHOLD)
+    {
+        new_index = 4;
+    }
+    else if (xReticle > xPos + NEAR_LOOK_THRESHOLD)
+    {
+        new_index = 3;
+    }
+
+    this->setAnimationIndex(new_index);
 }
