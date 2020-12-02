@@ -34,17 +34,47 @@ Hero::Hero() {
 
     // Set starting location to center of screen.
     setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
+    setAltitude(3);
 
     // Create reticle for firing bullets.
     p_reticle = new Reticle();
     p_reticle->draw();
 
     // Set attributes that control actions.
-    fire_slowdown = 15;
-    fire_countdown = fire_slowdown;
+    current_weapon = W_MISSILE;
+    fire_cooldown = 0;
     lives = 1;
     shield_integrity = 100;
-    }
+
+    // Initialize weapon names
+    weapon_name[W_MISSILE] =     "MISSILE";
+    weapon_name[W_LASER] =       "LASER";
+    weapon_name[W_SPREAD] =      "SPREAD";
+    weapon_name[W_BOMB] =        "BOMB";
+    weapon_name[W_PLASMA] =      "PLASMA";
+    weapon_name[W_RAPID] =       "RAPID";
+    // Initialize weapon ammo counts
+    weapon_ammo[W_MISSILE] =     0;
+    weapon_ammo[W_LASER] =       0;
+    weapon_ammo[W_SPREAD] =      0;
+    weapon_ammo[W_BOMB] =        0;
+    weapon_ammo[W_PLASMA] =      0;
+    weapon_ammo[W_RAPID] =       0;
+    // Initialize weapon cooldowns
+    weapon_cooldown[W_MISSILE] = 15;
+    weapon_cooldown[W_LASER] =   15;
+    weapon_cooldown[W_SPREAD] =  20;
+    weapon_cooldown[W_BOMB] =    20;
+    weapon_cooldown[W_PLASMA] =  30;
+    weapon_cooldown[W_RAPID] =   5;
+    // Initialize weapon sounds
+    weapon_sound[W_MISSILE] =    "fire";
+    weapon_sound[W_LASER] =      "fire";
+    weapon_sound[W_SPREAD] =     "fire";
+    weapon_sound[W_BOMB] =       "fire";
+    weapon_sound[W_PLASMA] =     "fire";
+    weapon_sound[W_RAPID] =      "fire";
+}
 
 Hero::~Hero() {
 
@@ -113,55 +143,162 @@ void Hero::mouse(const df::EventMouse* p_mouse_event) {
 // Take appropriate action according to key pressed.
 void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
 
-    switch (p_keyboard_event->getKey()) {
-    case df::Keyboard::Q:        // quit
-        if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
+    // handle key press events
+    if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
+    {
+        switch (p_keyboard_event->getKey()) {
+        // Q : Quit
+        case df::Keyboard::Q:
             WM.markForDelete(this);
-        break;
-
-    case df::Keyboard::SPACE:   // space
-        if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
+            break;
+        // Space : Overload Shield
+        case df::Keyboard::SPACE:
             overloadShield();
-        break;
-    default:
-        break;
-    };
-
+            break;
+        // 1-6 : Switch Weapon
+        case df::Keyboard::NUM1:
+            current_weapon = W_MISSILE;
+            break;
+        case df::Keyboard::NUM2:
+            current_weapon = W_LASER;
+            break;
+        case df::Keyboard::NUM3:
+            current_weapon = W_SPREAD;
+            break;
+        case df::Keyboard::NUM4:
+            current_weapon = W_BOMB;
+            break;
+        case df::Keyboard::NUM5:
+            current_weapon = W_PLASMA;
+            break;
+        case df::Keyboard::NUM6:
+            current_weapon = W_RAPID;
+            break;
+        default:
+            break;
+        };
+    }
     return;
 }
 
 // Fire bullet towards target.
 void Hero::fire(df::Vector target) {
 
-  // See if time to fire.
-  if (fire_countdown > 0)
-    return;
-  fire_countdown = fire_slowdown;
+    // See if ready to fire
+    if (fire_cooldown > 0)
+        return;
 
-  // Fire Bullet towards target.
-  Bullet* bullet = new Bullet();
+    // Update ammo (and skip firing if empty)
+    if (current_weapon != W_MISSILE)
+    {
+        if (weapon_ammo[current_weapon] <= 0)
+        {
+            // Play warning sound to indicate out of ammo
+            /*
+            df::Sound* p_sound = RM.getSound("no_ammo");
+            p_sound->play();
+            */
+            return;
+        }
+        else
+        {
+            weapon_ammo[current_weapon] -= 1;
+        }
+    }
 
-  // Set bullet velocity
-  df::Vector v = target - getPosition();
-  v.normalize();
-  v.scale(1);
-  bullet->setVelocity((v));
+    // Update cooldown
+    fire_cooldown = weapon_cooldown[current_weapon];
 
-  // Set bullet starting position
-  bullet->setPosition(getPojectileStart(target));
+    // Play appropriate fire sound for the current weapon
+    df::Sound* p_sound = RM.getSound(weapon_sound[current_weapon]);
+    p_sound->play();
 
-  // Play "fire" sound.
-  df::Sound *p_sound = RM.getSound("fire");
-  p_sound->play();
+    // Calculate bullet velocity
+    df::Vector v = target - getPosition();
+    v.normalize();
+    v.scale(1);
+
+    // Create and position weapon attack
+    switch (current_weapon)
+    {
+    case W_MISSILE:
+    {
+        // Fire Missile towards target
+        Bullet* bullet = new Bullet();
+        bullet->setVelocity((v));
+        bullet->setPosition(getPojectileStart(target));
+        return;
+    }
+    case W_LASER:
+    {
+        // Fire Laser towards target
+        /*
+        Laser* laser = new Bullet();
+        laser->setVelocity((v));
+        laser->setPosition(getPojectileStart(target));
+        */
+        return;
+    }
+    case W_SPREAD:
+    {
+        // Fire Spread of 4 bullets towards target
+        // PROCEDURE:
+        // 1. get angle from player to target
+        // 2. calculate offsets from angle based on i
+        // 3. generate Spread bullet objects and send them in the appropriate directions
+        for (float i = 0; i < 4; i++)
+        {
+            /*
+            float angle = target_angle - offset + i*offset_step;
+            Spread* spread = new Spread();
+            laser->setVelocity((v));
+            laser->setPosition(getPojectileStart(target));
+            */
+        }
+        return;
+    }
+    case W_BOMB:
+    {
+        // Fire Bomb towards target, exploding on impact
+        /*
+        Bomb* bomb = new Bomb();
+        bomb->setVelocity((v));
+        bomb->setPosition(getPojectileStart(target));
+        */
+        return;
+    }
+    case W_PLASMA:
+    {
+        // Fire a slow orb of Plasma towards target, dealing damage over time
+        /*
+        Plasma* plasma = new Plasma();
+        plasma->setVelocity((v));
+        plasma->setPosition(getPojectileStart(target));
+        */
+        return;
+    }
+    case W_RAPID:
+    {
+        // Rapid-fire light bullets towards target with a short
+        /*
+        Rapid* rapid = new Rapid();
+        rapid->setVelocity((v));
+        rapid->setPosition(getPojectileStart(target));
+        */
+        return;
+    }
+    default:
+        return;
+    }
 }
 
 // Decrease rate restriction counters.
 void Hero::step() {
 
   // Fire countdown.
-  fire_countdown--;
-  if (fire_countdown < 0)
-    fire_countdown = 0;
+  fire_cooldown--;
+  if (fire_cooldown < 0)
+    fire_cooldown = 0;
 
   // Update sprite
   updateSprite();

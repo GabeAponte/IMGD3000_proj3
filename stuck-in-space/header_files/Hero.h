@@ -2,6 +2,7 @@
 // Hero.h
 //
 
+#include <map>
 #include "EventKeyboard.h"
 #include "EventMouse.h"
 #include "EventCollision.h"
@@ -13,14 +14,27 @@
 #define HITBOX_WIDTH        9
 #define HITBOX_HEIGHT       5
 
+enum player_weapon {
+    W_MISSILE,
+    W_LASER,
+    W_SPREAD,
+    W_BOMB,
+    W_PLASMA,
+    W_RAPID,
+};
+
 class Hero : public df::Object {
 
  private:
   Reticle *p_reticle;
-  int fire_slowdown;
-  int fire_countdown;
+  int fire_cooldown;
   int shield_integrity;
   int lives;
+  std::map<player_weapon, std::string> weapon_name;
+  std::map<player_weapon, int> weapon_ammo;
+  std::map<player_weapon, int> weapon_cooldown;
+  std::map<player_weapon, std::string> weapon_sound;
+  player_weapon current_weapon;
   void mouse(const df::EventMouse *p_mouse_event);
   void kbd(const df::EventKeyboard *p_keyboard_event);
   void fire(df::Vector target);
