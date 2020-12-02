@@ -102,8 +102,11 @@ namespace df {
 		// Get Animation for this Object
 		Animation getAnimation() const;
 
-		// Get Animation Pointer for this Object
+		// Toggle whether the Object animates
 		void setAnimationState(bool enabled);
+
+		// Set the animation frame index used by the Object
+		void setAnimationIndex(int new_index);
 
 		// Draw the object
 		virtual int draw();

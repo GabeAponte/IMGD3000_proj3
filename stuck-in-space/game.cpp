@@ -5,6 +5,7 @@
 // Engine includes.
 #include "GameManager.h"
 #include "LogManager.h"
+#include "DisplayManager.h"
 #include "ResourceManager.h"
  
 // Game includes.
@@ -19,12 +20,19 @@ using namespace df;
  
 int main(int argc, char *argv[]) {
 
-  // Start up game manager.
-  if (GM.startUp())  {
-    LM.writeLog("Error starting game manager!");
-    GM.shutDown();
-    return 0;
-  }
+    // Set window dimensions and title BEFORE STARTUP
+    DM.setWindowTitle("STUCK IN SPACE");
+    DM.setHorizontal(120);
+    DM.setVertical(36);
+    DM.setHorizontalPixels(1024);
+    DM.setVerticalPixels(768);
+
+    // Start up game manager.
+    if (GM.startUp())  {
+        LM.writeLog("Error starting game manager!");
+        GM.shutDown();
+        return 0;
+    }
 
   // Set flush of logfile during development (when done, make false).
   LM.setFlush(true);
@@ -50,6 +58,7 @@ void loadResources(void) {
   RM.loadSprite("../sprites/explosion-spr.txt", "explosion");
   RM.loadSprite("../sprites/gamestart-spr.txt", "gamestart");
   RM.loadSprite("../sprites/gameover-spr.txt", "gameover");
+  RM.loadSprite("../sprites/player-spr.txt", "player");
   RM.loadSound("../sounds/fire.wav", "fire");
   RM.loadSound("../sounds/explode.wav", "explode");
   RM.loadSound("../sounds/nuke.wav", "nuke");

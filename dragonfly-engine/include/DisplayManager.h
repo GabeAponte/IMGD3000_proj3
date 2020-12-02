@@ -39,6 +39,7 @@ namespace df {
 		int m_window_vertical_pixels;	// Vertical pixels in window
 		int m_window_horizontal_chars;	// Horizontal ASCII spaces in window
 		int m_window_vertical_chars;	// Vertical ASCII spaces in window
+		std::string m_window_title;		// Title displayed on the window
 
 	public:
 		~DisplayManager();
@@ -54,18 +55,38 @@ namespace df {
 		
 		// WINDOW FUNCTIONS
 
+		// Set the window’s horizontal maximum (in characters)
+		// USABLE ONLY WHILE SHUT DOWN
+		int setHorizontal(int new_horizontal_chars);
+
 		// Return window’s horizontal maximum (in characters)
 		int getHorizontal() const;
 		
+		// Set the window’s vertical maximum (in characters)
+		// USABLE ONLY WHILE SHUT DOWN
+		int setVertical(int new_vertical_chars);
+
 		// Return window’s vertical maximum (in characters)
 		int getVertical() const;
 		
+		// Set the window’s horizontal maximum (in pixels)
+		// USABLE ONLY WHILE SHUT DOWN
+		int setHorizontalPixels(int new_horizontal_pixels);
+
 		// Return window’s horizontal maximum (in pixels)
 		int getHorizontalPixels() const;
 		
+		// Set the window’s vertical maximum (in pixels)
+		// USABLE ONLY WHILE SHUT DOWN
+		int setVerticalPixels(int new_vertical_pixels);
+
 		// Return window’s vertical maximum (in pixels)
 		int getVerticalPixels() const;
 		
+		// Set the window’s title
+		// USABLE ONLY WHILE SHUT DOWN
+		int setWindowTitle(std::string new_title);
+
 		// Return pointer to SFML graphics window
 		sf::RenderWindow* getWindow() const;
 

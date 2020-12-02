@@ -8,6 +8,11 @@
 #include "Object.h"
 #include "Reticle.h"
 
+#define FAR_LOOK_THRESHOLD  8
+#define NEAR_LOOK_THRESHOLD 3
+#define HITBOX_WIDTH        9
+#define HITBOX_HEIGHT       5
+
 class Hero : public df::Object {
 
  private:
@@ -23,6 +28,7 @@ class Hero : public df::Object {
   void overloadShield();
   df::Vector getPojectileStart(df::Vector target);
   void hit(const df::EventCollision* p_collision_event);
+  void updateSprite();
 
  public:
   Hero();
