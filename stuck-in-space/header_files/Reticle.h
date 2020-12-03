@@ -2,6 +2,8 @@
 // Reticle.h
 //
 
+#pragma once
+
 #include "Object.h"
 
 #define RETICLE_CHAR '+'

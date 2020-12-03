@@ -12,7 +12,8 @@
 // Game includes.
 #include "../header_files/GameOver.h"
 #include "../header_files/GameStart.h"
-#include "..\header_files\InputPlayerName.h"
+#include "../header_files/WaveController.h"
+#include "../header_files/InputPlayerName.h"
 
 using namespace df;
 
@@ -36,9 +37,19 @@ GameOver::GameOver() {
 
 // When done, game over so shut down.
 GameOver::~GameOver() {
-
+    // Clear view objects
     WM.deleteObjectsOfType("ViewObject");
-    new InputPlayerName(4);
+    
+    // Get the wave controller
+    ObjectList ol = WM.objectsOfType("WaveController");
+    ObjectListIterator oli(&ol);
+    WaveController* p_wc = dynamic_cast <WaveController*> (oli.currentObject());
+    
+    // Display results and let player input highscores
+    new InputPlayerName(p_wc->getWave()-1);
+    
+    // Delete wave controller
+    WM.markForDelete(p_wc);
 }
 
 // Handle event.

@@ -1,8 +1,11 @@
 //
 // EventOverloadShield.h
+// Indicates the player overloaded their shield, a special attack that costs shield
+// integrity but wipes the screen of enemies.
 //
 
-#include "Event.h"
+#pragma once
+#include <Event.h>
 
 const std::string OVERLOAD_EVENT =  "overload";
 

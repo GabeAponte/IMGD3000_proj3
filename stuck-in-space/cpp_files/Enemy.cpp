@@ -17,6 +17,8 @@
 #include "../header_files/Explosion.h"
 #include "../header_files/Points.h"
 #include "../header_files/Enemy.h"
+#include "../header_files/EventEnemyDeath.h"
+#include "../header_files/EventPlayerDeath.h"
 #include "../header_files/EventOverloadShield.h"
 
 using namespace df;
@@ -41,6 +43,9 @@ Enemy::~Enemy() {
   // Add 10 points.
   df::EventView ev(POINTS_STRING, 10, true);
   WM.onEvent(&ev);
+  // Declare that the enemy died
+  EventEnemyDeath eed(getPosition());
+  WM.onEvent(&eed);
 }
 
 // Handle event.
@@ -61,9 +66,6 @@ int Enemy::eventHandler(const df::Event *p_e) {
 
     // Delete self.
     WM.markForDelete(this);
- 
-    // Saucers appear stay around perpetually
-    new Enemy(randStartPos());
 
     return 1;
   }
@@ -71,6 +73,13 @@ int Enemy::eventHandler(const df::Event *p_e) {
   // Out of bounds event handler
   if (p_e->getType() == df::OUT_EVENT) {
       WM.markForDelete(this);
+      return 1;
+  }
+
+  // Player death event handler
+  // Freeze in place
+  if (p_e->getType() == PLAYER_DEATH_EVENT) {
+      setVelocity(Vector());
       return 1;
   }
  
@@ -97,9 +106,6 @@ void Enemy::hit(const df::EventCollision *p_collision_event) {
     // Play "explode" sound
     df::Sound *p_sound = RM.getSound("explode");
     p_sound->play();
-
-    // Saucers appear stay around perpetually.
-    new Enemy(randStartPos());
   }
 }
 

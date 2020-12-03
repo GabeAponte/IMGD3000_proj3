@@ -2,6 +2,8 @@
 // GameStart.h
 //
 
+#pragma once
+
 #include "Music.h"
 #include "ViewObject.h"
 

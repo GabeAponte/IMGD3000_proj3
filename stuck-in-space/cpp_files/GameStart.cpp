@@ -16,7 +16,8 @@
 #include "Music.h"
 #include "../header_files/Points.h"
 #include "../header_files/Enemy.h"
-#include "..\header_files\Leaderboard.h"
+#include "../header_files/WaveController.h"
+#include "../header_files/Leaderboard.h"
 
 using namespace df;
 
@@ -35,8 +36,6 @@ GameStart::GameStart() {
   // Play start music.
   p_music = RM.getMusic("start music");
   playMusic();
-
-  
 }
 
 // Play start music.
@@ -60,7 +59,6 @@ int GameStart::eventHandler(const df::Event *p_e) {
       break;
     case df::Keyboard::L:			// see leaderboards
         new Leaderboard();
-        //df::WM.removeObject(this);
         df::WM.markForDelete(this);
         break;
     default:
@@ -74,11 +72,15 @@ int GameStart::eventHandler(const df::Event *p_e) {
 }
 
 void GameStart::start() {
+  
+  // Create Wave Controller
+  new WaveController;
 
   // Create hero.
   new Hero;
 
   // Spawn some saucers to shoot.
+  /*
   for (int i = 0; i < 20; i++) {
       df::Vector temp_pos;
 
@@ -100,6 +102,7 @@ void GameStart::start() {
       }
       new Enemy(temp_pos);
   }
+  */
    
 
   // Setup heads-up display.
@@ -110,6 +113,12 @@ void GameStart::start() {
   p_fuel->setViewString("Shield Integrity %");
   p_fuel->setValue(100);
   p_fuel->setColor(df::YELLOW);
+
+  df::ViewObject* p_wave = new df::ViewObject; // Wave display
+  p_wave->setLocation(df::BOTTOM_CENTER);
+  p_wave->setViewString("WAVE");
+  p_wave->setValue(1);
+  p_wave->setColor(df::YELLOW);
 
   // Pause start music.
   p_music->pause();

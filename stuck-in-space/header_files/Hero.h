@@ -2,6 +2,8 @@
 // Hero.h
 //
 
+#pragma once
+
 #include <map>
 #include "EventKeyboard.h"
 #include "EventMouse.h"

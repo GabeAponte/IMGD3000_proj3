@@ -2,6 +2,8 @@
 // Points.h
 // 
 
+#pragma once
+
 #include "Event.h"		
 #include "ViewObject.h"
 

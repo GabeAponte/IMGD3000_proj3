@@ -20,8 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\cpp_files\Bullet.cpp" />
+    <ClCompile Include="..\cpp_files\EventEnemyDeath.cpp" />
     <ClCompile Include="..\cpp_files\EventOverloadShield.cpp" />
+    <ClCompile Include="..\cpp_files\EventPlayerDeath.cpp" />
     <ClCompile Include="..\cpp_files\Explosion.cpp" />
+    <ClCompile Include="..\cpp_files\WaveController.cpp" />
     <ClCompile Include="..\game.cpp" />
     <ClCompile Include="..\cpp_files\GameOver.cpp" />
     <ClCompile Include="..\cpp_files\GameStart.cpp" />
@@ -36,7 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Bullet.h" />
+    <ClInclude Include="..\header_files\EventEnemyDeath.h" />
     <ClInclude Include="..\header_files\EventOverloadShield.h" />
+    <ClInclude Include="..\header_files\EventPlayerDeath.h" />
     <ClInclude Include="..\header_files\Explosion.h" />
     <ClInclude Include="..\header_files\GameOver.h" />
     <ClInclude Include="..\header_files\GameStart.h" />
@@ -48,6 +53,7 @@
     <ClInclude Include="..\header_files\ScoresIOStreamer.h" />
     <ClInclude Include="..\header_files\Leaderboard.h" />
     <ClInclude Include="..\header_files\InputPlayerName.h" />
+    <ClInclude Include="..\header_files\WaveController.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

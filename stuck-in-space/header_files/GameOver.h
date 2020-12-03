@@ -2,6 +2,8 @@
 // GameOver.h
 //
 
+#pragma once
+
 #include "ViewObject.h"
 
 class GameOver : public df::ViewObject {

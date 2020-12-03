@@ -19,6 +19,7 @@
 #include "../header_files/GameOver.h"
 #include "../header_files/Hero.h"
 #include "../header_files/EventOverloadShield.h"
+#include "../header_files/EventPlayerDeath.h"
 
 using namespace df;
 
@@ -94,6 +95,10 @@ Hero::~Hero() {
             p_explosion->setPosition(temp_pos);
         }
     }
+
+    // Declare that the player died
+    EventPlayerDeath epd = EventPlayerDeath();
+    WM.onEvent(&epd);
 }
 
 // Handle event.

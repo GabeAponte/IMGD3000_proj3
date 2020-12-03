@@ -2,6 +2,8 @@
 // Bullet.h
 //
 
+#pragma once
+
 #include "EventCollision.h"
 #include "Object.h"
 

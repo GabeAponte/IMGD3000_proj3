@@ -2,6 +2,8 @@
 // Star.h
 //
 
+#pragma once
+
 #include "Object.h"
 
 #define STAR_CHAR '.'
