@@ -64,6 +64,14 @@ int Enemy::eventHandler(const df::Event *p_e) {
  
     // Saucers appear stay around perpetually
     new Enemy(randStartPos());
+
+    return 1;
+  }
+
+  // Out of bounds event handler
+  if (p_e->getType() == df::OUT_EVENT) {
+      WM.markForDelete(this);
+      return 1;
   }
  
   // If get here, have ignored this event.

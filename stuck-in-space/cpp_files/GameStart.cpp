@@ -16,10 +16,14 @@
 #include "Music.h"
 #include "../header_files/Points.h"
 #include "../header_files/Enemy.h"
+#include "..\header_files\Leaderboard.h"
 
 using namespace df;
 
 GameStart::GameStart() {
+
+  WM.deleteObjectsOfType("Saucer");
+
   setType("GameStart");
 
   // Link to "message" sprite.
@@ -31,6 +35,8 @@ GameStart::GameStart() {
   // Play start music.
   p_music = RM.getMusic("start music");
   playMusic();
+
+  
 }
 
 // Play start music.
@@ -52,6 +58,11 @@ int GameStart::eventHandler(const df::Event *p_e) {
     case df::Keyboard::Q:			// quit
       GM.setGameOver();
       break;
+    case df::Keyboard::L:			// see leaderboards
+        new Leaderboard();
+        //df::WM.removeObject(this);
+        df::WM.markForDelete(this);
+        break;
     default:
       break;
     }

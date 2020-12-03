@@ -149,7 +149,7 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
         switch (p_keyboard_event->getKey()) {
         // Q : Quit
         case df::Keyboard::Q:
-            WM.markForDelete(this);
+            GM.setGameOver();
             break;
         // Space : Overload Shield
         case df::Keyboard::SPACE:

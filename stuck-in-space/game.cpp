@@ -8,9 +8,10 @@
 #include "DisplayManager.h"
 #include "ResourceManager.h"
  
-// Game includes.
+// Game inmsxcludes.
 #include "header_files/GameStart.h"
 #include "header_files/Star.h"
+#include "header_files/ScoresIOStreamer.h"
 
 // Function prototypes.
 void loadResources(void);
@@ -19,7 +20,6 @@ void populateWorld(void);
 using namespace df;
  
 int main(int argc, char *argv[]) {
-
     // Set window dimensions and title BEFORE STARTUP
     DM.setWindowTitle("STUCK IN SPACE");
     DM.setHorizontal(120);

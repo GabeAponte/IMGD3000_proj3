@@ -12,6 +12,7 @@
 // Game includes.
 #include "../header_files/GameOver.h"
 #include "../header_files/GameStart.h"
+#include "..\header_files\InputPlayerName.h"
 
 using namespace df;
 
@@ -35,7 +36,9 @@ GameOver::GameOver() {
 
 // When done, game over so shut down.
 GameOver::~GameOver() {
-  GM.setGameOver();
+
+    WM.deleteObjectsOfType("ViewObject");
+    new InputPlayerName(4);
 }
 
 // Handle event.

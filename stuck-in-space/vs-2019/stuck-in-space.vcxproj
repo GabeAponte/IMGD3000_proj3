@@ -30,6 +30,9 @@
     <ClCompile Include="..\cpp_files\Reticle.cpp" />
     <ClCompile Include="..\cpp_files\Enemy.cpp" />
     <ClCompile Include="..\cpp_files\Star.cpp" />
+    <ClCompile Include="..\cpp_files\ScoresIOStreamer.cpp" />
+    <ClCompile Include="..\cpp_files\Leaderboard.cpp" />
+    <ClCompile Include="..\cpp_files\InputPlayerName.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Bullet.h" />
@@ -42,6 +45,9 @@
     <ClInclude Include="..\header_files\Reticle.h" />
     <ClInclude Include="..\header_files\Enemy.h" />
     <ClInclude Include="..\header_files\Star.h" />
+    <ClInclude Include="..\header_files\ScoresIOStreamer.h" />
+    <ClInclude Include="..\header_files\Leaderboard.h" />
+    <ClInclude Include="..\header_files\InputPlayerName.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

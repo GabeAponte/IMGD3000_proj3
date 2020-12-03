@@ -63,6 +63,9 @@ namespace df {
 
 		// Delete all game objects
 		void deleteAllObjects();
+
+		// Delete object of type
+		void deleteObjectsOfType(std::string obj_type);
 		
 		// Return list of all Objects in world
 		ObjectList getAllObjects() const;

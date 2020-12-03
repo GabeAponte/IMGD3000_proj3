@@ -21,7 +21,7 @@ Points::Points() {
 // Return 0 if ignored, else 1.
 int Points::eventHandler(const df::Event *p_e) {
 
-  // Parent handles event if score update.
+  // Parent handles event if Score update.
   if (df::ViewObject::eventHandler(p_e)) {
     return 1;
   }
