@@ -37,6 +37,7 @@
     <ClCompile Include="..\cpp_files\ScoresIOStreamer.cpp" />
     <ClCompile Include="..\cpp_files\Leaderboard.cpp" />
     <ClCompile Include="..\cpp_files\InputPlayerName.cpp" />
+    <ClCompile Include="..\cpp_files\FastEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Ammo.h" />
@@ -56,6 +57,7 @@
     <ClInclude Include="..\header_files\Leaderboard.h" />
     <ClInclude Include="..\header_files\InputPlayerName.h" />
     <ClInclude Include="..\header_files\WaveController.h" />
+    <ClInclude Include="..\header_files\FastEnemy.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

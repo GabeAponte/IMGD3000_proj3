@@ -1,19 +1,18 @@
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
 //
-// Enemy.cpp
+// InputPlayerName.h
+// Handles the logic for a Basic Enemy
 //
  
-// System includes.
-#include <stdlib.h>		// for rand()
-
-// Engine includes.
+#include <stdlib.h>
 #include "EventCollision.h"
 #include "EventOut.h"
 #include "EventView.h"
 #include "LogManager.h"
 #include "ResourceManager.h"
 #include "WorldManager.h"
- 
-// Game includes.
 #include "../header_files/Explosion.h"
 #include "../header_files/Points.h"
 #include "../header_files/Enemy.h"
@@ -111,29 +110,4 @@ void Enemy::targetHero(df::Vector position)
     df::Vector dir = (Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - position);
     dir.normalize();
     setDirection(dir);
-}
-
-// Generate random starting point for enemy 
-df::Vector Enemy::randStartPos()
-{
-    df::Vector temp_pos;
-
-    // Get world boundaries.
-    int world_horiz = (int)WM.getBoundary().getHorizontal();
-    int world_vert = (int)WM.getBoundary().getVertical();
-
-    // x is off right side of window.
-    temp_pos.setX((float)(world_horiz + rand() % world_horiz + 3));
-
-    // y is in vertical range.
-    temp_pos.setY(rand() % (world_vert - 4) + 4.0f);
-
-    // If collision, move right slightly until empty space.
-    df::ObjectList collision_list = WM.getCollisions(this, temp_pos);
-    while (!collision_list.isEmpty()) {
-        temp_pos.setX(temp_pos.getX() + 3);
-        collision_list = WM.getCollisions(this, temp_pos);
-    }
-
-    return temp_pos;
 }

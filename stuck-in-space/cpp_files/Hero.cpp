@@ -1,8 +1,13 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
 //
-// Hero.cpp
+// Handles the Hero functionality
 //
 
-// Engine includes.
 #include <Utility.h>
 #include <EventMouse.h>
 #include <EventStep.h>
@@ -11,10 +16,7 @@
 #include <DisplayManager.h>
 #include <ResourceManager.h>
 #include <WorldManager.h>
-
 #include <iostream>
-
-// Game includes.
 #include "../header_files/Bullet.h"
 #include "../header_files/Explosion.h"
 #include "../header_files/GameOver.h"
@@ -27,9 +29,11 @@ using namespace df;
 
 Hero::Hero() {
 
-    // Link to "ship" sprite.
+    // Link to "player" sprite.
     setSprite("player");
-    setBox(Box(Vector(-HITBOX_WIDTH/2,-HITBOX_HEIGHT/2), HITBOX_WIDTH, HITBOX_HEIGHT)); // custom collision box
+
+    // custom collision box
+    setBox(Box(Vector(-HITBOX_WIDTH/2,-HITBOX_HEIGHT/2), HITBOX_WIDTH, HITBOX_HEIGHT));
     setAnimationState(false);
 
     // Set object type.
@@ -418,12 +422,10 @@ void Hero::setProjectileStart(int index)
     }
 }
 
-/*
-* Hero was hit, so remove shield health
-*/
+// Function for when a hero was hit, so remove shield and/or health
 void Hero::hit(const df::EventCollision* p_collision_event) {
 
-    // Check for saucer collision and update the hero / game
+    // Check for enemy collision and update the hero / game
     if (((p_collision_event->getObject1()->getType()) == "Saucer")
         || ((p_collision_event->getObject2()->getType()) == "Saucer")) {
 
@@ -443,7 +445,7 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
         // Colision did not kill the hero
         if (shieldIntegrity != 0 || (shieldIntegrity == 0 && lives == 1)) {
 
-            // Delete only the saucer
+            // Delete only the enemy
             if (p_collision_event->getObject1()->getType() == "Saucer") {
                 WM.markForDelete(p_collision_event->getObject1());
             }
@@ -456,7 +458,7 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
         if (shieldIntegrity <= 0) {
             if (lives <= 0) 
             {
-                 // Delete the hero and the saucer
+                 // Delete the hero and the enemy
                 WM.markForDelete(p_collision_event->getObject1());
                 WM.markForDelete(p_collision_event->getObject2());
             } 

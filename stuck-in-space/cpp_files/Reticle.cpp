@@ -2,12 +2,9 @@
 // Reticle.cpp
 //
 
-// Engine includes.
 #include "DisplayManager.h"
 #include "EventMouse.h"
 #include "WorldManager.h"
-
-// Game includes.
 #include "../header_files/Reticle.h"
 
 using namespace df;

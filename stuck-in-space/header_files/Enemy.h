@@ -1,5 +1,9 @@
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
 //
-// Enemy.h
+// InputPlayerName.h
+// Handles the logic for a Basic Enemy
 //
 
 #pragma once
@@ -12,7 +16,6 @@ class Enemy : public df::Object {
  private:
   void hit(const df::EventCollision *p_collision_event);
   void targetHero(df::Vector position);
-  df::Vector randStartPos();
 
  public:
   Enemy(df::Vector start_pos);

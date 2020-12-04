@@ -2,14 +2,11 @@
 // Explosion.cpp
 //
 
-// Engine includes.
 #include "EventStep.h"
 #include "GameManager.h"
 #include "LogManager.h"
 #include "ResourceManager.h"
 #include "WorldManager.h"
-
-// Game includes.
 #include "../header_files/Explosion.h"
 
 Explosion::Explosion() {

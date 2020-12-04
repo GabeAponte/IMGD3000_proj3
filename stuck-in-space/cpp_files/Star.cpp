@@ -2,15 +2,10 @@
 // Star.cpp
 //
 
-// System includes.
-#include <stdlib.h>		// for rand()
-
-// Engine includes.
+#include <stdlib.h>
 #include "DisplayManager.h"
 #include "EventOut.h"
 #include "WorldManager.h"
-
-// Game includes.
 #include "../header_files/Star.h"
 
 using namespace df;

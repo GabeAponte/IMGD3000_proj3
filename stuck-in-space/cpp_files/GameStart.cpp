@@ -1,19 +1,22 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
 //
-// GameStart.cpp
+// Handles GameStart functionality
 //
 
-// Engine includes.
 #include "Color.h"
 #include "EventKeyboard.h"
 #include "GameManager.h"
 #include "LogManager.h"
 #include "ResourceManager.h"
 #include "WorldManager.h"
-
-// Game includes.
+#include "Music.h"
 #include "../header_files/GameStart.h"
 #include "../header_files/Hero.h"
-#include "Music.h"
 #include "../header_files/Points.h"
 #include "../header_files/Enemy.h"
 #include "../header_files/WaveController.h"
@@ -28,7 +31,7 @@ GameStart::GameStart() {
 
   setType("GameStart");
 
-  // Link to "message" sprite.
+  // Link to "gamestart" sprite.
   setSprite("gamestart");
 
   // Put in center of screen.

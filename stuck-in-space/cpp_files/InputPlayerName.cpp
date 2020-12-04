@@ -1,16 +1,25 @@
-#include "..\header_files\InputPlayerName.h"
-#include "..\header_files\Leaderboard.h"
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
+//
+// InputPlayerName.h
+// Handles the InputPlayerName display
+//
+
 #include <DisplayManager.h>
 #include <WorldManager.h>
 #include <EventKeyboard.h>
 #include <EventStep.h>
 #include <regex>
 #include <string>
+#include "..\header_files\Leaderboard.h"
+#include "..\header_files\InputPlayerName.h"
 
 using namespace df;
 
 InputPlayerName::InputPlayerName(int wave)
 {
+	// Initialize vars
 	wavesCompleted = wave;
     playerName = "";
 	keyRepeatWait = 0;
@@ -19,9 +28,11 @@ InputPlayerName::InputPlayerName(int wave)
 	setAltitude(MAX_ALTITUDE);
 }
 
+// Function that handles events
 int InputPlayerName::eventHandler(const df::Event* p_e)
 {
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
+		
 		// Handle keyboard input for name entry
 		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*) p_e;
 		bool key_pressed = p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED;
@@ -38,7 +49,8 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
 			}
 			switch (p_keyboard_event->getKey()) {
 			case df::Keyboard::RETURN:
-				// Leave leaderboard
+
+				// Return key will bring player to the leaderboard
 				if (trim(playerName) != "") {
 					new Leaderboard(trim(playerName), wavesCompleted);
 					df::WM.markForDelete(this);
@@ -188,14 +200,18 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
     return 0;
 }
 
+// Function that draws the InputPlayerName display
 int InputPlayerName::draw()
 {
+
+	// Toggle wave vs waves
 	std::string plural = "s";
 	if (wavesCompleted == 1)
 	{
 		plural = "";
 	}
 
+	// Toggle cursor
 	std::string text_cursor = " ";
 	if (showTextCursor)
 	{
@@ -209,7 +225,8 @@ int InputPlayerName::draw()
 	return 0;
 }
 
+// Function that trims the leading and trailing whitespaces of a string
 string InputPlayerName::trim(string s) {
-    regex e("^\\s+|\\s+$");   // remove leading and trailing spaces
+    regex e("^\\s+|\\s+$");
     return regex_replace(s, e, "");
 }
