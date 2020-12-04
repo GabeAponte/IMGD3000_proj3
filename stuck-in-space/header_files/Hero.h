@@ -1,5 +1,11 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
 //
-// Hero.h
+// Handles the Hero functionality
 //
 
 #pragma once

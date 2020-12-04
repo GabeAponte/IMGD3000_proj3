@@ -1,5 +1,11 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
 //
-// GameStart.h
+// Handles GameStart functionality
 //
 
 #pragma once

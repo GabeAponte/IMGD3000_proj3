@@ -1,15 +1,18 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
 //
-// GameOver.cpp
+// Handles GameOver functionality
 //
 
-// Engine includes.
 #include "EventStep.h"
 #include "GameManager.h"
 #include "LogManager.h"
 #include "ResourceManager.h"
 #include "WorldManager.h"
-
-// Game includes.
 #include "../header_files/GameOver.h"
 #include "../header_files/GameStart.h"
 #include "../header_files/WaveController.h"

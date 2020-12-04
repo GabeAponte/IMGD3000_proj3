@@ -1,3 +1,6 @@
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
 //
 // EventOverloadShield.h
 // Indicates the player overloaded their shield, a special attack that costs shield

@@ -1,14 +1,17 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
 //
 // game.cpp
-// 
+//
 
-// Engine includes.
 #include "GameManager.h"
 #include "LogManager.h"
 #include "DisplayManager.h"
 #include "ResourceManager.h"
- 
-// Game inmsxcludes.
 #include "header_files/GameStart.h"
 #include "header_files/Star.h"
 #include "header_files/ScoresIOStreamer.h"
