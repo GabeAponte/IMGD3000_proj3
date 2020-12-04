@@ -20,5 +20,5 @@ class EventEnemyDeath : public df::Event {
     EventEnemyDeath(df::Vector death_position);
 
     // Get the death position
-    df::Vector getPosition();
+    df::Vector getPosition() const;
 };

@@ -24,6 +24,7 @@ using namespace df;
 GameStart::GameStart() {
 
   WM.deleteObjectsOfType("Saucer");
+  WM.deleteObjectsOfType("Ammo");
 
   setType("GameStart");
 

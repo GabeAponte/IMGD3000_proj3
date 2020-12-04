@@ -14,6 +14,7 @@
 #include "../header_files/EventEnemyDeath.h"
 #include "../header_files/EventPlayerDeath.h"
 #include "../header_files/Enemy.h"
+#include "../header_files/Ammo.h"
 #include "../header_files/WaveController.h"
 
 using namespace df;
@@ -99,8 +100,11 @@ void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 	}
 
 	// Spawn ammo refill at enemy location
-	// More likely if low on ammo
-	// TODO
+	// TODO: maybe more likely if low on ammo
+	if (randomPercent() >= AMMO_SPAWN_CHANCE)
+	{
+		spawnAmmo(p_enemydeath_event->getPosition());
+	}
 }
 
 
@@ -170,7 +174,7 @@ void WaveController::spawnEnemy()
 
 	// Calculate spawn position
 	Vector spawn_pos = Vector();
-	if (((rand() % SPAWN_DICE_SIZE) / SPAWN_DICE_SIZE) <= SIDE_SPAWN_CHANCE)
+	if (randomPercent() <= SIDE_SPAWN_CHANCE)
 	{
 		// Spawn to the side of the map
 		if (rand() % 2 == 0)
@@ -244,8 +248,51 @@ void WaveController::spawnEnemy()
 		return;
 	}
 
-	// TODO - REMOVE THIS
+	// TODO - REMOVE THIS AFTER IMPLEMENTING PROPER SPAWNING ABOVE
 	new Enemy(spawn_pos);
+}
+
+
+// Spawn an ammo drop at the location
+void WaveController::spawnAmmo(df::Vector position)
+{
+	player_weapon ammo_type = W_MISSILE;
+	int ammo_value = 0;
+	
+	// randomly choose ammo type
+	switch (rand() % 5)
+	{
+	// No case for W_MISSILE
+	case 0: 
+		ammo_type = W_LASER;
+		ammo_value = 10;
+		break;
+	case 1:
+		ammo_type = W_SPREAD;
+		ammo_value = 15;
+		break;
+	case 2:
+		ammo_type = W_BOMB;
+		ammo_value = 10;
+		break;
+	case 3:
+		ammo_type = W_PLASMA;
+		ammo_value = 5;
+		break;
+	case 4:
+		ammo_type = W_RAPID;
+		ammo_value = 25;
+		break;
+	}
+	
+	new Ammo(position, ammo_type, ammo_value);
+}
+
+
+// Generate a random float from 0 to 1
+float WaveController::randomPercent()
+{
+	return (float) (rand() % RAND_DICE_SIZE) / RAND_DICE_SIZE;
 }
 
 

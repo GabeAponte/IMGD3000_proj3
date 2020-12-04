@@ -21,7 +21,8 @@
 #define SPAWN_X_OFFSET      8   // the horizontal distance off screen to spawn enemies at
 #define SPAWN_Y_OFFSET      5   // the Vertical distance off screen to spawn enemies at
 #define SIDE_SPAWN_CHANCE   0.8 // the probability that a spawned enemy will appear from the side of the screen
-#define SPAWN_DICE_SIZE     100 // the size of the "die" rolled when choosing spawn chance (it picks a random int up to DICE_SIZE and divides it by DICE_SIZE)
+#define AMMO_SPAWN_CHANCE   0.5 // the probability that an ammo pickup will spawn when an enemy dies
+#define RAND_DICE_SIZE     100  // the size of the "die" rolled when choosing spawn chance (it picks a random int up to DICE_SIZE and divides it by DICE_SIZE)
 
 enum enemy_type {
     E_BASIC,
@@ -67,6 +68,12 @@ private:
 
     // Spawn an enemy if able
     void spawnEnemy();
+
+    // Spawn an ammo drop at the location
+    void spawnAmmo(df::Vector position);
+
+    // Generate a random float from 0 to 1
+    float randomPercent();
 
 public:
     WaveController();

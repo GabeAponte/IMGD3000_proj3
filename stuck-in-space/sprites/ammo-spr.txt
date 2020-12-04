@@ -1,0 +1,36 @@
+<HEADER>
+frames 6
+width 5
+height 3
+color orange
+slowdown 3
+</HEADER>
+<BODY>
+.===.
+#   #
+'==='
+end
+#===.
+|   |
+'===#
+end
+.#==.
+|   |
+'==#'
+end
+.=#=.
+|   |
+'=#='
+end
+.==#.
+|   |
+'#=='
+end
+.===#
+|   |
+#==='
+end
+</BODY>
+<FOOTER>
+version 1
+</FOOTER>

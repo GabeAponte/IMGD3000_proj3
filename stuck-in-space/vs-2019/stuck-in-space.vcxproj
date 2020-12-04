@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\cpp_files\Ammo.cpp" />
     <ClCompile Include="..\cpp_files\Bullet.cpp" />
+    <ClCompile Include="..\cpp_files\EventAmmo.cpp" />
     <ClCompile Include="..\cpp_files\EventEnemyDeath.cpp" />
     <ClCompile Include="..\cpp_files\EventOverloadShield.cpp" />
     <ClCompile Include="..\cpp_files\EventPlayerDeath.cpp" />
@@ -38,7 +40,9 @@
     <ClCompile Include="..\cpp_files\InputPlayerName.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\header_files\Ammo.h" />
     <ClInclude Include="..\header_files\Bullet.h" />
+    <ClInclude Include="..\header_files\EventAmmo.h" />
     <ClInclude Include="..\header_files\EventEnemyDeath.h" />
     <ClInclude Include="..\header_files\EventOverloadShield.h" />
     <ClInclude Include="..\header_files\EventPlayerDeath.h" />

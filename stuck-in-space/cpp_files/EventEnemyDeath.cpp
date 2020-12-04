@@ -18,7 +18,7 @@ EventEnemyDeath::EventEnemyDeath(df::Vector death_position) {
 }
 
 // Get the death position
-df::Vector EventEnemyDeath::getPosition()
+df::Vector EventEnemyDeath::getPosition() const
 {
     return m_death_position;
 }

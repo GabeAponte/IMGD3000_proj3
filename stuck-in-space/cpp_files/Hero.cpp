@@ -3,13 +3,14 @@
 //
 
 // Engine includes.
-#include "EventMouse.h"
-#include "EventStep.h"
-#include "EventView.h"
-#include "GameManager.h"
-#include "LogManager.h"
-#include "ResourceManager.h"
-#include "WorldManager.h"
+#include <Utility.h>
+#include <EventMouse.h>
+#include <EventStep.h>
+#include <EventView.h>
+#include <GameManager.h>
+#include <DisplayManager.h>
+#include <ResourceManager.h>
+#include <WorldManager.h>
 
 #include <iostream>
 
@@ -17,9 +18,10 @@
 #include "../header_files/Bullet.h"
 #include "../header_files/Explosion.h"
 #include "../header_files/GameOver.h"
-#include "../header_files/Hero.h"
 #include "../header_files/EventOverloadShield.h"
 #include "../header_files/EventPlayerDeath.h"
+#include "../header_files/EventAmmo.h"
+#include "../header_files/Hero.h"
 
 using namespace df;
 
@@ -34,7 +36,9 @@ Hero::Hero() {
     setType("Hero");
 
     // Set starting location to center of screen.
-    setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
+    setPosition(Vector(WM.getBoundary().getHorizontal()/2, WM.getBoundary().getVertical()/2));
+    
+    // Set to middle altitude
     setAltitude(3);
 
     // Create reticle for firing bullets.
@@ -42,39 +46,40 @@ Hero::Hero() {
     p_reticle->draw();
 
     // Set attributes that control actions.
-    current_weapon = W_MISSILE;
-    fire_cooldown = 0;
+    currentWeapon = W_MISSILE;
+    fireCooldown = 0;
     lives = 1;
-    shield_integrity = 100;
+    shieldIntegrity = 100;
 
     // Initialize weapon names
-    weapon_name[W_MISSILE] =     "MISSILE";
-    weapon_name[W_LASER] =       "LASER";
-    weapon_name[W_SPREAD] =      "SPREAD";
-    weapon_name[W_BOMB] =        "BOMB";
-    weapon_name[W_PLASMA] =      "PLASMA";
-    weapon_name[W_RAPID] =       "RAPID";
+    weaponName[W_MISSILE] =     "MISSILE";
+    weaponName[W_LASER] =       "LASER";
+    weaponName[W_SPREAD] =      "SPREAD";
+    weaponName[W_BOMB] =        "BOMB";
+    weaponName[W_PLASMA] =      "PLASMA";
+    weaponName[W_RAPID] =       "RAPID";
     // Initialize weapon ammo counts
-    weapon_ammo[W_MISSILE] =     0;
-    weapon_ammo[W_LASER] =       0;
-    weapon_ammo[W_SPREAD] =      0;
-    weapon_ammo[W_BOMB] =        0;
-    weapon_ammo[W_PLASMA] =      0;
-    weapon_ammo[W_RAPID] =       0;
+    weaponAmmo[W_MISSILE] =     0;
+    weaponAmmo[W_LASER] =       0;
+    weaponAmmo[W_SPREAD] =      0;
+    weaponAmmo[W_BOMB] =        0;
+    weaponAmmo[W_PLASMA] =      0;
+    weaponAmmo[W_RAPID] =       0;
     // Initialize weapon cooldowns
-    weapon_cooldown[W_MISSILE] = 15;
-    weapon_cooldown[W_LASER] =   15;
-    weapon_cooldown[W_SPREAD] =  20;
-    weapon_cooldown[W_BOMB] =    20;
-    weapon_cooldown[W_PLASMA] =  30;
-    weapon_cooldown[W_RAPID] =   5;
+    weaponCooldown[W_MISSILE] = 15;
+    weaponCooldown[W_LASER] =   15;
+    weaponCooldown[W_SPREAD] =  20;
+    weaponCooldown[W_BOMB] =    20;
+    weaponCooldown[W_PLASMA] =  30;
+    weaponCooldown[W_RAPID] =   5;
     // Initialize weapon sounds
-    weapon_sound[W_MISSILE] =    "fire";
-    weapon_sound[W_LASER] =      "fire";
-    weapon_sound[W_SPREAD] =     "fire";
-    weapon_sound[W_BOMB] =       "fire";
-    weapon_sound[W_PLASMA] =     "fire";
-    weapon_sound[W_RAPID] =      "fire";
+    weaponSound[W_MISSILE] =    "fire";
+    weaponSound[W_LASER] =      "fire";
+    weaponSound[W_SPREAD] =     "fire";
+    weaponSound[W_BOMB] =       "fire";
+    weaponSound[W_PLASMA] =     "fire";
+    weaponSound[W_RAPID] =      "fire";
+    // TODO: maybe condense these into a map to a struct?
 }
 
 Hero::~Hero() {
@@ -132,6 +137,13 @@ int Hero::eventHandler(const df::Event* p_e) {
         return 1;
     }
 
+    // Ammo event handler
+    if (p_e->getType() == AMMO_EVENT) {
+        const EventAmmo* p_ammo_event = dynamic_cast <EventAmmo const*> (p_e);
+        weaponAmmo[p_ammo_event->getAmmoType()] += p_ammo_event->getAmmoValue();
+        return 1;
+    }
+
     // If get here, have ignored this event.
     return 0;
 }
@@ -162,22 +174,22 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
             break;
         // 1-6 : Switch Weapon
         case df::Keyboard::NUM1:
-            current_weapon = W_MISSILE;
+            currentWeapon = W_MISSILE;
             break;
         case df::Keyboard::NUM2:
-            current_weapon = W_LASER;
+            currentWeapon = W_LASER;
             break;
         case df::Keyboard::NUM3:
-            current_weapon = W_SPREAD;
+            currentWeapon = W_SPREAD;
             break;
         case df::Keyboard::NUM4:
-            current_weapon = W_BOMB;
+            currentWeapon = W_BOMB;
             break;
         case df::Keyboard::NUM5:
-            current_weapon = W_PLASMA;
+            currentWeapon = W_PLASMA;
             break;
         case df::Keyboard::NUM6:
-            current_weapon = W_RAPID;
+            currentWeapon = W_RAPID;
             break;
         default:
             break;
@@ -190,13 +202,13 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
 void Hero::fire(df::Vector target) {
 
     // See if ready to fire
-    if (fire_cooldown > 0)
+    if (fireCooldown > 0)
         return;
 
     // Update ammo (and skip firing if empty)
-    if (current_weapon != W_MISSILE)
+    if (currentWeapon != W_MISSILE)
     {
-        if (weapon_ammo[current_weapon] <= 0)
+        if (weaponAmmo[currentWeapon] <= 0)
         {
             // Play warning sound to indicate out of ammo
             /*
@@ -207,15 +219,15 @@ void Hero::fire(df::Vector target) {
         }
         else
         {
-            weapon_ammo[current_weapon] -= 1;
+            weaponAmmo[currentWeapon] -= 1;
         }
     }
 
     // Update cooldown
-    fire_cooldown = weapon_cooldown[current_weapon];
+    fireCooldown = weaponCooldown[currentWeapon];
 
     // Play appropriate fire sound for the current weapon
-    df::Sound* p_sound = RM.getSound(weapon_sound[current_weapon]);
+    df::Sound* p_sound = RM.getSound(weaponSound[currentWeapon]);
     p_sound->play();
 
     // Calculate bullet velocity
@@ -224,7 +236,7 @@ void Hero::fire(df::Vector target) {
     v.scale(1);
 
     // Create and position weapon attack
-    switch (current_weapon)
+    switch (currentWeapon)
     {
     case W_MISSILE:
     {
@@ -301,9 +313,9 @@ void Hero::fire(df::Vector target) {
 void Hero::step() {
 
   // Fire countdown.
-  fire_cooldown--;
-  if (fire_cooldown < 0)
-    fire_cooldown = 0;
+  fireCooldown--;
+  if (fireCooldown < 0)
+    fireCooldown = 0;
 
   // Update sprite
   updateSprite();
@@ -312,19 +324,19 @@ void Hero::step() {
 // Send "overloadShield" event to all objects.
 void Hero::overloadShield() {
 
-  // Check if nukes left.
-  if (shield_integrity == 0) 
+  // Check if shields left.
+  if (shieldIntegrity == 0) 
     return;
 
-  if (shield_integrity > 15) {
-    shield_integrity -= 15;
+  if (shieldIntegrity > 15) {
+    shieldIntegrity -= 15;
 
     // Send "view" event do decrease shield interested ViewObjects.
     df::EventView ev("Shield Integrity %", -15, true);
     WM.onEvent(&ev);
   }
   else {
-      shield_integrity = 0;
+      shieldIntegrity = 0;
       lives = 0;
       // Send "view" event do decrease shield interested ViewObjects.
       df::EventView ev("Shield Integrity %", 0, false);
@@ -369,55 +381,8 @@ df::Vector Hero::getPojectileStart(df::Vector target)
     return df::Vector(this->getPosition().getX() + xStart, this->getPosition().getY() + yStart);
 }
 
-/*
-* Hero was hit, so remove shield health
-*/
-void Hero::hit(const df::EventCollision* p_collision_event) {
 
-    // Check for saucer collision and update the hero / game
-    if (((p_collision_event->getObject1()->getType()) == "Saucer")
-        || ((p_collision_event->getObject2()->getType()) == "Saucer")) {
-
-
-        // Decrease the shield integrety by at most 10, only if it isn't already 0.
-        if (shield_integrity < 10) {
-            shield_integrity = 0;
-            df::EventView ev("Shield Integrity %", 0, false);
-            WM.onEvent(&ev);
-        }
-        else if (shield_integrity != 0) {
-            shield_integrity -= 10;
-            df::EventView ev("Shield Integrity %", -10, true);
-            WM.onEvent(&ev);
-        }
-
-        // Colision did not kill the hero
-        if (shield_integrity != 0 || (shield_integrity == 0 && lives == 1)) {
-
-            // Delete only the saucer
-            if (p_collision_event->getObject1()->getType() == "Saucer") {
-                WM.markForDelete(p_collision_event->getObject1());
-            }
-            if (p_collision_event->getObject2()->getType() == "Saucer") {
-                WM.markForDelete(p_collision_event->getObject2());
-            }
-        }
-
-        // Check hero still alive
-        if (shield_integrity == 0) {
-            if(lives == 0) {
-                 // Delete the hero and the saucer
-                WM.markForDelete(p_collision_event->getObject1());
-                WM.markForDelete(p_collision_event->getObject2());
-            } 
-            else {
-                // Hero will die next hit
-                lives = 0;
-            }
-        }
-    }
-}
-
+// Update the player's sprite based on the reticle location
 void Hero::updateSprite()
 {
     float xPos = getPosition().getX();
@@ -441,4 +406,90 @@ void Hero::updateSprite()
     }
 
     this->setAnimationIndex(new_index);
+}
+
+
+/*
+* Hero was hit, so remove shield health
+*/
+void Hero::hit(const df::EventCollision* p_collision_event) {
+
+    // Check for saucer collision and update the hero / game
+    if (((p_collision_event->getObject1()->getType()) == "Saucer")
+        || ((p_collision_event->getObject2()->getType()) == "Saucer")) {
+
+
+        // Decrease the shield integrety by at most 10, only if it isn't already 0.
+        if (shieldIntegrity < 10) {
+            shieldIntegrity = 0;
+            df::EventView ev("Shield Integrity %", 0, false);
+            WM.onEvent(&ev);
+        }
+        else if (shieldIntegrity != 0) {
+            shieldIntegrity -= 10;
+            df::EventView ev("Shield Integrity %", -10, true);
+            WM.onEvent(&ev);
+        }
+
+        // Colision did not kill the hero
+        if (shieldIntegrity != 0 || (shieldIntegrity == 0 && lives == 1)) {
+
+            // Delete only the saucer
+            if (p_collision_event->getObject1()->getType() == "Saucer") {
+                WM.markForDelete(p_collision_event->getObject1());
+            }
+            if (p_collision_event->getObject2()->getType() == "Saucer") {
+                WM.markForDelete(p_collision_event->getObject2());
+            }
+        }
+
+        // Check hero still alive
+        if (shieldIntegrity <= 0) {
+            if (lives <= 0) 
+            {
+                 // Delete the hero and the saucer
+                WM.markForDelete(p_collision_event->getObject1());
+                WM.markForDelete(p_collision_event->getObject2());
+            } 
+            else 
+            {
+                // Hero will die next hit
+                lives = 0;
+            }
+        }
+    }
+}
+
+
+// Draw the player and their ammo counts
+int Hero::draw()
+{
+    // Draw player
+    Object::draw();
+
+    // Draw ammo
+    // TODO: Polish this up visually
+    int width = 8;
+    for (int i = 0; i < WEAPON_COUNT; i++)
+    {
+        player_weapon weapon = static_cast<player_weapon>(i);
+        float x_pos = (float) (DM.getHorizontal() / 2 - (WEAPON_COUNT-1) * width / 2 + i*width);
+
+        // draw selection indicator
+        if (currentWeapon == weapon)
+        {
+            DM.drawCh(Vector(x_pos,0), 'V', YELLOW);
+        }
+        // draw weapon name
+        DM.drawString(Vector(x_pos, 1), weaponName[weapon], CENTER_JUSTIFIED, YELLOW);
+        // draw weapon ammo
+        std::string ammo_string = "---";
+        if (weapon != W_MISSILE)
+        {
+            ammo_string = std::to_string(weaponAmmo[weapon]);
+        }
+        DM.drawString(Vector(x_pos, 2), ammo_string, CENTER_JUSTIFIED, YELLOW);
+    }
+
+    return 0;
 }

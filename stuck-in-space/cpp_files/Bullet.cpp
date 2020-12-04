@@ -15,13 +15,28 @@
 using namespace df;
 
 Bullet::Bullet() {
+    // Link to "bullet" sprite.
+    setSprite("bullet");
 
-  // Link to "bullet" sprite.
-  setSprite("bullet");
+    // Set other object properties.
+    setType("Bullet");
 
-  // Set other object properties.
-  setType("Bullet");
+    // Set the weapon type (defaults to W_MISSILE)
+    weaponType = W_MISSILE;
 }
+Bullet::Bullet(player_weapon weapon_type) {
+    // Link to "bullet" sprite.
+    setSprite("bullet");
+
+    // Set other object properties.
+    setType("Bullet");
+
+    // Set the weapon type
+    // NOTE: All weapon attacks should have the "Bullet" type to allow general collision
+    // TODO: modify this per weapon type
+    weaponType = weapon_type;
+}
+
 
 // Handle event.
 // Return 0 if ignored, else 1.
@@ -47,11 +62,40 @@ void Bullet::out() {
   WM.markForDelete(this);
 }
 
+
 // If Bullet hits Enemy, mark Enemy and Bullet for deletion.
 void Bullet::hit(const df::EventCollision *p_collision_event) {
-  if ((p_collision_event -> getObject1() -> getType() == "Saucer") || 
-      (p_collision_event -> getObject2() -> getType() == "Saucer")) {
-    WM.markForDelete(p_collision_event->getObject1());
-    WM.markForDelete(p_collision_event->getObject2());
-  }
+    Object* other_object;
+    // Check if first object was an enemy
+    if (p_collision_event->getObject1()->getType() == "Saucer")
+    {
+        other_object = p_collision_event->getObject1();
+    }
+    // Check if second object was an enemy
+    else if (p_collision_event->getObject2()->getType() == "Saucer")
+    {
+        other_object = p_collision_event->getObject2();
+    }
+    // No enemy hit, so don't proceed
+    else
+    {
+        return;
+    }
+    
+    // Delete the enemy hit
+    // TODO: change to hurting the target
+    WM.markForDelete(other_object);
+    
+    // Delete this projectile object unless weapon type is piercing
+    if (weaponType != W_LASER && weaponType != W_PLASMA)
+    {
+        WM.markForDelete(this);
+    }
+}
+
+
+// Get bullet type
+player_weapon Bullet::getWeaponType()
+{
+    return weaponType;
 }

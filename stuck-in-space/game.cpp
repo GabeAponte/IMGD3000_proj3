@@ -59,6 +59,7 @@ void loadResources(void) {
   RM.loadSprite("../sprites/gamestart-spr.txt", "gamestart");
   RM.loadSprite("../sprites/gameover-spr.txt", "gameover");
   RM.loadSprite("../sprites/player-spr.txt", "player");
+  RM.loadSprite("../sprites/ammo-spr.txt", "ammo");
   RM.loadSound("../sounds/fire.wav", "fire");
   RM.loadSound("../sounds/explode.wav", "explode");
   RM.loadSound("../sounds/nuke.wav", "nuke");

@@ -15,6 +15,7 @@
 #define NEAR_LOOK_THRESHOLD 3
 #define HITBOX_WIDTH        9
 #define HITBOX_HEIGHT       5
+#define WEAPON_COUNT        6
 
 enum player_weapon {
     W_MISSILE,
@@ -29,14 +30,14 @@ class Hero : public df::Object {
 
  private:
   Reticle *p_reticle;
-  int fire_cooldown;
-  int shield_integrity;
+  int fireCooldown;
+  int shieldIntegrity;
   int lives;
-  std::map<player_weapon, std::string> weapon_name;
-  std::map<player_weapon, int> weapon_ammo;
-  std::map<player_weapon, int> weapon_cooldown;
-  std::map<player_weapon, std::string> weapon_sound;
-  player_weapon current_weapon;
+  std::map<player_weapon, std::string> weaponName;
+  std::map<player_weapon, int> weaponAmmo;
+  std::map<player_weapon, int> weaponCooldown;
+  std::map<player_weapon, std::string> weaponSound;
+  player_weapon currentWeapon;
   void mouse(const df::EventMouse *p_mouse_event);
   void kbd(const df::EventKeyboard *p_keyboard_event);
   void fire(df::Vector target);
@@ -44,10 +45,13 @@ class Hero : public df::Object {
   void overloadShield();
   df::Vector getPojectileStart(df::Vector target);
   void hit(const df::EventCollision* p_collision_event);
+
+  // Update the player's sprite based on the reticle location
   void updateSprite();
 
  public:
   Hero();
   ~Hero();
-  int eventHandler(const df::Event *p_e);
+  int eventHandler(const df::Event *p_e); // OVERRIDE
+  int draw(); // OVERRIDE
 };
