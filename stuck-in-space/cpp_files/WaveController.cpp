@@ -68,11 +68,10 @@ void WaveController::step() {
 		if (enemySpawnWait > 0)
 		{
 			enemySpawnWait--;
-			if (enemySpawnWait <= 0)
-			{
-				// Spawn an enemy
-				spawnEnemy();
-			}
+		}
+		else
+		{
+			spawnEnemy();
 		}
 	}
 }
