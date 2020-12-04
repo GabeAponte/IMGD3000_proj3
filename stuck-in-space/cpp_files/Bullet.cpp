@@ -9,8 +9,8 @@
 #include "EventOut.h"
 
 // Game includes.
-#include "../header_files/Bullet.h"
 #include "../header_files/Enemy.h"
+#include "../header_files/Bullet.h"
 
 using namespace df;
 
