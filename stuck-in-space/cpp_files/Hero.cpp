@@ -160,7 +160,7 @@ void Hero::mouse(const df::EventMouse* p_mouse_event) {
     // Pressed button?
     if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
         (p_mouse_event->getMouseButton() == df::Mouse::LEFT))
-        fire(p_mouse_event->getMousePosition());
+        fire(p_mouse_event->getMousePosition(), projectileStart);
 }
 
 // Take appropriate action according to key pressed.
@@ -205,7 +205,7 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
 }
 
 // Fire bullet towards target.
-void Hero::fire(df::Vector target) {
+void Hero::fire(df::Vector target, df::Vector origin) {
 
     // See if ready to fire
     if (fireCooldown > 0)
@@ -237,10 +237,11 @@ void Hero::fire(df::Vector target) {
     p_sound->play();
 
     // Calculate bullet velocity
-    df::Vector v = target - getPosition();
-    v.normalize();
-    v.scale(1);
-    v = convertToReal(v);
+    df::Vector v = target - origin; // calculate aim vector
+    v = convertToDragonfly(v);      // adjust aim for screen coordinates
+    v.normalize();                  // convert aim to direction
+    v.scale(1);                     // apply bullet speed
+    v = convertToReal(v);           // adjust velocity for screen coordinates
 
     // Create and position weapon attack
     switch (currentWeapon)
@@ -250,7 +251,7 @@ void Hero::fire(df::Vector target) {
         // Fire Missile towards target
         Bullet* bullet = new Bullet();
         bullet->setVelocity(v);
-        bullet->setPosition(projectileStart);
+        bullet->setPosition(origin);
         return;
     }
     case W_LASER:
@@ -491,7 +492,7 @@ int Hero::draw()
         // draw selection indicator
         if (currentWeapon == weapon)
         {
-            DM.drawCh(Vector(x_pos, DM.getVertical() - 1.5), 'V', YELLOW);
+            DM.drawCh(Vector(x_pos, DM.getVertical() - 3.5), 'V', YELLOW);
         }
         // draw weapon name
         DM.drawString(Vector(x_pos, DM.getVertical() - 2.5), weaponName[weapon], CENTER_JUSTIFIED, YELLOW);
@@ -501,7 +502,7 @@ int Hero::draw()
         {
             ammo_string = std::to_string(weaponAmmo[weapon]);
         }
-        DM.drawString(Vector(x_pos, DM.getVertical() - 3.5), ammo_string, CENTER_JUSTIFIED, YELLOW);
+        DM.drawString(Vector(x_pos, DM.getVertical() - 1.5), ammo_string, CENTER_JUSTIFIED, YELLOW);
     }
 
     return 0;

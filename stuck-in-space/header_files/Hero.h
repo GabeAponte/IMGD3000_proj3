@@ -46,7 +46,7 @@ class Hero : public df::Object {
   player_weapon currentWeapon;
   void mouse(const df::EventMouse *p_mouse_event);
   void kbd(const df::EventKeyboard *p_keyboard_event);
-  void fire(df::Vector target);
+  void fire(df::Vector target, df::Vector origin);
   void step();
   void overloadShield();
   void hit(const df::EventCollision* p_collision_event);
