@@ -80,35 +80,6 @@ void GameStart::start() {
   // Create hero.
   new Hero;
 
-  // Spawn some saucers to shoot.
-  /*
-  for (int i = 0; i < 20; i++) {
-      df::Vector temp_pos;
-
-      // Get world boundaries.
-      int world_horiz = (int)WM.getBoundary().getHorizontal();
-      int world_vert = (int)WM.getBoundary().getVertical();
-
-      // x is off right side of window.
-      temp_pos.setX((float)(world_horiz + rand() % world_horiz + 3));
-
-      // y is in vertical range.
-      temp_pos.setY(rand() % (world_vert - 4) + 4.0f);
-
-      // If collision, move right slightly until empty space.
-      df::ObjectList collision_list = WM.getCollisions(this, temp_pos);
-      while (!collision_list.isEmpty()) {
-          temp_pos.setX(temp_pos.getX() + 1);
-          collision_list = WM.getCollisions(this, temp_pos);
-      }
-      new Enemy(temp_pos);
-  }
-  */
-   
-
-  // Setup heads-up display.
-  new Points;		                     // Points display.
-
   df::ViewObject* p_fuel = new df::ViewObject; // Shield display
   p_fuel->setLocation(df::TOP_LEFT);
   p_fuel->setViewString("Shield Integrity %");
@@ -116,7 +87,7 @@ void GameStart::start() {
   p_fuel->setColor(df::YELLOW);
 
   df::ViewObject* p_wave = new df::ViewObject; // Wave display
-  p_wave->setLocation(df::BOTTOM_CENTER);
+  p_wave->setLocation(df::TOP_RIGHT);
   p_wave->setViewString("WAVE");
   p_wave->setValue(1);
   p_wave->setColor(df::YELLOW);

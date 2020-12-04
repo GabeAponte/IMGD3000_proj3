@@ -29,9 +29,6 @@
     <ClCompile Include="..\cpp_files\Hero.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\cpp_files\Points.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\cpp_files\Reticle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -92,9 +89,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\header_files\Reticle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\Points.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\header_files\EventOverloadShield.h">

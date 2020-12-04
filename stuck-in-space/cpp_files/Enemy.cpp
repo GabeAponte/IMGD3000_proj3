@@ -39,10 +39,6 @@ Enemy::Enemy(df::Vector start_pos) {
 }
 
 Enemy::~Enemy() {
-  // Send "view" event with points to interested ViewObjects.
-  // Add 10 points.
-  df::EventView ev(POINTS_STRING, 10, true);
-  WM.onEvent(&ev);
   // Declare that the enemy died
   EventEnemyDeath eed(getPosition());
   WM.onEvent(&eed);

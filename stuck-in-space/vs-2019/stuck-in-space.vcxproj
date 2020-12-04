@@ -31,7 +31,6 @@
     <ClCompile Include="..\cpp_files\GameOver.cpp" />
     <ClCompile Include="..\cpp_files\GameStart.cpp" />
     <ClCompile Include="..\cpp_files\Hero.cpp" />
-    <ClCompile Include="..\cpp_files\Points.cpp" />
     <ClCompile Include="..\cpp_files\Reticle.cpp" />
     <ClCompile Include="..\cpp_files\Enemy.cpp" />
     <ClCompile Include="..\cpp_files\Star.cpp" />
@@ -50,7 +49,6 @@
     <ClInclude Include="..\header_files\GameOver.h" />
     <ClInclude Include="..\header_files\GameStart.h" />
     <ClInclude Include="..\header_files\Hero.h" />
-    <ClInclude Include="..\header_files\Points.h" />
     <ClInclude Include="..\header_files\Reticle.h" />
     <ClInclude Include="..\header_files\Enemy.h" />
     <ClInclude Include="..\header_files\Star.h" />
