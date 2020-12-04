@@ -49,7 +49,7 @@ GameOver::~GameOver() {
     new InputPlayerName(p_wc->getWave()-1);
     
     // Delete wave controller
-    WM.markForDelete(p_wc);
+    WM.deleteObjectsOfType("WaveController");
 }
 
 // Handle event.
