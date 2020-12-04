@@ -487,17 +487,17 @@ int Hero::draw()
         // draw selection indicator
         if (currentWeapon == weapon)
         {
-            DM.drawCh(Vector(x_pos,0), 'V', YELLOW);
+            DM.drawCh(Vector(x_pos, DM.getVertical() - 1.5), 'V', YELLOW);
         }
         // draw weapon name
-        DM.drawString(Vector(x_pos, 1), weaponName[weapon], CENTER_JUSTIFIED, YELLOW);
+        DM.drawString(Vector(x_pos, DM.getVertical() - 2.5), weaponName[weapon], CENTER_JUSTIFIED, YELLOW);
         // draw weapon ammo
         std::string ammo_string = "---";
         if (weapon != W_MISSILE)
         {
             ammo_string = std::to_string(weaponAmmo[weapon]);
         }
-        DM.drawString(Vector(x_pos, 2), ammo_string, CENTER_JUSTIFIED, YELLOW);
+        DM.drawString(Vector(x_pos, DM.getVertical() - 3.5), ammo_string, CENTER_JUSTIFIED, YELLOW);
     }
 
     return 0;
