@@ -50,6 +50,7 @@ Hero::Hero() {
     fireCooldown = 0;
     lives = 1;
     shieldIntegrity = 100;
+    projectileStart = Vector();
 
     // Initialize weapon names
     weaponName[W_MISSILE] =     "MISSILE";
@@ -242,8 +243,8 @@ void Hero::fire(df::Vector target) {
     {
         // Fire Missile towards target
         Bullet* bullet = new Bullet();
-        bullet->setVelocity((v));
-        bullet->setPosition(getPojectileStart(target));
+        bullet->setVelocity(v);
+        bullet->setPosition(projectileStart);
         return;
     }
     case W_LASER:
@@ -352,36 +353,6 @@ void Hero::overloadShield() {
   p_sound->play();
 }
 
-// Get the vector position for where a weapon projectile should start from
-df::Vector Hero::getPojectileStart(df::Vector target)
-{
-    int xStart = 0;
-    int yStart = 0;
-    Box thisBox = getWorldBox(this);
-    if ((target.getX() > thisBox.getCorner().getX()) && (target.getX() < thisBox.getCorner().getX()+thisBox.getHorizontal())) {
-        if (target.getY() > this->getPosition().getY()) {
-            xStart = 0;
-            yStart = 1 + HITBOX_HEIGHT/2;
-        }
-        else if (target.getY() < this->getPosition().getY()) {
-            xStart = 0;
-            yStart = -1 - HITBOX_HEIGHT/2;
-        }
-    }
-
-    else if (target.getX() > this->getPosition().getX()) {
-        xStart = 2 + HITBOX_WIDTH/2;
-        yStart = 0;
-    }
-    else if (target.getX() < this->getPosition().getX()) {
-        xStart = -2 - HITBOX_WIDTH/2;
-        yStart = 0;
-    }
-
-    return df::Vector(this->getPosition().getX() + xStart, this->getPosition().getY() + yStart);
-}
-
-
 // Update the player's sprite based on the reticle location
 void Hero::updateSprite()
 {
@@ -405,9 +376,47 @@ void Hero::updateSprite()
         new_index = 3;
     }
 
+    setProjectileStart(new_index);
     this->setAnimationIndex(new_index);
 }
 
+// Set the location for projectiles to start at based on the sprite 
+void Hero::setProjectileStart(int index)
+{
+    if (index == 2) {
+        if (p_reticle->getPosition().getY() > this->getPosition().getY()) {
+            projectileStart = (Vector(this->getPosition().getX(), this->getPosition().getY() + 1 + HITBOX_HEIGHT / 2));
+        }
+        else {
+            projectileStart = (Vector(this->getPosition().getX(), this->getPosition().getY() -1 - HITBOX_HEIGHT / 2));
+        }
+    }
+    if (index == 0) {
+        projectileStart = (Vector(this->getPosition().getX() - 3 - HITBOX_WIDTH / 2, this->getPosition().getY()));
+    }
+
+    if (index == 4) {
+        projectileStart = (Vector(this->getPosition().getX() + 3 + HITBOX_WIDTH / 2, this->getPosition().getY()));
+    }
+
+    if (index == 1) {
+        if (p_reticle->getPosition().getY() > this->getPosition().getY()) {
+            projectileStart = (Vector(this->getPosition().getX() - 1 - HITBOX_WIDTH / 2, this->getPosition().getY() + HITBOX_HEIGHT / 2));
+        }
+        else {
+            projectileStart = (Vector(this->getPosition().getX() - 1 - HITBOX_WIDTH / 2, this->getPosition().getY() - HITBOX_HEIGHT / 2));
+        }
+    }
+
+    if (index == 3) {
+        if (p_reticle->getPosition().getY() > this->getPosition().getY()) {
+            projectileStart = (Vector(this->getPosition().getX() + 1 + HITBOX_WIDTH / 2, this->getPosition().getY() + HITBOX_HEIGHT / 2));
+        }
+        else {
+            projectileStart = (Vector(this->getPosition().getX() + 1 + HITBOX_WIDTH / 2, this->getPosition().getY() - HITBOX_HEIGHT / 2));
+        }
+    }
+}
 
 /*
 * Hero was hit, so remove shield health

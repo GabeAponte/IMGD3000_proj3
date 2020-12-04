@@ -43,11 +43,14 @@ class Hero : public df::Object {
   void fire(df::Vector target);
   void step();
   void overloadShield();
-  df::Vector getPojectileStart(df::Vector target);
   void hit(const df::EventCollision* p_collision_event);
 
   // Update the player's sprite based on the reticle location
   void updateSprite();
+
+  void setProjectileStart(int index);
+
+  df::Vector projectileStart;
 
  public:
   Hero();

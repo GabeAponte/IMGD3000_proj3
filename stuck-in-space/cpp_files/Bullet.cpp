@@ -21,6 +21,8 @@ Bullet::Bullet() {
     // Set other object properties.
     setType("Bullet");
 
+    setSolidness(SOFT);
+
     // Set the weapon type (defaults to W_MISSILE)
     weaponType = W_MISSILE;
 }
