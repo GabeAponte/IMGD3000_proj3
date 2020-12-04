@@ -15,6 +15,7 @@
 #include <iostream>
 
 // Game includes.
+#include "../header_files/Velocity.h"
 #include "../header_files/Bullet.h"
 #include "../header_files/Explosion.h"
 #include "../header_files/GameOver.h"
@@ -234,6 +235,7 @@ void Hero::fire(df::Vector target) {
     df::Vector v = target - getPosition();
     v.normalize();
     v.scale(1);
+    v = convertToReal(v);
 
     // Create and position weapon attack
     switch (currentWeapon)

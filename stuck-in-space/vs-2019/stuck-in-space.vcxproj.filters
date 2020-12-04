@@ -71,6 +71,9 @@
     <ClCompile Include="..\cpp_files\EventAmmo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\cpp_files\Velocity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Star.h">
@@ -125,6 +128,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\header_files\EventAmmo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header_files\Velocity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
