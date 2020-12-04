@@ -68,7 +68,7 @@
     <ClCompile Include="..\cpp_files\EventAmmo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\cpp_files\FastEnemy.cpp">
+    <ClCompile Include="..\cpp_files\Velocity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -124,7 +124,7 @@
     <ClInclude Include="..\header_files\EventAmmo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\header_files\FastEnemy.h">
+    <ClInclude Include="..\header_files\Velocity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,8 +6,9 @@
 #include "WorldManager.h"
 #include "ResourceManager.h"
 #include "EventOut.h"
-#include "../header_files/Bullet.h"
+
 #include "../header_files/Enemy.h"
+#include "../header_files/Bullet.h"
 
 using namespace df;
 

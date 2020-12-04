@@ -26,6 +26,7 @@
     <ClCompile Include="..\cpp_files\EventOverloadShield.cpp" />
     <ClCompile Include="..\cpp_files\EventPlayerDeath.cpp" />
     <ClCompile Include="..\cpp_files\Explosion.cpp" />
+    <ClCompile Include="..\cpp_files\Velocity.cpp" />
     <ClCompile Include="..\cpp_files\WaveController.cpp" />
     <ClCompile Include="..\game.cpp" />
     <ClCompile Include="..\cpp_files\GameOver.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="..\header_files\ScoresIOStreamer.h" />
     <ClInclude Include="..\header_files\Leaderboard.h" />
     <ClInclude Include="..\header_files\InputPlayerName.h" />
+    <ClInclude Include="..\header_files\Velocity.h" />
     <ClInclude Include="..\header_files\WaveController.h" />
     <ClInclude Include="..\header_files\FastEnemy.h" />
   </ItemGroup>
