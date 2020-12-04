@@ -230,7 +230,7 @@ void WaveController::spawnEnemy()
 	}
 	case E_SPIRAL:
 	{
-		// TODO spawn enem here
+		// TODO spawn enemy here
 		enemySpawnCount++;
 		break;
 	}

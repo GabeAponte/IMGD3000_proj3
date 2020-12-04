@@ -13,6 +13,7 @@
 #include "LogManager.h"
 #include "ResourceManager.h"
 #include "WorldManager.h"
+#include "../header_files/Velocity.h"
 #include "../header_files/Explosion.h"
 #include "../header_files/Points.h"
 #include "../header_files/Enemy.h"
@@ -31,7 +32,7 @@ Enemy::Enemy(df::Vector start_pos) {
   setType("Saucer");
 
   // Set speed
-  setSpeed(.20);
+  setRealSpeed(.20);
   setPosition(start_pos);
   targetHero(start_pos);
   setSolidness(SOFT);
@@ -108,6 +109,20 @@ void Enemy::hit(const df::EventCollision *p_collision_event) {
 void Enemy::targetHero(df::Vector position)
 {
     df::Vector dir = (Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - position);
+    dir = convertToDragonfly(dir);
     dir.normalize();
-    setDirection(dir);
+    dir.scale(realSpeed);
+    dir = convertToReal(dir);
+    setVelocity(dir);
+}
+
+
+// Set/get the enemy's real speed (df speed is unreliable)
+void Enemy::setRealSpeed(float new_speed)
+{
+    realSpeed = new_speed;
+}
+float Enemy::getRealSpeed() const
+{
+    return realSpeed;
 }
