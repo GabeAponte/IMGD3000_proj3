@@ -1,131 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{c6fe32e6-569c-4bc4-bda2-5b5a50d1b314}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="..\cpp_files\Ammo.cpp" />
+    <ClCompile Include="..\cpp_files\Bullet.cpp" />
+    <ClCompile Include="..\cpp_files\EventAmmo.cpp" />
+    <ClCompile Include="..\cpp_files\EventEnemyDeath.cpp" />
+    <ClCompile Include="..\cpp_files\EventOverloadShield.cpp" />
+    <ClCompile Include="..\cpp_files\EventPlayerDeath.cpp" />
+    <ClCompile Include="..\cpp_files\Explosion.cpp" />
+    <ClCompile Include="..\cpp_files\Velocity.cpp" />
+    <ClCompile Include="..\cpp_files\WaveController.cpp" />
+    <ClCompile Include="..\game.cpp" />
+    <ClCompile Include="..\cpp_files\GameOver.cpp" />
+    <ClCompile Include="..\cpp_files\GameStart.cpp" />
+    <ClCompile Include="..\cpp_files\Hero.cpp" />
+    <ClCompile Include="..\cpp_files\Reticle.cpp" />
+    <ClCompile Include="..\cpp_files\Enemy.cpp" />
+    <ClCompile Include="..\cpp_files\Star.cpp" />
+    <ClCompile Include="..\cpp_files\ScoresIOStreamer.cpp" />
+    <ClCompile Include="..\cpp_files\Leaderboard.cpp" />
+    <ClCompile Include="..\cpp_files\InputPlayerName.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\cpp_files\Bullet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\Explosion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\GameOver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\GameStart.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\Hero.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\Reticle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\Star.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\EventOverloadShield.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\ScoresIOStreamer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\Leaderboard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\InputPlayerName.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\WaveController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\EventEnemyDeath.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\EventPlayerDeath.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\Ammo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\EventAmmo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\cpp_files\Velocity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\header_files\Star.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\Bullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\Explosion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\GameOver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\GameStart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\Hero.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\Reticle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\EventOverloadShield.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\ScoresIOStreamer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\Leaderboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\InputPlayerName.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\WaveController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\EventEnemyDeath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\EventPlayerDeath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\Ammo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\EventAmmo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\header_files\Velocity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="..\header_files\Ammo.h" />
+    <ClInclude Include="..\header_files\Bullet.h" />
+    <ClInclude Include="..\header_files\EventAmmo.h" />
+    <ClInclude Include="..\header_files\EventEnemyDeath.h" />
+    <ClInclude Include="..\header_files\EventOverloadShield.h" />
+    <ClInclude Include="..\header_files\EventPlayerDeath.h" />
+    <ClInclude Include="..\header_files\Explosion.h" />
+    <ClInclude Include="..\header_files\GameOver.h" />
+    <ClInclude Include="..\header_files\GameStart.h" />
+    <ClInclude Include="..\header_files\Hero.h" />
+    <ClInclude Include="..\header_files\Reticle.h" />
+    <ClInclude Include="..\header_files\Enemy.h" />
+    <ClInclude Include="..\header_files\Star.h" />
+    <ClInclude Include="..\header_files\ScoresIOStreamer.h" />
+    <ClInclude Include="..\header_files\Leaderboard.h" />
+    <ClInclude Include="..\header_files\InputPlayerName.h" />
+    <ClInclude Include="..\header_files\Velocity.h" />
+    <ClInclude Include="..\header_files\WaveController.h" />
   </ItemGroup>
 </Project>
