@@ -147,7 +147,6 @@ void WaveController::beginWave()
 			}
 		}
 	}
-
 	// Start spawn timer
 	enemySpawnWait = ENEMY_SPAWN_DELAY;
 }

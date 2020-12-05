@@ -14,7 +14,7 @@ using namespace df;
 
 Bullet::Bullet() {
     // Link to "bullet" sprite.
-    setSprite("bullet");
+    setSprite("w_bullet");
 
     // Set other object properties.
     setType("Bullet");
@@ -26,7 +26,7 @@ Bullet::Bullet() {
 }
 Bullet::Bullet(player_weapon weapon_type) {
     // Link to "bullet" sprite.
-    setSprite("bullet");
+    setSprite("w_bullet");
 
     // Set other object properties.
     setType("Bullet");

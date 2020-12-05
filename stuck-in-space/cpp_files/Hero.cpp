@@ -8,6 +8,8 @@
 // Handles the Hero functionality
 //
 
+#include <iostream>
+
 #include <Utility.h>
 #include <EventMouse.h>
 #include <EventStep.h>
@@ -16,7 +18,7 @@
 #include <DisplayManager.h>
 #include <ResourceManager.h>
 #include <WorldManager.h>
-#include <iostream>
+
 #include "../header_files/Velocity.h"
 #include "../header_files/Bullet.h"
 #include "../header_files/Explosion.h"
@@ -48,7 +50,8 @@ Hero::Hero() {
 
     // Create reticle for firing bullets.
     p_reticle = new Reticle();
-    p_reticle->draw();
+
+    std::cout << "huh1\n";
 
     // Set attributes that control actions.
     currentWeapon = W_MISSILE;
@@ -57,6 +60,8 @@ Hero::Hero() {
     lives = 1;
     shieldIntegrity = 100;
     projectileStart = Vector();
+
+    std::cout << "huh2\n";
 
     // Initialize weapon names
     weaponName[W_MISSILE] =     "MISSILE";
@@ -68,7 +73,7 @@ Hero::Hero() {
     // Initialize weapon ammo counts
     weaponAmmo[W_MISSILE] =     0;
     weaponAmmo[W_LASER] =       0;
-    weaponAmmo[W_SPREAD] =      0;
+    weaponAmmo[W_SPREAD] =      100;
     weaponAmmo[W_BOMB] =        0;
     weaponAmmo[W_PLASMA] =      0;
     weaponAmmo[W_RAPID] =       0;
@@ -78,7 +83,7 @@ Hero::Hero() {
     weaponCooldown[W_SPREAD] =  20;
     weaponCooldown[W_BOMB] =    20;
     weaponCooldown[W_PLASMA] =  30;
-    weaponCooldown[W_RAPID] =   5;
+    weaponCooldown[W_RAPID] =   4;
     // Initialize weapon sounds
     weaponSound[W_MISSILE] =    "fire";
     weaponSound[W_LASER] =      "fire";
@@ -87,6 +92,12 @@ Hero::Hero() {
     weaponSound[W_PLASMA] =     "fire";
     weaponSound[W_RAPID] =      "fire";
     // TODO: maybe condense these into a map to a struct?
+
+    //df::Vector v1 = rotateVector(Vector(1, 2), 180);
+    std::cout << "huh3\n";
+    std::cout << //v1.getX() << ", " << v1.getY() << "\n";
+    //df::Vector v2 = rotateVector(Vector(), 45);
+    //std::cout << v2.getX() << ", " << v2.getY() << "\n";
 }
 
 Hero::~Hero() {
@@ -244,11 +255,8 @@ void Hero::fire(df::Vector target, df::Vector origin) {
     p_sound->play();
 
     // Calculate bullet velocity
-    df::Vector v = target - origin; // calculate aim vector
-    v = convertToDragonfly(v);      // adjust aim for screen coordinates
-    v.normalize();                  // convert aim to direction
-    v.scale(1);                     // apply bullet speed
-    v = convertToReal(v);           // adjust velocity for screen coordinates
+    df::Vector aim = target - origin;      // calculate aim vector
+    df::Vector v = makeRealVector(aim, 2); // convert to game vector
 
     // Create and position weapon attack
     switch (currentWeapon)
@@ -256,9 +264,9 @@ void Hero::fire(df::Vector target, df::Vector origin) {
     case W_MISSILE:
     {
         // Fire Missile towards target
-        Bullet* bullet = new Bullet();
-        bullet->setVelocity(v);
-        bullet->setPosition(origin);
+        Bullet* p_bullet = new Bullet();
+        p_bullet->setVelocity(v);
+        p_bullet->setPosition(origin);
         return;
     }
     case W_LASER:
@@ -266,7 +274,7 @@ void Hero::fire(df::Vector target, df::Vector origin) {
         // Fire Laser towards target
         /*
         Laser* laser = new Bullet();
-        laser->setVelocity((v));
+        laser->setVelocity(v);
         laser->setPosition(getPojectileStart(target));
         */
         return;
@@ -278,14 +286,13 @@ void Hero::fire(df::Vector target, df::Vector origin) {
         // 1. get angle from player to target
         // 2. calculate offsets from angle based on i
         // 3. generate Spread bullet objects and send them in the appropriate directions
-        for (float i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
-            /*
-            float angle = target_angle - offset + i*offset_step;
-            Spread* spread = new Spread();
-            laser->setVelocity((v));
-            laser->setPosition(getPojectileStart(target));
-            */
+            Bullet* p_spread = new Bullet(W_SPREAD);
+            p_spread->setSprite("w_spread");
+            p_spread->setVelocity(makeRealVector(rotateVector(aim, 10*i-15), 2));
+            p_spread->setPosition(origin);
+            std::cout << p_spread->getVelocity().getY() << ", " << p_spread->getVelocity().getX() << "\n";
         }
         return;
     }
@@ -294,7 +301,7 @@ void Hero::fire(df::Vector target, df::Vector origin) {
         // Fire Bomb towards target, exploding on impact
         /*
         Bomb* bomb = new Bomb();
-        bomb->setVelocity((v));
+        bomb->setVelocity(v);
         bomb->setPosition(getPojectileStart(target));
         */
         return;
@@ -304,19 +311,18 @@ void Hero::fire(df::Vector target, df::Vector origin) {
         // Fire a slow orb of Plasma towards target, dealing damage over time
         /*
         Plasma* plasma = new Plasma();
-        plasma->setVelocity((v));
+        plasma->setVelocity(v);
         plasma->setPosition(getPojectileStart(target));
         */
         return;
     }
     case W_RAPID:
     {
-        // Rapid-fire light bullets towards target with a short
-        /*
-        Rapid* rapid = new Rapid();
-        rapid->setVelocity((v));
-        rapid->setPosition(getPojectileStart(target));
-        */
+        // Rapid-fire light bullets towards target
+        Bullet* p_rapid = new Bullet(W_RAPID);
+        p_rapid->setSprite("w_rapid");
+        p_rapid->setVelocity(v);
+        p_rapid->setPosition(origin);
         return;
     }
     default:
@@ -380,10 +386,6 @@ void Hero::overloadShield() {
 void Hero::changeWeapon(player_weapon new_weapon)
 {
     currentWeapon = new_weapon;
-    if (fireCooldown > 0)
-    {
-        fireCooldown = std::max(fireCooldown, weaponCooldown[currentWeapon]);
-    }
 }
 
 

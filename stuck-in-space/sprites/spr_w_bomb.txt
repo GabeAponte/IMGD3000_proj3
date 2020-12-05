@@ -1,0 +1,16 @@
+<HEADER>
+frames 2
+width 3
+height 1
+color gray
+slowdown 5
+</HEADER>
+<BODY>
+(X)
+end
+(+)
+end
+</BODY>
+<FOOTER>
+version 1
+</FOOTER>

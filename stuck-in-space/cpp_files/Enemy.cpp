@@ -32,7 +32,7 @@ Enemy::Enemy(df::Vector start_pos) {
   setType("Saucer");
 
   // Set speed
-  setRealSpeed(.20);
+  setRealSpeed(0.20);
   setPosition(start_pos);
   targetHero(start_pos);
   setSolidness(SOFT);
@@ -108,12 +108,9 @@ void Enemy::hit(const df::EventCollision *p_collision_event) {
 // Set the direction of the enemy to point at the player (center of screen)
 void Enemy::targetHero(df::Vector position)
 {
-    df::Vector dir = (Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - position);
-    dir = convertToDragonfly(dir);
-    dir.normalize();
-    dir.scale(realSpeed);
-    dir = convertToReal(dir);
-    setVelocity(dir);
+    df::Vector dir = Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - position;
+    df::Vector new_vel = makeRealVector(dir, realSpeed);
+    setVelocity(new_vel);
 }
 
 

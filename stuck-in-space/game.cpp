@@ -55,18 +55,25 @@ int main(int argc, char *argv[]) {
  
 // Load resources (sprites, sound effects, music).
 void loadResources(void) {
+  LM.setLogLevel(2);
+  // Load sprites
+  RM.loadSprite("../sprites/spr_player.txt", "player");
+  RM.loadSprite("../sprites/spr_ammo.txt", "ammo");
+  RM.loadSprite("../sprites/spr_w_bullet.txt", "w_bullet");
+  RM.loadSprite("../sprites/spr_w_bomb.txt", "w_bomb");
+  RM.loadSprite("../sprites/spr_w_split.txt", "w_split");
+  RM.loadSprite("../sprites/spr_w_plasma.txt", "w_plasma");
+  RM.loadSprite("../sprites/spr_w_rapid.txt", "w_rapid");
   RM.loadSprite("../sprites/saucer-spr.txt", "saucer");
-  RM.loadSprite("../sprites/ship-spr.txt", "ship");
-  RM.loadSprite("../sprites/bullet-spr.txt", "bullet");
   RM.loadSprite("../sprites/explosion-spr.txt", "explosion");
   RM.loadSprite("../sprites/gamestart-spr.txt", "gamestart");
   RM.loadSprite("../sprites/gameover-spr.txt", "gameover");
-  RM.loadSprite("../sprites/player-spr.txt", "player");
-  RM.loadSprite("../sprites/ammo-spr.txt", "ammo");
+  // Load sounds
   RM.loadSound("../sounds/fire.wav", "fire");
   RM.loadSound("../sounds/explode.wav", "explode");
   RM.loadSound("../sounds/nuke.wav", "nuke");
   RM.loadSound("../sounds/game-over.wav", "game over");
+  // Load music
   RM.loadMusic("../sounds/start-music.wav", "start music");
 }
  
