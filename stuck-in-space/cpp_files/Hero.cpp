@@ -280,7 +280,10 @@ void Hero::fire(df::Vector target, df::Vector origin) {
         {
             Bullet* p_spread = new Bullet(W_SPREAD);
             p_spread->setSprite("w_spread");
-            p_spread->setVelocity(makeRealVector(rotateVector(aim, 10*i-15), 2));
+            df::Vector spread_vel = rotateVector(aim, 10 * i - 15);
+            spread_vel.normalize();
+            spread_vel.scale(2);
+            p_spread->setVelocity(convertToReal(spread_vel));
             p_spread->setPosition(origin);
         }
         return;
