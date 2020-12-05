@@ -74,6 +74,9 @@
     <ClCompile Include="..\cpp_files\EnemyBullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\cpp_files\ScreenShaker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Star.h">
@@ -131,6 +134,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\header_files\EnemyBullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header_files\ScreenShaker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
