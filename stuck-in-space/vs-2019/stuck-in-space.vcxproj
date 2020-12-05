@@ -28,6 +28,7 @@
     <ClCompile Include="..\cpp_files\EventOverloadShield.cpp" />
     <ClCompile Include="..\cpp_files\EventPlayerDeath.cpp" />
     <ClCompile Include="..\cpp_files\Explosion.cpp" />
+    <ClCompile Include="..\cpp_files\Laser.cpp" />
     <ClCompile Include="..\cpp_files\Velocity.cpp" />
     <ClCompile Include="..\cpp_files\WaveController.cpp" />
     <ClCompile Include="..\game.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="..\header_files\GameOver.h" />
     <ClInclude Include="..\header_files\GameStart.h" />
     <ClInclude Include="..\header_files\Hero.h" />
+    <ClInclude Include="..\header_files\Laser.h" />
     <ClInclude Include="..\header_files\Reticle.h" />
     <ClInclude Include="..\header_files\Enemy.h" />
     <ClInclude Include="..\header_files\Star.h" />

@@ -1,6 +1,6 @@
 //
-// Bomb.h
-// Special bullet that turns into an explosion on impact
+// Laser.h
+// Special piercing bullet
 //
 
 #pragma once
@@ -10,14 +10,15 @@
 #include "../header_files/Hero.h"
 #include "../header_files/Bullet.h"
 
-class Bomb : public Bullet {
-
+class Laser : public Bullet {
 private:
-	void hit(const df::EventCollision* p_collision_event);
-
+	df::Vector prevPos1;
+	df::Vector prevPos2;
 public:
-	Bomb();
+	Laser(df::Vector position);
 
 	// Handle events
 	int eventHandler(const df::Event* p_e);
+	// Draw full laser
+	int draw();
 };

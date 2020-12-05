@@ -3,11 +3,8 @@
 // Variation of Bomb that destroys a lot of enemies at once on impact
 //
 
-#include "LogManager.h"
-#include "WorldManager.h"
-#include "ResourceManager.h"
-#include "EventOut.h"
-
+#include <WorldManager.h>
+#include <EventOut.h>
 #include "../header_files/Enemy.h"
 #include "../header_files/BombExplosion.h"
 #include "../header_files/Bomb.h"
@@ -33,7 +30,7 @@ Bomb::Bomb() {
 int Bomb::eventHandler(const df::Event* p_e) {
 
 	if (p_e->getType() == df::OUT_EVENT) {
-		Bullet::out();
+		out();
 		return 1;
 	}
 
