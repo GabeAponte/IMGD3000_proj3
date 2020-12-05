@@ -22,6 +22,7 @@
 #define HITBOX_WIDTH        9
 #define HITBOX_HEIGHT       5
 #define WEAPON_COUNT        6
+#define SPREAD_SPACING      10  // the spacing (in degrees) between Spread bullets
 
 enum player_weapon {
     W_MISSILE,

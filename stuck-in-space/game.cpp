@@ -65,24 +65,24 @@ void loadResources(void) {
     RM.loadSprite("../sprites/spr_w_plasma.txt", "w_plasma");
     RM.loadSprite("../sprites/spr_w_rapid.txt", "w_rapid");
     RM.loadSprite("../sprites/saucer-spr.txt", "saucer");
-  RM.loadSprite("../sprites/basic-enemy-spr.txt", "basic-enemy");
-  RM.loadSprite("../sprites/fast-enemy-spr.txt", "fast-enemy");
-  RM.loadSprite("../sprites/swarm-enemy-spr.txt", "swarm-enemy");
-  RM.loadSprite("../sprites/tough-enemy-spr.txt", "tough-enemy");
-  RM.loadSprite("../sprites/tricky-enemy-spr.txt", "tricky-enemy");
-  RM.loadSprite("../sprites/shooter-enemy-spr.txt", "shooter-enemy");
-  RM.loadSprite("../sprites/spiral-enemy-spr.txt", "spiral-enemy");
-  RM.loadSprite("../sprites/enemy-bullet-spr.txt", "enemy-bullet");
-  RM.loadSprite("../sprites/explosion-spr.txt", "explosion");
-  RM.loadSprite("../sprites/gamestart-spr.txt", "gamestart");
-  RM.loadSprite("../sprites/gameover-spr.txt", "gameover");
-  // Load sounds
-  RM.loadSound("../sounds/fire.wav", "fire");
-  RM.loadSound("../sounds/explode.wav", "explode");
-  RM.loadSound("../sounds/nuke.wav", "nuke");
-  RM.loadSound("../sounds/game-over.wav", "game over");
-  // Load music
-  RM.loadMusic("../sounds/start-music.wav", "start music");
+    RM.loadSprite("../sprites/basic-enemy-spr.txt", "basic-enemy");
+    RM.loadSprite("../sprites/fast-enemy-spr.txt", "fast-enemy");
+    RM.loadSprite("../sprites/swarm-enemy-spr.txt", "swarm-enemy");
+    RM.loadSprite("../sprites/tough-enemy-spr.txt", "tough-enemy");
+    RM.loadSprite("../sprites/tricky-enemy-spr.txt", "tricky-enemy");
+    RM.loadSprite("../sprites/shooter-enemy-spr.txt", "shooter-enemy");
+    RM.loadSprite("../sprites/spiral-enemy-spr.txt", "spiral-enemy");
+    RM.loadSprite("../sprites/enemy-bullet-spr.txt", "enemy-bullet");
+    RM.loadSprite("../sprites/explosion-spr.txt", "explosion");
+    RM.loadSprite("../sprites/gamestart-spr.txt", "gamestart");
+    RM.loadSprite("../sprites/gameover-spr.txt", "gameover");
+    // Load sounds
+    RM.loadSound("../sounds/fire.wav", "fire");
+    RM.loadSound("../sounds/explode.wav", "explode");
+    RM.loadSound("../sounds/nuke.wav", "nuke");
+    RM.loadSound("../sounds/game-over.wav", "game over");
+    // Load music
+    RM.loadMusic("../sounds/start-music.wav", "start music");
 }
  
 // Populate world with some objects.

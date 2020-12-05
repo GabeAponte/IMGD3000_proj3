@@ -67,12 +67,12 @@ Hero::Hero() {
     weaponName[W_PLASMA] =      "PLASMA";
     weaponName[W_RAPID] =       "RAPID";
     // Initialize weapon ammo counts
-    weaponAmmo[W_MISSILE] =     0;
-    weaponAmmo[W_LASER] =       0;
-    weaponAmmo[W_SPREAD] =      100;
-    weaponAmmo[W_BOMB] =        0;
-    weaponAmmo[W_PLASMA] =      0;
-    weaponAmmo[W_RAPID] =       0;
+    weaponAmmo[W_MISSILE] =     0; // should always be 0
+    weaponAmmo[W_LASER] =       20;
+    weaponAmmo[W_SPREAD] =      20;
+    weaponAmmo[W_BOMB] =        20;
+    weaponAmmo[W_PLASMA] =      20;
+    weaponAmmo[W_RAPID] =       20;
     // Initialize weapon cooldowns
     weaponCooldown[W_MISSILE] = 15;
     weaponCooldown[W_LASER] =   15;
@@ -272,15 +272,11 @@ void Hero::fire(df::Vector target, df::Vector origin) {
     case W_SPREAD:
     {
         // Fire Spread of 4 bullets towards target
-        // PROCEDURE:
-        // 1. get angle from player to target
-        // 2. calculate offsets from angle based on i
-        // 3. generate Spread bullet objects and send them in the appropriate directions
         for (int i = 0; i < 4; i++)
         {
             Bullet* p_spread = new Bullet(W_SPREAD);
             p_spread->setSprite("w_spread");
-            df::Vector spread_vel = rotateVector(aim, 10 * i - 15);
+            df::Vector spread_vel = rotateVector(aim, SPREAD_SPACING*(i-1.5));
             spread_vel.normalize();
             spread_vel.scale(2);
             p_spread->setVelocity(convertToReal(spread_vel));
@@ -294,18 +290,19 @@ void Hero::fire(df::Vector target, df::Vector origin) {
         /*
         Bomb* bomb = new Bomb();
         bomb->setVelocity(v);
-        bomb->setPosition(getPojectileStart(target));
+        bomb->setPosition(origin);
         */
         return;
     }
     case W_PLASMA:
     {
         // Fire a slow orb of Plasma towards target, dealing damage over time
-        /*
-        Plasma* plasma = new Plasma();
-        plasma->setVelocity(v);
-        plasma->setPosition(getPojectileStart(target));
-        */
+        Bullet* p_plasma = new Bullet(W_PLASMA);
+        p_plasma->setSprite("w_plasma");
+        df::Vector plasma_vel = v;
+        plasma_vel.scale(0.3);
+        p_plasma->setVelocity(plasma_vel);
+        p_plasma->setPosition(origin);
         return;
     }
     case W_RAPID:
