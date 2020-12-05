@@ -15,10 +15,14 @@ const std::string ENEMY_DEATH_EVENT =  "enemydeath";
 class EventEnemyDeath : public df::Event {
  private:
     EventEnemyDeath(); // inaccessible
-    df::Vector m_death_position;
+    df::Vector deathPosition;
+    bool killedByPlayer;
  public:
-    EventEnemyDeath(df::Vector death_position);
+    EventEnemyDeath(df::Vector death_position, bool killed_by_player=false);
 
     // Get the death position
     df::Vector getPosition() const;
+
+    // Get whether the player killed the enemy
+    bool getDidPlayerKill() const;
 };

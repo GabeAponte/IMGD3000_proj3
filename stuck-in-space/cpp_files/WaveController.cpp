@@ -98,9 +98,9 @@ void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 		// TODO: Popup wave clear notification
 	}
 
-	// Spawn ammo refill at enemy location
+	// Spawn ammo refill at enemy location if player killed enemy
 	// TODO: maybe more likely if low on ammo
-	if (randomPercent() >= AMMO_SPAWN_CHANCE)
+	if (p_enemydeath_event->getDidPlayerKill() && randomPercent() >= AMMO_SPAWN_CHANCE)
 	{
 		spawnAmmo(p_enemydeath_event->getPosition());
 	}
@@ -136,16 +136,13 @@ void WaveController::beginWave()
 			if (it->minDifficulty <= difficulty && it->difficultyCost <= difficulty-difficulty_cost)
 			{
 				// Chance to spawn selected enemy. Otherwise, if no options found: default to basic enemy
-				if (rand() % 2 == 1 || it == enemyOptions.rend() - 1)
+				if (randomPercent() < 0.5 || it == enemyOptions.rend() - 1)
 				{
 					// Queue enemy for spawning, and add cost to accumulated difficulty cost
 					enemySpawnList.push_back(it->enemyType);
 					difficulty_cost += it->difficultyCost;
 					std::cout << "~ Queuing enemy of type " << (int) it->enemyType << " (Cost: " << difficulty_cost << "/" << difficulty << ")\n";
-					if (difficulty_cost >= difficulty)
-					{
-						break;
-					}
+					break;
 				}
 			}
 		}

@@ -36,11 +36,13 @@ Enemy::Enemy(df::Vector start_pos) {
   setPosition(start_pos);
   targetHero(start_pos);
   setSolidness(SOFT);
+  
+  killedByPlayer = false;
 }
 
 Enemy::~Enemy() {
   // Declare that the enemy died
-  EventEnemyDeath eed(getPosition());
+  EventEnemyDeath eed(getPosition(), killedByPlayer);
   WM.onEvent(&eed);
 }
 
@@ -62,6 +64,8 @@ int Enemy::eventHandler(const df::Event *p_e) {
 
     // Delete self.
     WM.markForDelete(this);
+
+    killedByPlayer = true;
 
     return 1;
   }
@@ -102,6 +106,8 @@ void Enemy::hit(const df::EventCollision *p_collision_event) {
     // Play "explode" sound
     df::Sound *p_sound = RM.getSound("explode");
     p_sound->play();
+
+    killedByPlayer = true;
   }
 }
 
