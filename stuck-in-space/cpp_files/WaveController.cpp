@@ -28,13 +28,13 @@ WaveController::WaveController()
 
 	// Set up enemy options
 	// enemy_data is (enemy type, minimum difficulty, difficulty cost)
-	enemyOptions.push_back(enemy_data{ E_BASIC, START_DIFFICULTY, 1 }); // basic enemy must require difficulty 0
-	enemyOptions.push_back(enemy_data{ E_TOUGH, 0, 1 });
-	enemyOptions.push_back(enemy_data{ E_FAST, 0, 1 });
-	enemyOptions.push_back(enemy_data{ E_TRICKY, 0, 1 });
+	enemyOptions.push_back(enemy_data{ E_BASIC, 1000, 1 }); // basic enemy must require difficulty 0
+	enemyOptions.push_back(enemy_data{ E_TOUGH, 10000, 1 });
+	enemyOptions.push_back(enemy_data{ E_FAST, 10000, 1 });
+	enemyOptions.push_back(enemy_data{ E_TRICKY, 1000, 1 });
 	enemyOptions.push_back(enemy_data{ E_SPIRAL, 0, 1 });
-	enemyOptions.push_back(enemy_data{ E_SWARM, 20, 1 });
-	enemyOptions.push_back(enemy_data{ E_SHOOTER, 20, 1 });
+	enemyOptions.push_back(enemy_data{ E_SWARM, 20000, 1 });
+	enemyOptions.push_back(enemy_data{ E_SHOOTER, 20000, 1 });
 
 	enemySpawnCount = 0;
 	enemyKillCount = 0;

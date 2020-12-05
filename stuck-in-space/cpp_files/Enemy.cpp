@@ -3,8 +3,9 @@
 
 //
 // Enemy.cpp
-// Handles the logic for a Basic Enemy
+// Handles the logic for an Enemy
 //
+
 #include <iostream>
 #include <stdlib.h>
 #include <DisplayManager.h>
@@ -83,7 +84,10 @@ int Enemy::eventHandler(const df::Event* p_e) {
 
 	// Out of bounds event handler
 	if (p_e->getType() == df::OUT_EVENT) {
-		WM.markForDelete(this);
+		if (type != E_SPIRAL) {
+			WM.markForDelete(this);
+		}
+		
 		return 1;
 	}
 
@@ -120,6 +124,8 @@ int Enemy::eventHandler(const df::Event* p_e) {
 			else if (canFire) {
 				fire();
 			}
+
+			return 1;
 		}
 
 		// Apply zig zag on step for tricky enemy
@@ -136,8 +142,38 @@ int Enemy::eventHandler(const df::Event* p_e) {
 			if (canZigZag && canMove) {
 				applyZigZagMovement();
 			}
+
+			return 1;
 		}
-		return 1;
+
+		// Apply zig zag on step for tricky enemy
+		if (type == E_SPIRAL) {
+			stepCounter++; // regulates rate of direction change
+
+			// Check that the enemy has entered the world bounds
+			if (boxIntersectsBox(Box(Vector(10, 3), 100, 30), getWorldBox(this)) && !canZigZag)
+			{
+				canZigZag = true;
+			}
+
+			// Apply zig zag movement if inside world bounds
+			if (canZigZag && canMove) {
+				df::Vector v = convertToDragonfly(getVelocity());
+				if (stepCounter >= 1 && rotationIndex == 8) {
+					targetHero(getPosition());
+					stepCounter = -3;
+					rotationIndex = 0;
+				}
+				if (stepCounter >= 5 && rotationIndex < 8) {
+					v = rotateVector(v, 45);
+					setVelocity(convertToReal(v));
+					rotationIndex++;
+					stepCounter = 0;
+				}
+			}
+
+			return 1;
+		}
 	}
 	
 	// If get here, have ignored this event.
@@ -208,7 +244,7 @@ void Enemy::setEnemyTypeSpeed()
 	}
 	case E_SPIRAL:
 	{
-		setRealSpeed(.35);
+		setRealSpeed(1);
 		break;
 	}
 	case E_SWARM:
@@ -317,7 +353,6 @@ void Enemy::applyZigZagMovement()
 	df::Vector v = convertToDragonfly(getVelocity());
 
 	if (stepCounter >= 15 && rotationIndex == 0) {
-		std::cout << "first" << "\n";
 		v = rotateVector(v, 45);
 		setVelocity(convertToReal(v));
 		rotationIndex = 1;
@@ -325,7 +360,6 @@ void Enemy::applyZigZagMovement()
 	}
 
 	if (stepCounter >= 15 && rotationIndex == 1) {
-		std::cout << "second" << "\n";
 		v = rotateVector(v, -90);
 		setVelocity(convertToReal(v));
 		stepCounter = 0;
@@ -333,7 +367,6 @@ void Enemy::applyZigZagMovement()
 	}
 
 	if (stepCounter >= 15 && rotationIndex == 2) {
-		std::cout << "third" << "\n";
 		v = rotateVector(v, 45);
 		setVelocity(convertToReal(v));
 		stepCounter = 0;
@@ -341,7 +374,6 @@ void Enemy::applyZigZagMovement()
 	}
 
 	if (stepCounter >= 15 && rotationIndex == 3) {
-		std::cout << "first" << "\n";
 		v = rotateVector(v, -90);
 		setVelocity(convertToReal(v));
 		rotationIndex = 4;
