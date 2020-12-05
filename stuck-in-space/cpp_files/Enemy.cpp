@@ -5,8 +5,9 @@
 // Enemy.cpp
 // Handles the logic for a Basic Enemy
 //
-
+#include <iostream>
 #include <stdlib.h>
+#include <DisplayManager.h>
 #include "EventCollision.h"
 #include "EventOut.h"
 #include "EventView.h"
@@ -20,8 +21,6 @@
 #include "../header_files/EventEnemyDeath.h"
 #include "../header_files/EventPlayerDeath.h"
 #include "../header_files/EventOverloadShield.h"
-#include <iostream>
-#include <DisplayManager.h>
 #include "../header_files/EnemyBullet.h"
 
 using namespace df;
@@ -43,8 +42,11 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	killedByPlayer = false;
 	targetHero(start_pos);
 	fireCooldown = 0;
-	stopMoving = false;
+	canMove = true;
 	canFire = false;
+	canZigZag = false;
+	stepCounter = 0;
+	rotationIndex = 0;
 }
 
 Enemy::~Enemy() {
@@ -90,6 +92,7 @@ int Enemy::eventHandler(const df::Event* p_e) {
 	if (p_e->getType() == PLAYER_DEATH_EVENT) {
 		setVelocity(Vector());
 		canFire = false;
+		canMove = false;
 		return 1;
 	}
 
@@ -98,16 +101,18 @@ int Enemy::eventHandler(const df::Event* p_e) {
 	// Stop motion and fire for shooter
 	if (p_e->getType() == STEP_EVENT) {
 
+		// If shooter, stop movement once close enough to the center of the screen
 		if (type == E_SHOOTER) {
 
-			if (distance(DM.spacesToPixels(getPosition()), DM.spacesToPixels(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2))) < 350 && !stopMoving)
+			if (distance(DM.spacesToPixels(getPosition()), DM.spacesToPixels(Vector(WM.getBoundary().getHorizontal() / 2, 
+				WM.getBoundary().getVertical() / 2))) < 325 && canMove)
 			{
-				setVelocity(Vector());
-				stopMoving = true;
-				canFire = true;
+				setVelocity(Vector()); // stop movement
+				canMove = false;
+				canFire = true; // set fire bool
 			}
 
-			// Fire weapon
+			// Fire weapon if cooldown allows
 			if (fireCooldown > 0)
 			{
 				fireCooldown--;
@@ -115,11 +120,26 @@ int Enemy::eventHandler(const df::Event* p_e) {
 			else if (canFire) {
 				fire();
 			}
+		}
 
+		// Apply zig zag on step for tricky enemy
+		if (type == E_TRICKY) {
+			stepCounter++; // regulates rate of direction change
+
+			// Check that the enemy has entered the world bounds
+			if (boxIntersectsBox(Box(Vector(10, 3), 100, 30), getWorldBox(this)) && !canZigZag)
+			{
+				canZigZag = true;
+			}
+
+			// Apply zig zag movement if inside world bounds
+			if (canZigZag && canMove) {
+				applyZigZagMovement();
+			}
 		}
 		return 1;
 	}
-
+	
 	// If get here, have ignored this event.
 	return 0;
 }
@@ -131,9 +151,9 @@ void Enemy::hit(const df::EventCollision* p_collision_event) {
 	if ((p_collision_event->getObject1()->getType() == "Bullet") ||
 		(p_collision_event->getObject2()->getType() == "Bullet")) {
 
-		hit_points--;
+		hitPoints--;
 
-		if (hit_points <= 0) {
+		if (hitPoints <= 0) {
 
 			// Create an explosion.
 			Explosion* p_explosion = new Explosion;
@@ -178,12 +198,12 @@ void Enemy::setEnemyTypeSpeed()
 	}
 	case E_FAST:
 	{
-		setRealSpeed(1);
+		setRealSpeed(1.5);
 		break;
 	}
 	case E_TRICKY:
 	{
-		setRealSpeed(.8);
+		setRealSpeed(1);
 		break;
 	}
 	case E_SPIRAL:
@@ -254,39 +274,98 @@ void Enemy::setEnemyTypeHitPoints()
 	{
 	case E_BASIC:
 	{
-		hit_points = 1;
+		hitPoints = 1;
 		break;
 	}
 	case E_TOUGH:
 	{
-		hit_points = 3;
+		hitPoints = 3;
 		break;
 	}
 	case E_FAST:
 	{
-		hit_points = 1;
+		hitPoints = 1;
 		break;
 	}
 	case E_TRICKY:
 	{
-		hit_points = 1;
+		hitPoints = 1;
 		break;
 	}
 	case E_SPIRAL:
 	{
-		hit_points = 1;
+		hitPoints = 1;
 		break;
 	}
 	case E_SWARM:
 	{
-		hit_points = 1;
+		hitPoints = 1;
 		break;
 	}
 	case E_SHOOTER:
 	{
-		hit_points = 1;
+		hitPoints = 1;
 		break;
 	}
+	}
+}
+
+// Changes the veclocity of tricky to the current diagonal every 15 steps
+// Last rotation will target enemy directly
+void Enemy::applyZigZagMovement()
+{
+	df::Vector v = convertToDragonfly(getVelocity());
+
+	if (stepCounter >= 15 && rotationIndex == 0) {
+		std::cout << "first" << "\n";
+		v = rotateVector(v, 45);
+		setVelocity(convertToReal(v));
+		rotationIndex = 1;
+		stepCounter = 0;
+	}
+
+	if (stepCounter >= 15 && rotationIndex == 1) {
+		std::cout << "second" << "\n";
+		v = rotateVector(v, -90);
+		setVelocity(convertToReal(v));
+		stepCounter = 0;
+		rotationIndex = 2;
+	}
+
+	if (stepCounter >= 15 && rotationIndex == 2) {
+		std::cout << "third" << "\n";
+		v = rotateVector(v, 45);
+		setVelocity(convertToReal(v));
+		stepCounter = 0;
+		rotationIndex = 3;
+	}
+
+	if (stepCounter >= 15 && rotationIndex == 3) {
+		std::cout << "first" << "\n";
+		v = rotateVector(v, -90);
+		setVelocity(convertToReal(v));
+		rotationIndex = 4;
+		stepCounter = 0;
+	}
+
+	if (stepCounter >= 15 && rotationIndex == 4) {
+		v = rotateVector(v, 45);
+		setVelocity(convertToReal(v));
+		stepCounter = 0;
+		rotationIndex = 5;
+	}
+
+	if (stepCounter >= 15 && rotationIndex == 5) {
+		v = rotateVector(v, 90);
+		setVelocity(convertToReal(v));
+		stepCounter = 0;
+		rotationIndex = 6;
+	}
+
+	if (stepCounter >= 15 && rotationIndex == 6) {
+		targetHero(getPosition());
+		stepCounter = 0;
+		rotationIndex = 7;
 	}
 }
 

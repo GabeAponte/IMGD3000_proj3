@@ -16,17 +16,21 @@ class Enemy : public df::Object {
 
 private:
 	float realSpeed;
-	int hit_points;
+	int hitPoints;
 	int fireCooldown;
 	enemy_type type;
 	bool killedByPlayer;
-	bool stopMoving;
+	bool canMove;
+	bool canZigZag;
 	bool canFire;
+	int stepCounter;
+	int rotationIndex;
 	void hit(const df::EventCollision* p_collision_event);
 	void targetHero(df::Vector position);
 	void setEnemyTypeSpeed();
 	void setEnemyTypeSprite();
 	void setEnemyTypeHitPoints();
+	void applyZigZagMovement();
 	void fire();
 
 public:
