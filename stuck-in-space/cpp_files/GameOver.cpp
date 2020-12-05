@@ -22,67 +22,67 @@ using namespace df;
 
 GameOver::GameOver() {
 
-  setType("GameOver");
+	setType("GameOver");
 
-  // Link to "message" sprite.
-  if (setSprite("gameover") == 0)
-    time_to_live = getAnimation().getSprite()->getFrameCount() * 15;
-  else
-    time_to_live = 0;
+	// Link to "message" sprite.
+	if (setSprite("gameover") == 0)
+		time_to_live = getAnimation().getSprite()->getFrameCount() * 15;
+	else
+		time_to_live = 0;
 
-  // Put in center of window.
-  setLocation(df::CENTER_CENTER);
-  
-  // Play "game over" sound.
-  df::Sound *p_sound = RM.getSound("game over");
-  p_sound->play();
+	// Put in center of window.
+	setLocation(df::CENTER_CENTER);
+
+	// Play "game over" sound.
+	df::Sound* p_sound = RM.getSound("game over");
+	p_sound->play();
 }
 
 // When done, game over so shut down.
 GameOver::~GameOver() {
-    // Clear view objects
-    WM.deleteObjectsOfType("ViewObject");
-    
-    // Get the wave controller
-    ObjectList ol = WM.objectsOfType("WaveController");
-    ObjectListIterator oli(&ol);
-    WaveController* p_wc = dynamic_cast <WaveController*> (oli.currentObject());
-    
-    // Display results and let player input highscores
-    int wave = 1;
-    if (p_wc != nullptr)
-    {
-        wave = p_wc->getWave() - 1;
-    }
-    new InputPlayerName(wave);
-    
-    // Delete wave controller
-    WM.deleteObjectsOfType("WaveController");
+	// Clear view objects
+	WM.deleteObjectsOfType("ViewObject");
+
+	// Get the wave controller
+	ObjectList ol = WM.objectsOfType("WaveController");
+	ObjectListIterator oli(&ol);
+	WaveController* p_wc = dynamic_cast <WaveController*> (oli.currentObject());
+
+	// Display results and let player input highscores
+	int wave = 1;
+	if (p_wc != nullptr)
+	{
+		wave = p_wc->getWave() - 1;
+	}
+	new InputPlayerName(wave);
+
+	// Delete wave controller
+	WM.deleteObjectsOfType("WaveController");
 }
 
 // Handle event.
 // Return 0 if ignored, else 1.
-int GameOver::eventHandler(const df::Event *p_e) {
+int GameOver::eventHandler(const df::Event* p_e) {
 
-  if (p_e->getType() == df::STEP_EVENT) {
-    step();
-    return 1;
-  }
+	if (p_e->getType() == df::STEP_EVENT) {
+		step();
+		return 1;
+	}
 
-  // If get here, have ignored this event.
-  return 0;
+	// If get here, have ignored this event.
+	return 0;
 }
 
 // Count down to end of message.
 void GameOver::step() {
-  time_to_live--;
-  if (time_to_live <= 0) { 
-    WM.markForDelete(this);
-  }
+	time_to_live--;
+	if (time_to_live <= 0) {
+		WM.markForDelete(this);
+	}
 }
 
 // Override default draw so as not to display "value".
 int GameOver::draw() {
-  df::Object::draw();
-  return 0;
+	df::Object::draw();
+	return 0;
 }

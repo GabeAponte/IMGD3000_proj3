@@ -13,62 +13,62 @@
 using namespace df;
 
 Bullet::Bullet(player_weapon weapon_type) {
-    // Link to "bullet" sprite.
-    setSprite("w_bullet");
+	// Link to "bullet" sprite.
+	setSprite("w_bullet");
 
-    // Set other object properties.
-    setType("Bullet");
+	// Set other object properties.
+	setType("Bullet");
 
-    setSolidness(SOFT);
+	setSolidness(SOFT);
 
-    // Set the weapon type
-    // NOTE: All weapon attacks should have the "Bullet" type to allow general collision
-    // TODO: modify this per weapon type
-    weaponType = weapon_type;
+	// Set the weapon type
+	// NOTE: All weapon attacks should have the "Bullet" type to allow general collision
+	// TODO: modify this per weapon type
+	weaponType = weapon_type;
 }
 
 
 // Handle event.
 // Return 0 if ignored, else 1.
-int Bullet::eventHandler(const df::Event *p_e) {
+int Bullet::eventHandler(const df::Event* p_e) {
 
-  if (p_e->getType() == df::OUT_EVENT) {
-    out();
-    return 1;
-  }
+	if (p_e->getType() == df::OUT_EVENT) {
+		out();
+		return 1;
+	}
 
-  if (p_e->getType() == df::COLLISION_EVENT) {
-    const df::EventCollision *p_collision_event = dynamic_cast <const df::EventCollision *> (p_e);
-    hit(p_collision_event);
-    return 1;
-  }
+	if (p_e->getType() == df::COLLISION_EVENT) {
+		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
+		hit(p_collision_event);
+		return 1;
+	}
 
-  // If get here, have ignored this event.
-  return 0;
+	// If get here, have ignored this event.
+	return 0;
 }
 
 // If Bullet moves outside world, mark self for deletion.
 void Bullet::out() {
-  WM.markForDelete(this);
+	WM.markForDelete(this);
 }
 
 // If Bullet hits Enemy, mark Enemy and Bullet for deletion.
-void Bullet::hit(const df::EventCollision *p_collision_event) {
-   
-    // Check if collided with an Enemy or enemy bullet
-    if ((p_collision_event->getObject1()->getType() == "Enemy") || (p_collision_event->getObject2()->getType() == "Enemy")
-        || (p_collision_event->getObject1()->getType() == "EnemyBullet") || (p_collision_event->getObject2()->getType() == "EnemyBullet"))
-    {
-        // Delete this projectile object unless weapon type is piercing
-        if (weaponType != W_LASER && weaponType != W_PLASMA)
-        {
-            WM.markForDelete(this);
-        }
-    }
+void Bullet::hit(const df::EventCollision* p_collision_event) {
+
+	// Check if collided with an Enemy or enemy bullet
+	if ((p_collision_event->getObject1()->getType() == "Enemy") || (p_collision_event->getObject2()->getType() == "Enemy")
+		|| (p_collision_event->getObject1()->getType() == "EnemyBullet") || (p_collision_event->getObject2()->getType() == "EnemyBullet"))
+	{
+		// Delete this projectile object unless weapon type is piercing
+		if (weaponType != W_LASER && weaponType != W_PLASMA)
+		{
+			WM.markForDelete(this);
+		}
+	}
 }
 
 // Get bullet type
 player_weapon Bullet::getWeaponType()
 {
-    return weaponType;
+	return weaponType;
 }

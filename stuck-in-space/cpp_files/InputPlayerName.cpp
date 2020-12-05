@@ -21,7 +21,7 @@ InputPlayerName::InputPlayerName(int wave)
 {
 	// Initialize vars
 	wavesCompleted = wave;
-    playerName = "";
+	playerName = "";
 	keyRepeatWait = 0;
 	showTextCursor = true;
 	textCursorWait = TEXT_CURSOR_WAIT;
@@ -32,7 +32,7 @@ InputPlayerName::InputPlayerName(int wave)
 int InputPlayerName::eventHandler(const df::Event* p_e)
 {
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
-		
+
 		// Handle keyboard input for name entry
 		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*) p_e;
 		bool key_pressed = p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED;
@@ -178,8 +178,8 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
 				break;
 			}
 		}
-        return 1;
-    }
+		return 1;
+	}
 	if (p_e->getType() == df::STEP_EVENT) {
 		// Update text repeat timer
 		if (keyRepeatWait > 0)
@@ -196,8 +196,8 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
 		return 1;
 	}
 
-    // If get here, have ignored this event.
-    return 0;
+	// If get here, have ignored this event.
+	return 0;
 }
 
 // Function that draws the InputPlayerName display
@@ -227,6 +227,6 @@ int InputPlayerName::draw()
 
 // Function that trims the leading and trailing whitespaces of a string
 string InputPlayerName::trim(string s) {
-    regex e("^\\s+|\\s+$");
-    return regex_replace(s, e, "");
+	regex e("^\\s+|\\s+$");
+	return regex_replace(s, e, "");
 }

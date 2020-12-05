@@ -26,83 +26,83 @@ using namespace df;
 
 GameStart::GameStart() {
 
-  WM.deleteObjectsOfType("Enemy");
-  WM.deleteObjectsOfType("Ammo");
+	WM.deleteObjectsOfType("Enemy");
+	WM.deleteObjectsOfType("Ammo");
 
-  setType("GameStart");
+	setType("GameStart");
 
-  // Link to "gamestart" sprite.
-  setSprite("gamestart");
+	// Link to "gamestart" sprite.
+	setSprite("gamestart");
 
-  // Put in center of screen.
-  setLocation(df::CENTER_CENTER);
-  
-  // Play start music.
-  p_music = RM.getMusic("start music");
-  playMusic();
+	// Put in center of screen.
+	setLocation(df::CENTER_CENTER);
+
+	// Play start music.
+	p_music = RM.getMusic("start music");
+	playMusic();
 }
 
 // Play start music.
 void GameStart::playMusic() {
-  p_music->play();
+	p_music->play();
 }
 
 // Handle event.
 // Return 0 if ignored, else 1.
-int GameStart::eventHandler(const df::Event *p_e) {
+int GameStart::eventHandler(const df::Event* p_e) {
 
-  if (p_e->getType() == df::KEYBOARD_EVENT) {
-    df::EventKeyboard *p_keyboard_event = (df::EventKeyboard *) p_e;
-    if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
-    switch (p_keyboard_event->getKey()) {
-    case df::Keyboard::P: 			// play
-      start();
-      break;
-    case df::Keyboard::Q:			// quit
-      GM.setGameOver();
-      break;
-    case df::Keyboard::L:			// see leaderboards
-        new Leaderboard();
-        df::WM.markForDelete(this);
-        break;
-    default:
-      break;
-    }
-    return 1;
-  }
+	if (p_e->getType() == df::KEYBOARD_EVENT) {
+		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*) p_e;
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
+			switch (p_keyboard_event->getKey()) {
+			case df::Keyboard::P: 			// play
+				start();
+				break;
+			case df::Keyboard::Q:			// quit
+				GM.setGameOver();
+				break;
+			case df::Keyboard::L:			// see leaderboards
+				new Leaderboard();
+				df::WM.markForDelete(this);
+				break;
+			default:
+				break;
+			}
+		return 1;
+	}
 
-  // If get here, have ignored this event.
-  return 0;
+	// If get here, have ignored this event.
+	return 0;
 }
 
 void GameStart::start() {
-  
-  // Create Wave Controller
-  new WaveController;
 
-  // Create hero.
-  new Hero;
+	// Create Wave Controller
+	new WaveController;
 
-  df::ViewObject* p_fuel = new df::ViewObject; // Shield display
-  p_fuel->setLocation(df::TOP_LEFT);
-  p_fuel->setViewString("Shield Integrity %");
-  p_fuel->setValue(100);
-  p_fuel->setColor(df::YELLOW);
+	// Create hero.
+	new Hero;
 
-  df::ViewObject* p_wave = new df::ViewObject; // Wave display
-  p_wave->setLocation(df::TOP_RIGHT);
-  p_wave->setViewString("WAVE");
-  p_wave->setValue(1);
-  p_wave->setColor(df::YELLOW);
+	df::ViewObject* p_fuel = new df::ViewObject; // Shield display
+	p_fuel->setLocation(df::TOP_LEFT);
+	p_fuel->setViewString("Shield Integrity %");
+	p_fuel->setValue(100);
+	p_fuel->setColor(df::YELLOW);
 
-  // Pause start music.
-  p_music->pause();
+	df::ViewObject* p_wave = new df::ViewObject; // Wave display
+	p_wave->setLocation(df::TOP_RIGHT);
+	p_wave->setViewString("WAVE");
+	p_wave->setValue(1);
+	p_wave->setColor(df::YELLOW);
 
-  // When game starts, destroy this object.
-  WM.markForDelete(this);
+	// Pause start music.
+	p_music->pause();
+
+	// When game starts, destroy this object.
+	WM.markForDelete(this);
 }
 // Override default draw so as not to display "value".
 int GameStart::draw() {
-  df::Object::draw();
-  return 0;
+	df::Object::draw();
+	return 0;
 }

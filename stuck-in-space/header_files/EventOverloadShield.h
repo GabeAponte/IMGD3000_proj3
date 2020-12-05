@@ -10,10 +10,10 @@
 #pragma once
 #include <Event.h>
 
-const std::string OVERLOAD_EVENT =  "overload";
+const std::string OVERLOAD_EVENT = "overload";
 
 class EventOverloadShield : public df::Event {
 
- public:
-  EventOverloadShield();
+public:
+	EventOverloadShield();
 };

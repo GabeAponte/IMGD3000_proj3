@@ -25,63 +25,63 @@
 #define RAND_DICE_SIZE     100  // the size of the "die" rolled when choosing spawn chance (it picks a random int up to DICE_SIZE and divides it by DICE_SIZE)
 
 enum enemy_type {
-    E_BASIC,
-    E_TOUGH,
-    E_FAST,
-    E_TRICKY,
-    E_SPIRAL,
-    E_SWARM,
-    E_SHOOTER,
+	E_BASIC,
+	E_TOUGH,
+	E_FAST,
+	E_TRICKY,
+	E_SPIRAL,
+	E_SWARM,
+	E_SHOOTER,
 };
 
 struct enemy_data {
-    enemy_type enemyType;
-    int minDifficulty;
-    int difficultyCost;
+	enemy_type enemyType;
+	int minDifficulty;
+	int difficultyCost;
 };
 
 class WaveController : public df::Object {
 
 private:
-    bool disabled; // set to true to shut down wave controller updates
+	bool disabled; // set to true to shut down wave controller updates
 
-    int waveNumber;
-    int difficulty;
-    std::vector<struct enemy_data> enemyOptions;
+	int waveNumber;
+	int difficulty;
+	std::vector<struct enemy_data> enemyOptions;
 
-    bool waveComplete;   // whether the current wave is complete
-    int waveBeginWait;   // the delay before the next wave spawns
+	bool waveComplete;   // whether the current wave is complete
+	int waveBeginWait;   // the delay before the next wave spawns
 
-    int enemySpawnCount; // the number of enemies spawned so far this wave
-    int enemyKillCount;  // the number of enemies killed so far this wave
-    int enemySpawnWait;  // the delay before the next enemy spawns
-    std::vector<enemy_type> enemySpawnList; // the list of enemies to spawn
-    
-    // Handle step event
-    void step();
+	int enemySpawnCount; // the number of enemies spawned so far this wave
+	int enemyKillCount;  // the number of enemies killed so far this wave
+	int enemySpawnWait;  // the delay before the next enemy spawns
+	std::vector<enemy_type> enemySpawnList; // the list of enemies to spawn
 
-    // Handle enemy death event
-    void enemyDead(const EventEnemyDeath* p_enemydeath_event);
+	// Handle step event
+	void step();
 
-    // Generate a new wave
-    void beginWave();
+	// Handle enemy death event
+	void enemyDead(const EventEnemyDeath* p_enemydeath_event);
 
-    // Spawn an enemy if able
-    void spawnEnemy();
+	// Generate a new wave
+	void beginWave();
 
-    // Spawn an ammo drop at the location
-    void spawnAmmo(df::Vector position);
+	// Spawn an enemy if able
+	void spawnEnemy();
 
-    // Generate a random float from 0 to 1
-    float randomPercent();
+	// Spawn an ammo drop at the location
+	void spawnAmmo(df::Vector position);
+
+	// Generate a random float from 0 to 1
+	float randomPercent();
 
 public:
-    WaveController();
-    ~WaveController();
+	WaveController();
+	~WaveController();
 
-    // Handle game events
-    int eventHandler(const df::Event* p_e); // OVERRIDE
+	// Handle game events
+	int eventHandler(const df::Event* p_e); // OVERRIDE
 
-    // Get the current wave number
-    int getWave();
+	// Get the current wave number
+	int getWave();
 };

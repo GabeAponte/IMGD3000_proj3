@@ -16,56 +16,56 @@
 using namespace df;
 
 EnemyBullet::EnemyBullet() {
-    // Link to "enemy-bullet" sprite.
-    setSprite("enemy-bullet");
+	// Link to "enemy-bullet" sprite.
+	setSprite("enemy-bullet");
 
-    // Set other object properties.
-    setType("EnemyBullet");
+	// Set other object properties.
+	setType("EnemyBullet");
 
-    setSolidness(SOFT);
+	setSolidness(SOFT);
 }
 
 // Handle event.
 // Return 0 if ignored, else 1.
 int EnemyBullet::eventHandler(const df::Event* p_e) {
 
-    // Out of bounds event handler
-    if (p_e->getType() == df::OUT_EVENT) {
-        out();
-        return 1;
-    }
+	// Out of bounds event handler
+	if (p_e->getType() == df::OUT_EVENT) {
+		out();
+		return 1;
+	}
 
-    // Collisions event handler
-    if (p_e->getType() == df::COLLISION_EVENT) {
-        const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
-        hit(p_collision_event);
-        return 1;
-    }
+	// Collisions event handler
+	if (p_e->getType() == df::COLLISION_EVENT) {
+		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
+		hit(p_collision_event);
+		return 1;
+	}
 
-    // Overload event handler
-    if (p_e->getType() == OVERLOAD_EVENT) {
+	// Overload event handler
+	if (p_e->getType() == OVERLOAD_EVENT) {
 
-        // Delete self.
-        WM.markForDelete(this);
-        return 1;
-    }
+		// Delete self.
+		WM.markForDelete(this);
+		return 1;
+	}
 
-    // If get here, have ignored this event.
-    return 0;
+	// If get here, have ignored this event.
+	return 0;
 }
 
 // If EnemyBullet moves outside world, mark self for deletion.
 void EnemyBullet::out() {
-    WM.markForDelete(this);
+	WM.markForDelete(this);
 }
 
 // If EnemyBullet hits hero or hero's bullet, mark for deletion.
 void EnemyBullet::hit(const df::EventCollision* p_collision_event) {
 
-    // Check if collided with hero or a bullet
-    if ((p_collision_event->getObject1()->getType() == "Hero") || (p_collision_event->getObject2()->getType() == "Hero")
-        || (p_collision_event->getObject1()->getType() == "Bullet") || (p_collision_event->getObject2()->getType() == "Bullet"))
-    {
-        WM.markForDelete(this);
-    }
+	// Check if collided with hero or a bullet
+	if ((p_collision_event->getObject1()->getType() == "Hero") || (p_collision_event->getObject2()->getType() == "Hero")
+		|| (p_collision_event->getObject1()->getType() == "Bullet") || (p_collision_event->getObject2()->getType() == "Bullet"))
+	{
+		WM.markForDelete(this);
+	}
 }

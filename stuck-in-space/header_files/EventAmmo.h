@@ -11,21 +11,21 @@
 #include <Vector.h>
 #include "../header_files/Hero.h"
 
-const std::string AMMO_EVENT =  "ammo";
+const std::string AMMO_EVENT = "ammo";
 
 class EventAmmo : public df::Event {
- private:
-    EventAmmo(); // inaccessible
-    player_weapon ammoType;
-    int ammoValue;
+private:
+	EventAmmo(); // inaccessible
+	player_weapon ammoType;
+	int ammoValue;
 
- public:
-    // Constructor requires initial values
-    EventAmmo(player_weapon ammo_type, int ammo_value);
+public:
+	// Constructor requires initial values
+	EventAmmo(player_weapon ammo_type, int ammo_value);
 
-    // Get the type of ammo
-    player_weapon getAmmoType() const;
+	// Get the type of ammo
+	player_weapon getAmmoType() const;
 
-    // Get the amount of ammo
-    int getAmmoValue() const;
+	// Get the amount of ammo
+	int getAmmoValue() const;
 };

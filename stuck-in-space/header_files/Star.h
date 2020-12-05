@@ -10,11 +10,11 @@
 
 class Star : public df::Object {
 
- private:
-  void out();
+private:
+	void out();
 
- public:
-  Star();
-  int draw(void);
-  int eventHandler(const df::Event *p_e);
+public:
+	Star();
+	int draw(void);
+	int eventHandler(const df::Event* p_e);
 };

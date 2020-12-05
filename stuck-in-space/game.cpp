@@ -21,77 +21,77 @@ void loadResources(void);
 void populateWorld(void);
 
 using namespace df;
- 
-int main(int argc, char *argv[]) {
-    // Set window dimensions and title BEFORE STARTUP
-    DM.setWindowTitle("STUCK IN SPACE");
-    DM.setHorizontal(120);
-    DM.setVertical(36);
-    DM.setHorizontalPixels(1024);
-    DM.setVerticalPixels(768);
 
-    // Start up game manager.
-    if (GM.startUp())  {
-        LM.writeLog("Error starting game manager!");
-        GM.shutDown();
-        return 0;
-    }
+int main(int argc, char* argv[]) {
+	// Set window dimensions and title BEFORE STARTUP
+	DM.setWindowTitle("STUCK IN SPACE");
+	DM.setHorizontal(120);
+	DM.setVertical(36);
+	DM.setHorizontalPixels(1024);
+	DM.setVerticalPixels(768);
 
-  // Set flush of logfile during development (when done, make false).
-  LM.setFlush(true);
+	// Start up game manager.
+	if (GM.startUp()) {
+		LM.writeLog("Error starting game manager!");
+		GM.shutDown();
+		return 0;
+	}
 
-  // Load game resources.
-  loadResources();
+	// Set flush of logfile during development (when done, make false).
+	LM.setFlush(true);
 
-  // Populate game world with some objects.
-  populateWorld();
- 
-  // Run game (this blocks until game loop is over).
-  GM.run();
- 
-  // Shut everything down.
-  GM.shutDown();
+	// Load game resources.
+	loadResources();
+
+	// Populate game world with some objects.
+	populateWorld();
+
+	// Run game (this blocks until game loop is over).
+	GM.run();
+
+	// Shut everything down.
+	GM.shutDown();
 }
- 
+
 // Load resources (sprites, sound effects, music).
 void loadResources(void) {
-    LM.setLogLevel(2);
-    // Load sprites
-    RM.loadSprite("../sprites/spr_player.txt", "player");
-    RM.loadSprite("../sprites/spr_ammo.txt", "ammo");
-    RM.loadSprite("../sprites/spr_w_bullet.txt", "w_bullet");
-    RM.loadSprite("../sprites/spr_w_bomb.txt", "w_bomb");
-    RM.loadSprite("../sprites/spr_w_spread.txt", "w_spread");
-    RM.loadSprite("../sprites/spr_w_plasma.txt", "w_plasma");
-    RM.loadSprite("../sprites/spr_w_rapid.txt", "w_rapid");
-    RM.loadSprite("../sprites/saucer-spr.txt", "saucer");
-    RM.loadSprite("../sprites/basic-enemy-spr.txt", "basic-enemy");
-    RM.loadSprite("../sprites/fast-enemy-spr.txt", "fast-enemy");
-    RM.loadSprite("../sprites/swarm-enemy-spr.txt", "swarm-enemy");
-    RM.loadSprite("../sprites/tough-enemy-spr.txt", "tough-enemy");
-    RM.loadSprite("../sprites/tricky-enemy-spr.txt", "tricky-enemy");
-    RM.loadSprite("../sprites/shooter-enemy-spr.txt", "shooter-enemy");
-    RM.loadSprite("../sprites/spiral-enemy-spr.txt", "spiral-enemy");
-    RM.loadSprite("../sprites/enemy-bullet-spr.txt", "enemy-bullet");
-    RM.loadSprite("../sprites/explosion-spr.txt", "explosion");
-    RM.loadSprite("../sprites/gamestart-spr.txt", "gamestart");
-    RM.loadSprite("../sprites/gameover-spr.txt", "gameover");
-    // Load sounds
-    RM.loadSound("../sounds/fire.wav", "fire");
-    RM.loadSound("../sounds/explode.wav", "explode");
-    RM.loadSound("../sounds/nuke.wav", "nuke");
-    RM.loadSound("../sounds/game-over.wav", "game over");
-    // Load music
-    RM.loadMusic("../sounds/start-music.wav", "start music");
+	LM.setLogLevel(2);
+	// Load sprites
+	RM.loadSprite("../sprites/spr_player.txt", "player");
+	RM.loadSprite("../sprites/spr_ammo.txt", "ammo");
+	RM.loadSprite("../sprites/spr_w_bullet.txt", "w_bullet");
+	RM.loadSprite("../sprites/spr_w_bomb.txt", "w_bomb");
+	RM.loadSprite("../sprites/spr_w_spread.txt", "w_spread");
+	RM.loadSprite("../sprites/spr_w_plasma.txt", "w_plasma");
+	RM.loadSprite("../sprites/spr_w_rapid.txt", "w_rapid");
+	RM.loadSprite("../sprites/saucer-spr.txt", "saucer");
+	RM.loadSprite("../sprites/basic-enemy-spr.txt", "basic-enemy");
+	RM.loadSprite("../sprites/fast-enemy-spr.txt", "fast-enemy");
+	RM.loadSprite("../sprites/swarm-enemy-spr.txt", "swarm-enemy");
+	RM.loadSprite("../sprites/tough-enemy-spr.txt", "tough-enemy");
+	RM.loadSprite("../sprites/tricky-enemy-spr.txt", "tricky-enemy");
+	RM.loadSprite("../sprites/shooter-enemy-spr.txt", "shooter-enemy");
+	RM.loadSprite("../sprites/spiral-enemy-spr.txt", "spiral-enemy");
+	RM.loadSprite("../sprites/enemy-bullet-spr.txt", "enemy-bullet");
+	RM.loadSprite("../sprites/explosion-spr.txt", "explosion");
+	RM.loadSprite("../sprites/gamestart-spr.txt", "gamestart");
+	RM.loadSprite("../sprites/gameover-spr.txt", "gameover");
+	// Load sounds
+	RM.loadSound("../sounds/fire.wav", "fire");
+	RM.loadSound("../sounds/explode.wav", "explode");
+	RM.loadSound("../sounds/nuke.wav", "nuke");
+	RM.loadSound("../sounds/game-over.wav", "game over");
+	// Load music
+	RM.loadMusic("../sounds/start-music.wav", "start music");
 }
- 
+
 // Populate world with some objects.
 void populateWorld(void) {
 
-  // Spawn some Stars.
-  for (int i=0; i<16; i++) 
-    new Star;
- 
-  // Create GameStart object.
-  new GameStart();
+	// Spawn some Stars.
+	for (int i = 0; i < 16; i++)
+		new Star;
+
+	// Create GameStart object.
+	new GameStart();
 }

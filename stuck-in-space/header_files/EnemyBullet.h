@@ -14,12 +14,12 @@
 class EnemyBullet : public df::Object {
 
 private:
-    void out();
-    void hit(const df::EventCollision* p_collision_event);
+	void out();
+	void hit(const df::EventCollision* p_collision_event);
 
 public:
-    EnemyBullet();
+	EnemyBullet();
 
-    // Handle events
-    int eventHandler(const df::Event* p_e);
+	// Handle events
+	int eventHandler(const df::Event* p_e);
 };

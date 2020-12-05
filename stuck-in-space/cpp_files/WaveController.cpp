@@ -87,7 +87,7 @@ void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 {
 	// Record enemy kill
 	enemyKillCount++;
-	
+
 	// End wave if all enemies spawned and killed
 	if (enemyKillCount >= enemySpawnCount && enemySpawnList.empty())
 	{
@@ -131,7 +131,7 @@ void WaveController::beginWave()
 		{
 			// Ensure that enemy can be spawned
 			// (is available at current difficulty and is within budget)
-			if (it->minDifficulty <= difficulty && it->difficultyCost <= difficulty-difficulty_cost)
+			if (it->minDifficulty <= difficulty && it->difficultyCost <= difficulty - difficulty_cost)
 			{
 				// Chance to spawn selected enemy. Otherwise, if no options found: default to basic enemy
 				if (randomPercent() < 0.5 || it == enemyOptions.rend() - 1)
@@ -139,7 +139,7 @@ void WaveController::beginWave()
 					// Queue enemy for spawning, and add cost to accumulated difficulty cost
 					enemySpawnList.push_back(it->enemyType);
 					difficulty_cost += it->difficultyCost;
-					std::cout << "~ Queuing enemy of type " << (int) it->enemyType << " (Cost: " << difficulty_cost << "/" << difficulty << ")\n";
+					std::cout << "~ Queuing enemy of type " << (int)it->enemyType << " (Cost: " << difficulty_cost << "/" << difficulty << ")\n";
 					break;
 				}
 			}
@@ -178,7 +178,7 @@ void WaveController::spawnEnemy()
 		{
 			spawn_pos.setX(WM.getBoundary().getHorizontal() + SPAWN_X_OFFSET);
 		}
-		spawn_pos.setY((float) (rand() % (int)WM.getBoundary().getVertical()));
+		spawn_pos.setY((float)(rand() % (int)WM.getBoundary().getVertical()));
 	}
 	else
 	{
@@ -191,7 +191,7 @@ void WaveController::spawnEnemy()
 		{
 			spawn_pos.setY(WM.getBoundary().getVertical() + SPAWN_Y_OFFSET);
 		}
-		spawn_pos.setX((float) (rand() % (int)WM.getBoundary().getHorizontal()));
+		spawn_pos.setX((float)(rand() % (int)WM.getBoundary().getHorizontal()));
 	}
 
 	// Spawn the selected enemy
@@ -256,12 +256,12 @@ void WaveController::spawnAmmo(df::Vector position)
 {
 	player_weapon ammo_type = W_MISSILE;
 	int ammo_value = 0;
-	
+
 	// randomly choose ammo type
 	switch (rand() % 5)
 	{
-	// No case for W_MISSILE
-	case 0: 
+		// No case for W_MISSILE
+	case 0:
 		ammo_type = W_LASER;
 		ammo_value = 10;
 		break;
@@ -282,7 +282,7 @@ void WaveController::spawnAmmo(df::Vector position)
 		ammo_value = 25;
 		break;
 	}
-	
+
 	new Ammo(position, ammo_type, ammo_value);
 }
 
@@ -290,7 +290,7 @@ void WaveController::spawnAmmo(df::Vector position)
 // Generate a random float from 0 to 1
 float WaveController::randomPercent()
 {
-	return (float) (rand() % RAND_DICE_SIZE) / RAND_DICE_SIZE;
+	return (float)(rand() % RAND_DICE_SIZE) / RAND_DICE_SIZE;
 }
 
 

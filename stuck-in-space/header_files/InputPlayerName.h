@@ -18,26 +18,26 @@
 
 class InputPlayerName : public df::Object
 {
-	private:
-		int wavesCompleted;		// Value of the last wave survived
-		string playerName;		// Value of the current player
-		std::vector<ScoresIOStreamer::Score*> allScores;	// Vector of all the scores 
-		int keyRepeatWait;
-		bool showTextCursor;	// Bool that toggles showing the text cursor
-		int textCursorWait;
+private:
+	int wavesCompleted;		// Value of the last wave survived
+	string playerName;		// Value of the current player
+	std::vector<ScoresIOStreamer::Score*> allScores;	// Vector of all the scores 
+	int keyRepeatWait;
+	bool showTextCursor;	// Bool that toggles showing the text cursor
+	int textCursorWait;
 
-		// Function that handles events
-		int eventHandler(const df::Event* p_e);
+	// Function that handles events
+	int eventHandler(const df::Event* p_e);
 
-		// Function that draws the InputPlayerName display
-		int draw();
+	// Function that draws the InputPlayerName display
+	int draw();
 
-		// Function that trims the leading and trailing whitespaces of a string
-		string trim(string s);
+	// Function that trims the leading and trailing whitespaces of a string
+	string trim(string s);
 
-	public:
+public:
 
-		// Constructor
-		InputPlayerName(int wave);
+	// Constructor
+	InputPlayerName(int wave);
 };
 
