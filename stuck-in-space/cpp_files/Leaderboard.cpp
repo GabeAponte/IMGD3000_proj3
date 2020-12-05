@@ -47,6 +47,7 @@ int Leaderboard::eventHandler(const df::Event* p_e)
 
 				// Escape key to leave the leaderboard
 			case df::Keyboard::ESCAPE:
+			case df::Keyboard::RETURN:
 				new GameStart();
 				df::WM.markForDelete(this);
 				break;

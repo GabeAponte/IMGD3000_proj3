@@ -19,6 +19,7 @@
 #include <WorldManager.h>
 #include "../header_files/Velocity.h"
 #include "../header_files/Bullet.h"
+#include "../header_files/Bomb.h"
 #include "../header_files/Explosion.h"
 #include "../header_files/GameOver.h"
 #include "../header_files/EventOverloadShield.h"
@@ -285,11 +286,9 @@ void Hero::fire(df::Vector target, df::Vector origin) {
 	case W_BOMB:
 	{
 		// Fire Bomb towards target, exploding on impact
-		/*
-		Bomb* bomb = new Bomb();
-		bomb->setVelocity(v);
-		bomb->setPosition(origin);
-		*/
+		Bomb* p_bomb = new Bomb();
+		p_bomb->setVelocity(v);
+		p_bomb->setPosition(origin);
 		return;
 	}
 	case W_PLASMA:
