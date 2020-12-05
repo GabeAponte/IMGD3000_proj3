@@ -17,8 +17,7 @@ private:
     void hit(const df::EventCollision *p_collision_event);
 
 public:
-    Bullet();
-    Bullet(player_weapon weapon_type);
+    Bullet(player_weapon weapon_type=W_MISSILE);
 
     // Handle events
     int eventHandler(const df::Event *p_e);

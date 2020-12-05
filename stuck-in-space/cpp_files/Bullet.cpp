@@ -12,24 +12,14 @@
 
 using namespace df;
 
-Bullet::Bullet() {
+Bullet::Bullet(player_weapon weapon_type) {
     // Link to "bullet" sprite.
-    setSprite("bullet");
+    setSprite("w_bullet");
 
     // Set other object properties.
     setType("Bullet");
 
     setSolidness(SOFT);
-
-    // Set the weapon type (defaults to W_MISSILE)
-    weaponType = W_MISSILE;
-}
-Bullet::Bullet(player_weapon weapon_type) {
-    // Link to "bullet" sprite.
-    setSprite("bullet");
-
-    // Set other object properties.
-    setType("Bullet");
 
     // Set the weapon type
     // NOTE: All weapon attacks should have the "Bullet" type to allow general collision

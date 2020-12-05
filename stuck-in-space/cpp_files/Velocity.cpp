@@ -9,6 +9,7 @@
 
 #include <iostream>
 
+#include <LogManager.h>
 #include <DisplayManager.h>
 #include "../header_files/Velocity.h"
 
@@ -40,4 +41,32 @@ df::Vector convertToDragonfly(df::Vector real_velocity)
 	Vector dragonfly_velocity = real_velocity;
 	dragonfly_velocity.setY(real_velocity.getY() / scaleFactor());
 	return dragonfly_velocity;
+}
+
+
+// Produces a vector in the indicated direction with the indicated magnitude
+// Y-component is automatically adjusted to accommodate the screen distortion
+df::Vector makeRealVector(df::Vector direction, float magnitude)
+{
+	df::Vector v = convertToDragonfly(direction); // adjust direction for screen coordinates
+	v.normalize();				// convert to direction unit vector
+	v.scale(magnitude);			// set magnitude
+	v = convertToReal(v);	// adjust velocity for screen coordinates
+	return v;
+}
+
+
+// Rotates a vector counterclockwise by the indicated amount in degrees
+df::Vector rotateVector(df::Vector base_vector, float degrees)
+{
+	// screen for 0 vector
+	if (base_vector.getX() == 0 && base_vector.getY() == 0)
+	{
+		LM.writeLog(1, "ERROR: Tried to get direction of 0-vector!");
+		return base_vector;
+	}
+	double direction = atan2(base_vector.getY(), base_vector.getX()) + degrees*PI/180;
+	float magnitude = base_vector.getMagnitude();
+	df::Vector rv = Vector(magnitude * cos(direction), magnitude * sin(direction));
+	return rv;
 }
