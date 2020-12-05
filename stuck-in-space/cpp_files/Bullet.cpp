@@ -62,37 +62,20 @@ void Bullet::out() {
   WM.markForDelete(this);
 }
 
-
 // If Bullet hits Enemy, mark Enemy and Bullet for deletion.
 void Bullet::hit(const df::EventCollision *p_collision_event) {
-    Object* other_object;
-    // Check if first object was an enemy
-    if (p_collision_event->getObject1()->getType() == "Enemy")
+   
+    // Check if collided with an Enemy or enemy bullet
+    if ((p_collision_event->getObject1()->getType() == "Enemy") || (p_collision_event->getObject2()->getType() == "Enemy")
+        || (p_collision_event->getObject1()->getType() == "EnemyBullet") || (p_collision_event->getObject2()->getType() == "EnemyBullet"))
     {
-        other_object = p_collision_event->getObject1();
-    }
-    // Check if second object was an enemy
-    else if (p_collision_event->getObject2()->getType() == "Enemy")
-    {
-        other_object = p_collision_event->getObject2();
-    }
-    // No enemy hit, so don't proceed
-    else
-    {
-        return;
-    }
-    
-    // Delete the enemy hit
-    // TODO: change to hurting the target
-    WM.markForDelete(other_object);
-    
-    // Delete this projectile object unless weapon type is piercing
-    if (weaponType != W_LASER && weaponType != W_PLASMA)
-    {
-        WM.markForDelete(this);
+        // Delete this projectile object unless weapon type is piercing
+        if (weaponType != W_LASER && weaponType != W_PLASMA)
+        {
+            WM.markForDelete(this);
+        }
     }
 }
-
 
 // Get bullet type
 player_weapon Bullet::getWeaponType()

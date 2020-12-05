@@ -55,7 +55,14 @@ int main(int argc, char *argv[]) {
  
 // Load resources (sprites, sound effects, music).
 void loadResources(void) {
-  RM.loadSprite("../sprites/saucer-spr.txt", "saucer");
+  RM.loadSprite("../sprites/basic-enemy-spr.txt", "basic-enemy");
+  RM.loadSprite("../sprites/fast-enemy-spr.txt", "fast-enemy");
+  RM.loadSprite("../sprites/swarm-enemy-spr.txt", "swarm-enemy");
+  RM.loadSprite("../sprites/tough-enemy-spr.txt", "tough-enemy");
+  RM.loadSprite("../sprites/tricky-enemy-spr.txt", "tricky-enemy");
+  RM.loadSprite("../sprites/shooter-enemy-spr.txt", "shooter-enemy");
+  RM.loadSprite("../sprites/spiral-enemy-spr.txt", "spiral-enemy");
+  RM.loadSprite("../sprites/enemy-bullet-spr.txt", "enemy-bullet");
   RM.loadSprite("../sprites/bullet-spr.txt", "bullet");
   RM.loadSprite("../sprites/explosion-spr.txt", "explosion");
   RM.loadSprite("../sprites/gamestart-spr.txt", "gamestart");

@@ -457,8 +457,10 @@ void Hero::setProjectileStart(int index)
 void Hero::hit(const df::EventCollision* p_collision_event) {
 
     // Check for enemy collision and update the hero / game
-    if (((p_collision_event->getObject1()->getType()) == "Enemy")
-        || ((p_collision_event->getObject2()->getType()) == "Enemy")) {
+    if ((p_collision_event->getObject1()->getType() == "Enemy")
+        || (p_collision_event->getObject2()->getType() == "Enemy")
+        || (p_collision_event->getObject1()->getType() == "EnemyBullet")
+        || (p_collision_event->getObject2()->getType() == "EnemyBullet")){
 
 
         // Decrease the shield integrety by at most 10, only if it isn't already 0.

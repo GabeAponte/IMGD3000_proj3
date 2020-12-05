@@ -7,7 +7,6 @@
 //
 
 #include <iostream>
-
 #include <Vector.h>
 #include <EventView.h>
 #include <WorldManager.h>
@@ -29,13 +28,13 @@ WaveController::WaveController()
 
 	// Set up enemy options
 	// enemy_data is (enemy type, minimum difficulty, difficulty cost)
-	enemyOptions.push_back(enemy_data{ E_BASIC, START_DIFFICULTY, 1 }); // basic enemy must require difficulty 0
+	enemyOptions.push_back(enemy_data{ E_BASIC, 0, 1 }); // basic enemy must require difficulty 0
 	enemyOptions.push_back(enemy_data{ E_TOUGH, 0, 1 });
 	enemyOptions.push_back(enemy_data{ E_FAST, 0, 1 });
 	enemyOptions.push_back(enemy_data{ E_TRICKY, 0, 1 });
 	enemyOptions.push_back(enemy_data{ E_SPIRAL, 0, 1 });
-	enemyOptions.push_back(enemy_data{ E_SWARM, 100, 1 });
-	enemyOptions.push_back(enemy_data{ E_SHOOTER, 0, 1 });
+	enemyOptions.push_back(enemy_data{ E_SWARM, 20, 1 });
+	enemyOptions.push_back(enemy_data{ E_SHOOTER, 20, 1 });
 
 	enemySpawnCount = 0;
 	enemyKillCount = 0;
@@ -44,7 +43,6 @@ WaveController::WaveController()
 
 	disabled = false; // start enabled
 }
-
 
 // Handle step event
 void WaveController::step() {
@@ -202,50 +200,55 @@ void WaveController::spawnEnemy()
 	{
 	case E_BASIC:
 	{
-		// TODO spawn enemy here
+		new Enemy(spawn_pos, E_BASIC);
 		enemySpawnCount++;
 		break;
 	}
 	case E_TOUGH:
 	{
-		// TODO spawn enemy here
+		new Enemy(spawn_pos, E_TOUGH);
 		enemySpawnCount++;
 		break;
 	}
 	case E_FAST:
 	{
-		// TODO spawn enemy here
+		new Enemy(spawn_pos, E_FAST);
 		enemySpawnCount++;
 		break;
 	}
 	case E_TRICKY:
 	{
-		// TODO spawn enemy here
+		new Enemy(spawn_pos, E_TRICKY);
 		enemySpawnCount++;
 		break;
 	}
 	case E_SPIRAL:
 	{
-		// TODO spawn enemy here
+		new Enemy(spawn_pos, E_SPIRAL);
 		enemySpawnCount++;
 		break;
 	}
 	case E_SWARM:
 	{
-		for (int i = 0; i < 4; i++)
-		{
-			// TODO spawn enemy here, passing in i as radial offset
-			enemySpawnCount++;
-		}
+		new Enemy(spawn_pos, E_SWARM);
+		new Enemy(spawn_pos + Vector(0, +3), E_SWARM);
+		new Enemy(spawn_pos + Vector(0, -3), E_SWARM);
+		new Enemy(spawn_pos + Vector(+8, 0), E_SWARM);
+		new Enemy(spawn_pos + Vector(-8, 0), E_SWARM);
+		enemySpawnCount++;
+		break;
+	}
+
+	case E_SHOOTER:
+	{
+		new Enemy(spawn_pos, E_SHOOTER);
+		enemySpawnCount++;
 		break;
 	}
 	default:
 		// If you got here something went bad. Don't proceed.
 		return;
 	}
-
-	// TODO - REMOVE THIS AFTER IMPLEMENTING PROPER SPAWNING ABOVE
-	new Enemy(spawn_pos);
 }
 
 
