@@ -36,6 +36,8 @@ class Hero : public df::Object {
 
  private:
   Reticle *p_reticle;
+
+  bool firing;
   int fireCooldown;
   int shieldIntegrity;
   int lives;
@@ -44,19 +46,30 @@ class Hero : public df::Object {
   std::map<player_weapon, int> weaponCooldown;
   std::map<player_weapon, std::string> weaponSound;
   player_weapon currentWeapon;
+  df::Vector projectileStart; // the position projectiles currently spawn from
+  
   void mouse(const df::EventMouse *p_mouse_event);
   void kbd(const df::EventKeyboard *p_keyboard_event);
   void fire(df::Vector target, df::Vector origin);
+  
+  // Handle step event
   void step();
+
+  // Use Shield Overload ability
   void overloadShield();
+
+  // Handle collision event
   void hit(const df::EventCollision* p_collision_event);
+
+  // Change the player's currently-equipped weapon
+  // Also adjusts the cooldown if active to prevent abusing it
+  void changeWeapon(player_weapon new_weapon);
 
   // Update the player's sprite based on the reticle location
   void updateSprite();
 
+  // Update the position the player's projectiles spawn from
   void setProjectileStart(int index);
-
-  df::Vector projectileStart;
 
  public:
   Hero();
