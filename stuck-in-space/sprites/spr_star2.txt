@@ -1,18 +1,12 @@
 <HEADER>
-frames 4
-width 3
+frames 1
+width 1
 height 1
-color gray
-slowdown 4
+color dkgray
+slowdown 3
 </HEADER>
 <BODY>
-[X]
-end
-[+]
-end
-[-]
-end
-[*]
+.
 end
 </BODY>
 <FOOTER>
