@@ -65,10 +65,8 @@ df::Vector rotateVector(df::Vector base_vector, float degrees)
 		LM.writeLog(1, "ERROR: Tried to get direction of 0-vector!");
 		return base_vector;
 	}
-	//double direction = atan2(base_vector.getY(), base_vector.getX()) + degrees*PI/180;
-	//float magnitude = base_vector.getMagnitude();
-	//df::Vector rv = Vector(magnitude * cos(direction), magnitude * sin(direction));
-	//std::cout << "Dir: " << direction << "\n";
-	return base_vector;
-	//return rv;
+	double direction = atan2(base_vector.getY(), base_vector.getX()) + degrees*PI/180;
+	float magnitude = base_vector.getMagnitude();
+	df::Vector rv = Vector(magnitude * cos(direction), magnitude * sin(direction));
+	return rv;
 }

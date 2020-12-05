@@ -51,8 +51,6 @@ Hero::Hero() {
     // Create reticle for firing bullets.
     p_reticle = new Reticle();
 
-    std::cout << "huh1\n";
-
     // Set attributes that control actions.
     currentWeapon = W_MISSILE;
     firing = false;
@@ -60,8 +58,6 @@ Hero::Hero() {
     lives = 1;
     shieldIntegrity = 100;
     projectileStart = Vector();
-
-    std::cout << "huh2\n";
 
     // Initialize weapon names
     weaponName[W_MISSILE] =     "MISSILE";
@@ -92,12 +88,6 @@ Hero::Hero() {
     weaponSound[W_PLASMA] =     "fire";
     weaponSound[W_RAPID] =      "fire";
     // TODO: maybe condense these into a map to a struct?
-
-    //df::Vector v1 = rotateVector(Vector(1, 2), 180);
-    std::cout << "huh3\n";
-    std::cout << //v1.getX() << ", " << v1.getY() << "\n";
-    //df::Vector v2 = rotateVector(Vector(), 45);
-    //std::cout << v2.getX() << ", " << v2.getY() << "\n";
 }
 
 Hero::~Hero() {
@@ -292,7 +282,6 @@ void Hero::fire(df::Vector target, df::Vector origin) {
             p_spread->setSprite("w_spread");
             p_spread->setVelocity(makeRealVector(rotateVector(aim, 10*i-15), 2));
             p_spread->setPosition(origin);
-            std::cout << p_spread->getVelocity().getY() << ", " << p_spread->getVelocity().getX() << "\n";
         }
         return;
     }

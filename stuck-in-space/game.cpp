@@ -61,7 +61,7 @@ void loadResources(void) {
   RM.loadSprite("../sprites/spr_ammo.txt", "ammo");
   RM.loadSprite("../sprites/spr_w_bullet.txt", "w_bullet");
   RM.loadSprite("../sprites/spr_w_bomb.txt", "w_bomb");
-  RM.loadSprite("../sprites/spr_w_split.txt", "w_split");
+  RM.loadSprite("../sprites/spr_w_spread.txt", "w_spread");
   RM.loadSprite("../sprites/spr_w_plasma.txt", "w_plasma");
   RM.loadSprite("../sprites/spr_w_rapid.txt", "w_rapid");
   RM.loadSprite("../sprites/saucer-spr.txt", "saucer");
