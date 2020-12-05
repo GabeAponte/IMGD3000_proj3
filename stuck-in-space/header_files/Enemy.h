@@ -15,6 +15,7 @@ class Enemy : public df::Object {
  
  private:
   float realSpeed;
+  bool killedByPlayer;
   void hit(const df::EventCollision *p_collision_event);
   void targetHero(df::Vector position);
 

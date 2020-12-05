@@ -118,13 +118,6 @@ void Ammo::hit(const df::EventCollision *p_collision_event) {
         return;
     }
 
-    Bullet* p_bullet = dynamic_cast <Bullet*> (other_object);
-
-    // Delete the bullet object unless weapon type is piercing
-    if (p_bullet->getWeaponType() != W_LASER && p_bullet->getWeaponType() != W_PLASMA)
-    {
-        WM.markForDelete(p_bullet);
-    }
     // Remove this object
     WM.markForDelete(this);
 

@@ -12,13 +12,22 @@
 EventEnemyDeath::EventEnemyDeath() {};
 
 // this constructor is required
-EventEnemyDeath::EventEnemyDeath(df::Vector death_position) {
+EventEnemyDeath::EventEnemyDeath(df::Vector death_position, bool killed_by_player) {
     setType(ENEMY_DEATH_EVENT);
-    m_death_position = death_position;
+    deathPosition = death_position;
+    killedByPlayer = killed_by_player;
 }
+
 
 // Get the death position
 df::Vector EventEnemyDeath::getPosition() const
 {
-    return m_death_position;
+    return deathPosition;
+}
+
+
+// Get whether the player killed the enemy
+bool EventEnemyDeath::getDidPlayerKill() const
+{
+    return killedByPlayer;
 }

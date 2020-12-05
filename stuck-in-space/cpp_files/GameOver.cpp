@@ -49,7 +49,12 @@ GameOver::~GameOver() {
     WaveController* p_wc = dynamic_cast <WaveController*> (oli.currentObject());
     
     // Display results and let player input highscores
-    new InputPlayerName(p_wc->getWave()-1);
+    int wave = 1;
+    if (p_wc != nullptr)
+    {
+        wave = p_wc->getWave() - 1;
+    }
+    new InputPlayerName(wave);
     
     // Delete wave controller
     WM.deleteObjectsOfType("WaveController");

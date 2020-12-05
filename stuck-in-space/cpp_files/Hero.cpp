@@ -52,6 +52,7 @@ Hero::Hero() {
 
     // Set attributes that control actions.
     currentWeapon = W_MISSILE;
+    firing = false;
     fireCooldown = 0;
     lives = 1;
     shieldIntegrity = 100;
@@ -154,14 +155,24 @@ int Hero::eventHandler(const df::Event* p_e) {
     return 0;
 }
 
+
 // Take appropriate action according to mouse action.
 void Hero::mouse(const df::EventMouse* p_mouse_event) {
 
     // Pressed button?
-    if ((p_mouse_event->getMouseAction() == df::CLICKED) &&
-        (p_mouse_event->getMouseButton() == df::Mouse::LEFT))
-        fire(p_mouse_event->getMousePosition(), projectileStart);
+    if (p_mouse_event->getMouseButton() == df::Mouse::LEFT)
+    {
+        if (p_mouse_event->getMouseAction() == df::CLICKED)
+        {
+            firing = true;
+        }
+        else if (p_mouse_event->getMouseAction() == df::RELEASED)
+        {
+            firing = false;
+        }
+    }  
 }
+
 
 // Take appropriate action according to key pressed.
 void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
@@ -180,22 +191,22 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
             break;
         // 1-6 : Switch Weapon
         case df::Keyboard::NUM1:
-            currentWeapon = W_MISSILE;
+            changeWeapon(W_MISSILE);
             break;
         case df::Keyboard::NUM2:
-            currentWeapon = W_LASER;
+            changeWeapon(W_LASER);
             break;
         case df::Keyboard::NUM3:
-            currentWeapon = W_SPREAD;
+            changeWeapon(W_SPREAD);
             break;
         case df::Keyboard::NUM4:
-            currentWeapon = W_BOMB;
+            changeWeapon(W_BOMB);
             break;
         case df::Keyboard::NUM5:
-            currentWeapon = W_PLASMA;
+            changeWeapon(W_PLASMA);
             break;
         case df::Keyboard::NUM6:
-            currentWeapon = W_RAPID;
+            changeWeapon(W_RAPID);
             break;
         default:
             break;
@@ -204,13 +215,9 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
     return;
 }
 
+
 // Fire bullet towards target.
 void Hero::fire(df::Vector target, df::Vector origin) {
-
-    // See if ready to fire
-    if (fireCooldown > 0)
-        return;
-
     // Update ammo (and skip firing if empty)
     if (currentWeapon != W_MISSILE)
     {
@@ -317,17 +324,24 @@ void Hero::fire(df::Vector target, df::Vector origin) {
     }
 }
 
+
 // Decrease rate restriction counters.
 void Hero::step() {
 
-  // Fire countdown.
-  fireCooldown--;
-  if (fireCooldown < 0)
-    fireCooldown = 0;
+  // Fire weapon
+  if (fireCooldown > 0)
+  {
+      fireCooldown--;
+  }
+  else if (firing)
+  {
+      fire(p_reticle->getPosition(), projectileStart);
+  }
 
   // Update sprite
   updateSprite();
 }
+
 
 // Send "overloadShield" event to all objects.
 void Hero::overloadShield() {
@@ -360,6 +374,19 @@ void Hero::overloadShield() {
   p_sound->play();
 }
 
+
+// Change the player's currently-equipped weapon
+// Also adjusts the cooldown if active to prevent abusing it
+void Hero::changeWeapon(player_weapon new_weapon)
+{
+    currentWeapon = new_weapon;
+    if (fireCooldown > 0)
+    {
+        fireCooldown = std::max(fireCooldown, weaponCooldown[currentWeapon]);
+    }
+}
+
+
 // Update the player's sprite based on the reticle location
 void Hero::updateSprite()
 {
@@ -386,6 +413,7 @@ void Hero::updateSprite()
     setProjectileStart(new_index);
     this->setAnimationIndex(new_index);
 }
+
 
 // Set the location for projectiles to start at based on the sprite 
 void Hero::setProjectileStart(int index)
