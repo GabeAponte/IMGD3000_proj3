@@ -2,7 +2,7 @@
 // gaaponte@wpi.edu
 
 //
-// InputPlayerName.h
+// Enemy.cpp
 // Handles the logic for a Basic Enemy
 //
  
@@ -25,11 +25,11 @@ using namespace df;
 
 Enemy::Enemy(df::Vector start_pos) {
 
-  // Setup "saucer" sprite.
+  // Setup "enemy" sprite.
   setSprite("saucer");
 
   // Set object type.
-  setType("Saucer");
+  setType("Enemy");
 
   // Set speed
   setRealSpeed(.20);
@@ -87,8 +87,8 @@ int Enemy::eventHandler(const df::Event *p_e) {
 void Enemy::hit(const df::EventCollision *p_collision_event) {
 
   // If Enemy on Enemy, ignore.
-  if ((p_collision_event -> getObject1() -> getType() == "Saucer") &&
-      (p_collision_event -> getObject2() -> getType() == "Saucer"))
+  if ((p_collision_event -> getObject1() -> getType() == "Enemy") &&
+      (p_collision_event -> getObject2() -> getType() == "Enemy"))
     return;
 
   // If Bullet, create explosion and make new Enemy.

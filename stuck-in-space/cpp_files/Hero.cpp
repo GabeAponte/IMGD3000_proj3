@@ -429,8 +429,8 @@ void Hero::setProjectileStart(int index)
 void Hero::hit(const df::EventCollision* p_collision_event) {
 
     // Check for enemy collision and update the hero / game
-    if (((p_collision_event->getObject1()->getType()) == "Saucer")
-        || ((p_collision_event->getObject2()->getType()) == "Saucer")) {
+    if (((p_collision_event->getObject1()->getType()) == "Enemy")
+        || ((p_collision_event->getObject2()->getType()) == "Enemy")) {
 
 
         // Decrease the shield integrety by at most 10, only if it isn't already 0.
@@ -449,10 +449,10 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
         if (shieldIntegrity != 0 || (shieldIntegrity == 0 && lives == 1)) {
 
             // Delete only the enemy
-            if (p_collision_event->getObject1()->getType() == "Saucer") {
+            if (p_collision_event->getObject1()->getType() == "Enemy") {
                 WM.markForDelete(p_collision_event->getObject1());
             }
-            if (p_collision_event->getObject2()->getType() == "Saucer") {
+            if (p_collision_event->getObject2()->getType() == "Enemy") {
                 WM.markForDelete(p_collision_event->getObject2());
             }
         }

@@ -2,7 +2,7 @@
 // gaaponte@wpi.edu
 
 //
-// InputPlayerName.h
+// Enemy.h
 // Handles the logic for a Basic Enemy
 //
 

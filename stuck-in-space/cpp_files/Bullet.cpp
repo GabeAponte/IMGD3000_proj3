@@ -67,12 +67,12 @@ void Bullet::out() {
 void Bullet::hit(const df::EventCollision *p_collision_event) {
     Object* other_object;
     // Check if first object was an enemy
-    if (p_collision_event->getObject1()->getType() == "Saucer")
+    if (p_collision_event->getObject1()->getType() == "Enemy")
     {
         other_object = p_collision_event->getObject1();
     }
     // Check if second object was an enemy
-    else if (p_collision_event->getObject2()->getType() == "Saucer")
+    else if (p_collision_event->getObject2()->getType() == "Enemy")
     {
         other_object = p_collision_event->getObject2();
     }
