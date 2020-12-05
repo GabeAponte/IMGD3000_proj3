@@ -95,7 +95,7 @@ Hero::Hero() {
 
     //df::Vector v1 = rotateVector(Vector(1, 2), 180);
     std::cout << "huh3\n";
-    std::cout << //v1.getX() << ", " << v1.getY() << "\n";
+    //std::cout << //v1.getX() << ", " << v1.getY() << "\n";
     //df::Vector v2 = rotateVector(Vector(), 45);
     //std::cout << v2.getX() << ", " << v2.getY() << "\n";
 }
