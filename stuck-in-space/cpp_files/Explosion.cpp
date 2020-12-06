@@ -13,9 +13,9 @@ Explosion::Explosion() {
 
 	// Link to "explosion" sprite.
 	if (setSprite("explosion") == 0)
-		time_to_live = getAnimation().getSprite()->getFrameCount();
+		timeToLive = getAnimation().getSprite()->getFrameCount();
 	else
-		time_to_live = 0;
+		timeToLive = 0;
 
 	setType("Explosion");
 
@@ -37,7 +37,7 @@ int Explosion::eventHandler(const df::Event* p_e) {
 
 // Count down until explosion finished.
 void Explosion::step() {
-	time_to_live--;
-	if (time_to_live <= 0)
+	timeToLive--;
+	if (timeToLive <= 0)
 		df::WM.markForDelete(this);
 }

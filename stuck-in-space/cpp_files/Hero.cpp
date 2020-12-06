@@ -27,6 +27,7 @@
 #include "../header_files/EventPlayerDeath.h"
 #include "../header_files/EventAmmo.h"
 #include "../header_files/Hero.h"
+#include "../header_files/EventShake.h"
 
 using namespace df;
 
@@ -55,9 +56,13 @@ Hero::Hero() {
 	currentWeapon = W_MISSILE;
 	firing = false;
 	fireCooldown = 0;
+	overloadCooldown = 3;
+	hitCooldown = 3;
 	lives = 1;
 	shieldIntegrity = 100;
 	projectileStart = Vector();
+	shieldOverloaded = false;
+	wasHit = false;
 
 	// Initialize weapon names
 	weaponName[W_MISSILE] = "MISSILE";
@@ -91,6 +96,9 @@ Hero::Hero() {
 }
 
 Hero::~Hero() {
+
+	// Make sure background is black
+	DM.setBackgroundColor(BLACK);
 
 	// Mark Reticle for deletion.
 	WM.markForDelete(p_reticle);
@@ -320,6 +328,31 @@ void Hero::fire(df::Vector target, df::Vector origin) {
 // Decrease rate restriction counters.
 void Hero::step() {
 
+	if (wasHit) {
+		setSprite("player-hit");
+		hitCooldown--;
+	}
+	if (hitCooldown == 0) {
+		if (shieldIntegrity > 0) {
+			setSprite("player");
+		}
+		else {
+			setSprite("player-no-shield");
+		}
+		hitCooldown = 3;
+		wasHit = false;
+	}
+
+	if (shieldOverloaded) {
+		DM.setBackgroundColor(MIDBLUE);
+		overloadCooldown--;
+	}
+	if (overloadCooldown == 0) {
+		DM.setBackgroundColor(BLACK);
+		overloadCooldown = 3;
+		shieldOverloaded = false;
+	}
+
 	// Fire weapon
 	if (fireCooldown > 0)
 	{
@@ -341,6 +374,8 @@ void Hero::overloadShield() {
 	// Check if shields left.
 	if (shieldIntegrity == 0)
 		return;
+
+	shieldOverloaded = true;
 
 	if (shieldIntegrity > 15) {
 		shieldIntegrity -= 15;
@@ -450,6 +485,11 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 		|| (p_collision_event->getObject1()->getType() == "EnemyBullet")
 		|| (p_collision_event->getObject2()->getType() == "EnemyBullet")) {
 
+		// Shake screen
+		EventShake es = EventShake();
+		WM.onEvent(&es);
+
+		wasHit = true;
 
 		// Decrease the shield integrety by at most 10, only if it isn't already 0.
 		if (shieldIntegrity < 10) {
@@ -477,6 +517,7 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 
 		// Check hero still alive
 		if (shieldIntegrity <= 0) {
+			setSprite("player-no-shield");
 			if (lives <= 0)
 			{
 				// Delete the hero and the enemy
@@ -510,17 +551,17 @@ int Hero::draw()
 		// draw selection indicator
 		if (currentWeapon == weapon)
 		{
-			DM.drawCh(Vector(x_pos, DM.getVertical() - 3.5), 'V', YELLOW);
+			DM.drawCh(Vector(x_pos, DM.getVertical() - 2.5), 'V', YELLOW);
 		}
 		// draw weapon name
-		DM.drawString(Vector(x_pos, DM.getVertical() - 2.5), weaponName[weapon], CENTER_JUSTIFIED, YELLOW);
+		DM.drawString(Vector(x_pos, DM.getVertical() - 1.5), weaponName[weapon], CENTER_JUSTIFIED, YELLOW);
 		// draw weapon ammo
 		std::string ammo_string = "---";
 		if (weapon != W_MISSILE)
 		{
 			ammo_string = std::to_string(weaponAmmo[weapon]);
 		}
-		DM.drawString(Vector(x_pos, DM.getVertical() - 1.5), ammo_string, CENTER_JUSTIFIED, YELLOW);
+		DM.drawString(Vector(x_pos, DM.getVertical() - .5), ammo_string, CENTER_JUSTIFIED, YELLOW);
 	}
 
 	return 0;

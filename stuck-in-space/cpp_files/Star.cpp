@@ -1,3 +1,6 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
 //
 // Star.cpp
 //

@@ -1,5 +1,9 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
 //
-// Bullet.h
+// Ammo.h
+// An ammo pickup, with different weapon types assignable
 //
 
 #pragma once

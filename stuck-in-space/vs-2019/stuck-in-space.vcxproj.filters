@@ -83,6 +83,12 @@
     <ClCompile Include="..\cpp_files\Laser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\cpp_files\ScreenShaker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cpp_files\EventShake.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Star.h">
@@ -149,6 +155,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\header_files\Laser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header_files\ScreenShaker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header_files\EventShake.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

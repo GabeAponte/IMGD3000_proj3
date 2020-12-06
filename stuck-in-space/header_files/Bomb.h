@@ -1,3 +1,6 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
 //
 // Bomb.h
 // Special bullet that turns into an explosion on impact
