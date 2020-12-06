@@ -26,6 +26,7 @@ InputPlayerName::InputPlayerName(int wave)
 	showTextCursor = true;
 	textCursorWait = TEXT_CURSOR_WAIT;
 	setAltitude(MAX_ALTITUDE);
+	setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 }
 
 // Function that handles events

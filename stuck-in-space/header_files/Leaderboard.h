@@ -31,6 +31,7 @@ private:
 	int draw();
 
 public:
+
 	// Constructor
 	Leaderboard();
 

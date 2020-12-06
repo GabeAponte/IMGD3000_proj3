@@ -27,12 +27,11 @@ using namespace df;
 int main(int argc, char* argv[]) {
 	// Set window dimensions and title BEFORE STARTUP
 	DM.setWindowTitle("STUCK IN SPACE");
-	DM.setHorizontal(124);
-	DM.setVertical(40);
+	DM.setHorizontal(120);
+	DM.setVertical(36);
 	DM.setHorizontalPixels(1024);
 	DM.setVerticalPixels(768);
 	
-
 	// Start up game manager.
 	if (GM.startUp()) {
 		LM.writeLog("Error starting game manager!");
@@ -40,7 +39,8 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
-	WM.setView(Box(Vector(2, 2), 120, 36));
+	WM.setBoundary(Box(Vector(-2, -2), 124, 40));
+	WM.setView(Box(Vector(0, 0), 120, 36));
 	WM.setViewFollowing(new ScreenShaker());
 
 	// Set flush of logfile during development (when done, make false).

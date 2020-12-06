@@ -15,6 +15,7 @@
 class Enemy : public df::Object {
 
 private:
+
 	float realSpeed;		// Speed value
 	int hitPoints;			// HP - health value
 	enemy_type type;		// Type of enemy (Enum from WaveController)

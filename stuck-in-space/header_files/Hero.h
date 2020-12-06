@@ -37,6 +37,7 @@ enum player_weapon {
 class Hero : public df::Object {
 
 private:
+
 	Reticle* p_reticle;				// Reticle displayed for aiming
 	bool firing;					// Indicates if the player can fire their weapon
 	int fireCooldown;				// The rate at which a weapon can fire

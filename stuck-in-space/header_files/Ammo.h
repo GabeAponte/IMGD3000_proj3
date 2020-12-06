@@ -17,6 +17,7 @@
 class Ammo : public df::Object {
 
 private:
+
 	player_weapon ammoType; // The type of ammo the pickup will provide
 	char ammoChar;          // The character id of ammo type
 	int ammoValue;          // The amount of ammo to pickup

@@ -22,6 +22,7 @@ Leaderboard::Leaderboard()
 	setAltitude(MAX_ALTITUDE);
 	latestScore = NULL;
 	displayLatestBadScore = false;
+	setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 }
 
 // Constructor that takes in the latest player and their score
@@ -34,6 +35,7 @@ Leaderboard::Leaderboard(string playerName, int score)
 	latestPlayer = playerName;
 	latestScore = score;
 	displayLatestBadScore = false;
+	setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 }
 
 // Function that handles events
