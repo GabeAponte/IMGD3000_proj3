@@ -25,6 +25,7 @@
 #include "../header_files/EventPlayerDeath.h"
 #include "../header_files/EventAmmo.h"
 #include "../header_files/Hero.h"
+#include "../header_files/EventShake.h"
 
 using namespace df;
 
@@ -445,12 +446,16 @@ void Hero::setProjectileStart(int index)
 // Function for when a hero was hit, so remove shield and/or health
 void Hero::hit(const df::EventCollision* p_collision_event) {
 
+	
 	// Check for enemy collision and update the hero / game
 	if ((p_collision_event->getObject1()->getType() == "Enemy")
 		|| (p_collision_event->getObject2()->getType() == "Enemy")
 		|| (p_collision_event->getObject1()->getType() == "EnemyBullet")
 		|| (p_collision_event->getObject2()->getType() == "EnemyBullet")) {
 
+		// Shake screen
+		EventShake es = EventShake();
+		WM.onEvent(&es);
 
 		// Decrease the shield integrety by at most 10, only if it isn't already 0.
 		if (shieldIntegrity < 10) {

@@ -40,6 +40,7 @@
     <ClCompile Include="..\cpp_files\InputPlayerName.cpp" />
     <ClCompile Include="..\cpp_files\EnemyBullet.cpp" />
     <ClCompile Include="..\cpp_files\ScreenShaker.cpp" />
+    <ClCompile Include="..\cpp_files\EventShake.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Ammo.h" />
@@ -62,6 +63,7 @@
     <ClInclude Include="..\header_files\WaveController.h" />
     <ClInclude Include="..\header_files\EnemyBullet.h" />
     <ClInclude Include="..\header_files\ScreenShaker.h" />
+    <ClInclude Include="..\header_files\EventShake.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

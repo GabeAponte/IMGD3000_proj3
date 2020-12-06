@@ -15,6 +15,8 @@
 #include "header_files/GameStart.h"
 #include "header_files/Star.h"
 #include "header_files/ScoresIOStreamer.h"
+#include <WorldManager.h>
+#include "header_files/ScreenShaker.h"
 
 // Function prototypes.
 void loadResources(void);
@@ -25,10 +27,11 @@ using namespace df;
 int main(int argc, char* argv[]) {
 	// Set window dimensions and title BEFORE STARTUP
 	DM.setWindowTitle("STUCK IN SPACE");
-	DM.setHorizontal(120);
-	DM.setVertical(36);
+	DM.setHorizontal(124);
+	DM.setVertical(40);
 	DM.setHorizontalPixels(1024);
 	DM.setVerticalPixels(768);
+	
 
 	// Start up game manager.
 	if (GM.startUp()) {
@@ -36,6 +39,9 @@ int main(int argc, char* argv[]) {
 		GM.shutDown();
 		return 0;
 	}
+
+	WM.setView(Box(Vector(2, 2), 120, 36));
+	WM.setViewFollowing(new ScreenShaker());
 
 	// Set flush of logfile during development (when done, make false).
 	LM.setFlush(true);
