@@ -30,6 +30,9 @@ Explosion::Explosion() {
 
 	// Set to SOFT
 	setSolidness(df::SPECTRAL);
+
+	// Set altitude
+	setAltitude(3);
 }
 
 // Handle event.

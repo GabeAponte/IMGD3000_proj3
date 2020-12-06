@@ -16,6 +16,7 @@
 #include "../header_files/Ammo.h"
 #include "../header_files/WaveController.h"
 #include <LogManager.h>
+#include <DisplayManager.h>
 
 using namespace df;
 
@@ -46,6 +47,10 @@ WaveController::WaveController() {
 	waveComplete = true;
 	waveBeginWait = WAVE_BEGIN_DELAY;
 	disabled = false; // start enabled
+	displayWaveEnd = false;
+	displayWaveStart = false;
+	messageCooldown = 45;
+	setAltitude(4);
 }
 
 WaveController::~WaveController()
@@ -93,7 +98,9 @@ void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 	if (enemyKillCount >= enemySpawnCount && enemySpawnList.empty()) {
 		waveComplete = true;
 		waveBeginWait = WAVE_BEGIN_DELAY;
-		// TODO: Popup wave clear notification
+		
+		// Toggle wave ended message
+		displayWaveEnd = true;
 	}
 
 	// Spawn ammo refill at enemy location if player killed enemy
@@ -113,6 +120,10 @@ void WaveController::beginWave()
 
 	// Advance wave
 	waveNumber++;
+
+	// Toggle wave started message
+	displayWaveStart = true;
+
 	std::cout << "STARTING WAVE " << waveNumber << "\n";
 	EventView ev("WAVE", waveNumber, false);
 	WM.onEvent(&ev);
@@ -309,4 +320,42 @@ int WaveController::eventHandler(const Event* p_e) {
 int WaveController::getWaveNumber()
 {
 	return waveNumber;
+}
+
+// Draws messages when waves start and end
+int WaveController::draw() 
+{
+	// Display wave start message if it is toggled
+	if (displayWaveStart) {
+		if (messageCooldown > 0) {
+			DM.drawString(Vector(WM.getView().getHorizontal() / 2 , WM.getView().getVertical() / 2 - 10), "Wave " + std::to_string(waveNumber) + " starting...", df::CENTER_JUSTIFIED, df::Color::GREEN);
+			messageCooldown--;
+		}
+
+		// Reset wave start display
+		else {
+			displayWaveStart = false;
+			messageCooldown = 45;
+		}
+
+		return 1;
+	}
+
+	// Display wave end message if it is toggled
+	if (displayWaveEnd) {
+		if (messageCooldown > 0) {
+			DM.drawString(Vector(WM.getView().getHorizontal() / 2, WM.getView().getVertical() / 2 - 10), "Wave " + std::to_string(waveNumber) + " cleared.", df::CENTER_JUSTIFIED, df::Color::GREEN);
+			messageCooldown--;
+		}
+
+		// Reset wave end display
+		else {
+			displayWaveEnd = false;
+			messageCooldown = 45;
+		}
+
+		return 1;
+	}
+
+	return 0;
 }

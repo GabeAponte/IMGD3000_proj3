@@ -15,7 +15,7 @@
 
 #define START_DIFFICULTY    0	    // The starting difficulty.
 #define DIFFICULTY_INCREASE 5		// The difficulty increase per wave (including the start of the first one)
-#define WAVE_BEGIN_DELAY    60		// The downtime between one wave ending and the next starting
+#define WAVE_BEGIN_DELAY    75		// The downtime between one wave ending and the next starting
 #define ENEMY_SPAWN_DELAY   15		// The delay before the first enemy of a wave appears
 #define MAX_ENEMY_SPAWN_DELAY 60    // The maximum delay before the first enemy of a wave appears
 #define SPAWN_X_OFFSET      8		// The horizontal distance off screen to spawn enemies at
@@ -45,15 +45,18 @@ class WaveController : public df::Object {
 
 private:
 
-	bool disabled;		 // Set to true to shut down wave controller updates
-	int waveNumber;		 // The current wave the player is on
-	int difficulty;		 // The current value of enemy difficulties
-	bool waveComplete;   // Whether the current wave is complete
-	int waveBeginWait;   // The delay before the next wave spawns
-	int enemySpawnCount; // The number of enemies spawned so far this wave
-	int enemyKillCount;  // The number of enemies killed so far this wave
-	int enemySpawnWait;  // The delay before the next enemy spawns
-	std::vector<enemy_type> enemySpawnList; // the list of enemies to spawn
+	bool disabled;		    // Set to true to shut down wave controller updates
+	int waveNumber;			// The current wave the player is on
+	int difficulty;			// The current value of enemy difficulties
+	bool waveComplete;		// Whether the current wave is complete
+	int waveBeginWait;	    // The delay before the next wave spawns
+	int enemySpawnCount;	// The number of enemies spawned so far this wave
+	int enemyKillCount;		// The number of enemies killed so far this wave
+	int enemySpawnWait;		// The delay before the next enemy spawns
+	int messageCooldown;    // The rate at which to show messages
+	bool displayWaveEnd;	// Toogles the wave ended message
+	bool displayWaveStart;  // Toggles the wave started message
+	std::vector<enemy_type> enemySpawnList;		 // The list of enemies to spawn
 	std::vector<struct enemy_data> enemyOptions; // Vector containg all enemy type spawn settings
 
 	// Handle step event
@@ -85,4 +88,7 @@ public:
 
 	// Get the current wave number
 	int getWaveNumber();
+
+	// Draws the wave ended and wave started messages
+	int draw();
 };
