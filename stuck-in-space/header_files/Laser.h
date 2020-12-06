@@ -1,3 +1,6 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
 //
 // Laser.h
 // Special piercing bullet

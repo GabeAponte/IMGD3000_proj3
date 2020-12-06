@@ -1,7 +1,10 @@
-//
-// Explosion.cpp
-//
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
 
+//
+// BombExplosion.cpp
+// Short-lived explosion 
+//
 #include "EventStep.h"
 #include "GameManager.h"
 #include "LogManager.h"

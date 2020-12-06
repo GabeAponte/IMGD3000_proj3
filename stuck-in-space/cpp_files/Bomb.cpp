@@ -1,3 +1,6 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
 //
 // Bomb.cpp
 // Variation of Bomb that destroys a lot of enemies at once on impact

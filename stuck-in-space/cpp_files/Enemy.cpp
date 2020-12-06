@@ -5,6 +5,7 @@
 // Enemy.cpp
 // Handles the logic for a Basic Enemy
 //
+
 #include <iostream>
 #include <stdlib.h>
 #include <DisplayManager.h>
