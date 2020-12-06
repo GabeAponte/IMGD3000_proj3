@@ -1,3 +1,9 @@
+// Joseph Henry Stadolnik IV
+// jhstadolnik@wpi.edu
+
+// Gabriel Aponte
+// gaaponte@wpi.edu
+
 //
 // Reticle.h
 //
