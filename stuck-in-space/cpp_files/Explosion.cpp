@@ -11,14 +11,18 @@
 
 Explosion::Explosion() {
 
-	// Link to "explosion" sprite.
-	if (setSprite("explosion") == 0)
+	// Link to "explosion" sprite and regulate animation
+	if (setSprite("explosion") == 0) {
 		timeToLive = getAnimation().getSprite()->getFrameCount();
-	else
+	}
+	else {
 		timeToLive = 0;
+	}
 
+	// Set type
 	setType("Explosion");
 
+	// Set to SOFT
 	setSolidness(df::SPECTRAL);
 }
 
@@ -26,6 +30,7 @@ Explosion::Explosion() {
 // Return 0 if ignored, else 1.
 int Explosion::eventHandler(const df::Event* p_e) {
 
+	// Step handler
 	if (p_e->getType() == df::STEP_EVENT) {
 		step();
 		return 1;
@@ -37,7 +42,12 @@ int Explosion::eventHandler(const df::Event* p_e) {
 
 // Count down until explosion finished.
 void Explosion::step() {
+
+	// Decrement rate
 	timeToLive--;
-	if (timeToLive <= 0)
+
+	// Check if explosion is over
+	if (timeToLive <= 0) {
 		df::WM.markForDelete(this);
+	}
 }

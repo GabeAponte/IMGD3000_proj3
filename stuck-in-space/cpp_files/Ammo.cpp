@@ -15,7 +15,6 @@
 
 using namespace df;
 
-
 Ammo::Ammo(df::Vector position, player_weapon ammo_type, int ammo_value) {
 
 	// Link to "Ammo" sprite.
@@ -64,11 +63,13 @@ Ammo::Ammo(df::Vector position, player_weapon ammo_type, int ammo_value) {
 // Return 0 if ignored, else 1.
 int Ammo::eventHandler(const df::Event* p_e) {
 
+	// Handle step event
 	if (p_e->getType() == df::STEP_EVENT) {
 		step();
 		return 1;
 	}
 
+	// Handle collision event
 	if (p_e->getType() == df::COLLISION_EVENT) {
 		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
 		hit(p_collision_event);
@@ -93,6 +94,7 @@ void Ammo::step() {
 
 // If Bullet hits Ammo, mark both for deletion and collect Ammo
 void Ammo::hit(const df::EventCollision* p_collision_event) {
+
 	// Ignore hit if just spawned
 	if (decayTimer > DECAY_TIME - 10)
 	{
@@ -100,16 +102,19 @@ void Ammo::hit(const df::EventCollision* p_collision_event) {
 	}
 
 	Object* other_object;
+
 	// Check if first object was a bullet
 	if (p_collision_event->getObject1()->getType() == "Bullet")
 	{
 		other_object = p_collision_event->getObject1();
 	}
+
 	// Check if second object was a bullet
 	else if (p_collision_event->getObject2()->getType() == "Bullet")
 	{
 		other_object = p_collision_event->getObject2();
 	}
+
 	// No bullet hit, so don't proceed
 	else
 	{
@@ -124,11 +129,10 @@ void Ammo::hit(const df::EventCollision* p_collision_event) {
 	WM.onEvent(&ea);
 }
 
-
 // Draw the ammo box and its identifying character
 int Ammo::draw()
 {
-	// flicker if fading out
+	// Flicker if fading out
 	if (decayTimer > 30 || (decayTimer / 2) % 3 != 0)
 	{
 		Object::draw();

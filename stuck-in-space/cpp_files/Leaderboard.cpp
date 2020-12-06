@@ -15,26 +15,30 @@
 
 using namespace df;
 
-Leaderboard::Leaderboard()
-{
+Leaderboard::Leaderboard() {
+
 	// Initialize vars
 	allScores = LEADERBOARD.getAllScores();
-	setAltitude(MAX_ALTITUDE);
 	latestScore = NULL;
 	displayLatestBadScore = false;
+
+	// Set altitude and center the position
+	setAltitude(MAX_ALTITUDE);
 	setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 }
 
 // Constructor that takes in the latest player and their score
-Leaderboard::Leaderboard(string playerName, int score)
-{
+Leaderboard::Leaderboard(string playerName, int score) {
+
 	// Initialize vars
 	LEADERBOARD.writeNewScore(score, playerName);
 	allScores = LEADERBOARD.getAllScores();
-	setAltitude(MAX_ALTITUDE);
 	latestPlayer = playerName;
 	latestScore = score;
 	displayLatestBadScore = false;
+
+	// Set altitude and center the position
+	setAltitude(MAX_ALTITUDE);
 	setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 }
 
@@ -45,21 +49,25 @@ int Leaderboard::eventHandler(const df::Event* p_e)
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*) p_e;
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
+
 			switch (p_keyboard_event->getKey()) {
 
-				// Escape key to leave the leaderboard
+		    // Escape key and return to leave the leaderboard
 			case df::Keyboard::ESCAPE:
 			case df::Keyboard::RETURN:
 				new GameStart();
 				df::WM.markForDelete(this);
 				break;
-				// Q key to end the game
+
+		    // Q key to end the game
 			case df::Keyboard::Q:
 				GM.setGameOver();
 				break;
+
 			default:
 				break;
 			}
+
 		return 1;
 	}
 

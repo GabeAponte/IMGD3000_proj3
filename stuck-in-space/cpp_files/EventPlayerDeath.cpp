@@ -9,5 +9,7 @@
 #include "../header_files/EventPlayerDeath.h"
 
 EventPlayerDeath::EventPlayerDeath() {
+
+	// Set type
 	setType(PLAYER_DEATH_EVENT);
 }

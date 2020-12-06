@@ -18,11 +18,15 @@
 
 using namespace df;
 
-WaveController::WaveController()
-{
+WaveController::WaveController() {
+
+	// Set type
 	setType("WaveController");
+
+	// Set to SPECTRAL
 	setSolidness(SPECTRAL);
 
+	// Initialize vars
 	waveNumber = 0;
 	difficulty = START_DIFFICULTY;
 
@@ -35,16 +39,23 @@ WaveController::WaveController()
 	enemyOptions.push_back(enemy_data{ E_SWARM, 30, 4 });
 	enemyOptions.push_back(enemy_data{ E_SHOOTER, 40, 3 });
 
+	// Initialize vars
 	enemySpawnCount = 0;
 	enemyKillCount = 0;
 	waveComplete = true;
 	waveBeginWait = WAVE_BEGIN_DELAY;
-
 	disabled = false; // start enabled
 }
 
+WaveController::~WaveController()
+{
+	enemyOptions.clear();
+	enemySpawnList.clear();
+}
+
 // Handle step event
-void WaveController::step() {
+void WaveController::step() 
+{
 	// Early exit if disabled
 	if (disabled)
 		return;
@@ -73,14 +84,6 @@ void WaveController::step() {
 	}
 }
 
-
-WaveController::~WaveController()
-{
-	enemyOptions.clear();
-	enemySpawnList.clear();
-}
-
-
 // Handle enemy death event
 void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 {
@@ -102,7 +105,6 @@ void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 		spawnAmmo(p_enemydeath_event->getPosition());
 	}
 }
-
 
 // Generate a new wave
 void WaveController::beginWave()
@@ -148,7 +150,6 @@ void WaveController::beginWave()
 	enemySpawnWait = ENEMY_SPAWN_DELAY;
 }
 
-
 // Spawn an enemy of the designated type
 void WaveController::spawnEnemy()
 {
@@ -166,36 +167,33 @@ void WaveController::spawnEnemy()
 
 	// Calculate spawn position
 	Vector spawn_pos = Vector();
-	if (randomPercent() <= SIDE_SPAWN_CHANCE)
-	{
+	if (randomPercent() <= SIDE_SPAWN_CHANCE) {
+
 		// Spawn to the side of the map
-		if (rand() % 2 == 0)
-		{
+		if (rand() % 2 == 0) {
 			spawn_pos.setX(-SPAWN_X_OFFSET);
 		}
-		else
-		{
+		else {
 			spawn_pos.setX(WM.getBoundary().getHorizontal() + SPAWN_X_OFFSET);
 		}
 		spawn_pos.setY((float)(rand() % (int)WM.getBoundary().getVertical()));
 	}
-	else
-	{
+	else {
+
 		// Spawn above or below the map
-		if (rand() % 2 == 0)
-		{
+		if (rand() % 2 == 0) {
 			spawn_pos.setY(-SPAWN_Y_OFFSET);
 		}
-		else
-		{
+		else {
 			spawn_pos.setY(WM.getBoundary().getVertical() + SPAWN_Y_OFFSET);
 		}
+
 		spawn_pos.setX((float)(rand() % (int)WM.getBoundary().getHorizontal()));
 	}
 
 	// Spawn the selected enemy
-	switch (e_type)
-	{
+	switch (e_type) {
+
 	case E_BASIC:
 	{
 		new Enemy(spawn_pos, E_BASIC);
@@ -243,7 +241,6 @@ void WaveController::spawnEnemy()
 	}
 }
 
-
 // Spawn an ammo drop at the location
 void WaveController::spawnAmmo(df::Vector position)
 {
@@ -251,8 +248,8 @@ void WaveController::spawnAmmo(df::Vector position)
 	int ammo_value = 0;
 
 	// randomly choose ammo type
-	switch (rand() % 5)
-	{
+	switch (rand() % 5) {
+
 		// No case for W_MISSILE
 	case 0:
 		ammo_type = W_LASER;
@@ -279,13 +276,11 @@ void WaveController::spawnAmmo(df::Vector position)
 	new Ammo(position, ammo_type, ammo_value);
 }
 
-
 // Generate a random float from 0 to 1
 float WaveController::randomPercent()
 {
 	return (float)(rand() % RAND_DICE_SIZE) / RAND_DICE_SIZE;
 }
-
 
 // Handle events
 int WaveController::eventHandler(const Event* p_e) {
@@ -295,12 +290,14 @@ int WaveController::eventHandler(const Event* p_e) {
 		step();
 		return 1;
 	}
+
 	// Enemy Death event handler
 	if (p_e->getType() == ENEMY_DEATH_EVENT) {
 		const EventEnemyDeath* p_enemydeath_event = dynamic_cast <const EventEnemyDeath*> (p_e);
 		enemyDead(p_enemydeath_event);
 		return 1;
 	}
+
 	// Player Death event handler
 	// Stop spawning waves if disabled
 	if (p_e->getType() == PLAYER_DEATH_EVENT) {
@@ -310,7 +307,6 @@ int WaveController::eventHandler(const Event* p_e) {
 
 	return 0;
 }
-
 
 // Get the current wave number
 int WaveController::getWaveNumber()

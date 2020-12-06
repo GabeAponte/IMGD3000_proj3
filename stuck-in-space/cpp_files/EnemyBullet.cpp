@@ -16,19 +16,21 @@
 using namespace df;
 
 EnemyBullet::EnemyBullet() {
+
 	// Link to "enemy-bullet" sprite.
 	setSprite("enemy-bullet");
 
 	// Set other object properties.
 	setType("EnemyBullet");
 
+	// Set to SOFT
 	setSolidness(SOFT);
 }
 
 // Handle event.
 // Return 0 if ignored, else 1.
-int EnemyBullet::eventHandler(const df::Event* p_e) {
-
+int EnemyBullet::eventHandler(const df::Event* p_e) 
+{
 	// Out of bounds event handler
 	if (p_e->getType() == df::OUT_EVENT) {
 		out();
@@ -55,17 +57,18 @@ int EnemyBullet::eventHandler(const df::Event* p_e) {
 }
 
 // If EnemyBullet moves outside world, mark self for deletion.
-void EnemyBullet::out() {
+void EnemyBullet::out() 
+{
 	WM.markForDelete(this);
 }
 
 // If EnemyBullet hits hero or hero's bullet, mark for deletion.
-void EnemyBullet::hit(const df::EventCollision* p_collision_event) {
-
+void EnemyBullet::hit(const df::EventCollision* p_collision_event) 
+{
 	// Check if collided with hero or a bullet
 	if ((p_collision_event->getObject1()->getType() == "Hero") || (p_collision_event->getObject2()->getType() == "Hero")
-		|| (p_collision_event->getObject1()->getType() == "Bullet") || (p_collision_event->getObject2()->getType() == "Bullet"))
-	{
+		|| (p_collision_event->getObject1()->getType() == "Bullet") || (p_collision_event->getObject2()->getType() == "Bullet")) {
+
 		WM.markForDelete(this);
 	}
 }

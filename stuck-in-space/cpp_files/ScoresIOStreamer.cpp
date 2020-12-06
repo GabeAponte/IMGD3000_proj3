@@ -8,8 +8,7 @@
 
 #include "../header_files/ScoresIOStreamer.h"
 
-ScoresIOStreamer::ScoresIOStreamer()
-{
+ScoresIOStreamer::ScoresIOStreamer() {
 }
 
 // Singleton implementation to only have one instance of the streamer
@@ -30,9 +29,11 @@ void ScoresIOStreamer::writeNewScore(int score, string player)
 // Reads in all the players and scores from the leaderboard file
 void ScoresIOStreamer::readLeaderboardFile()
 {
+	// Clear old scores and opne file
 	allScores.clear();
 	ifstream file(LEADERBOARD_TXT);
 
+	// Loop through and get the score on the current line
 	Score* currentLine = new Score();
 	while (file >> currentLine->score >> ws && getline(file, currentLine->player)) {
 		Score* temp = new Score();
@@ -44,6 +45,7 @@ void ScoresIOStreamer::readLeaderboardFile()
 	// Sort by highest to lowest
 	std::sort(allScores.begin(), allScores.end(), &compareByScore);
 
+	// Close the file
 	file.close();
 }
 

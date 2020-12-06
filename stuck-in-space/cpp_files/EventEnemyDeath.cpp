@@ -9,18 +9,20 @@
 #include "../header_files/EventEnemyDeath.h"
 
 EventEnemyDeath::EventEnemyDeath(df::Vector death_position, bool killed_by_player) {
+
+	// Set type
 	setType(ENEMY_DEATH_EVENT);
+
+	// Initialize vars
 	deathPosition = death_position;
 	killedByPlayer = killed_by_player;
 }
-
 
 // Get the death position
 df::Vector EventEnemyDeath::getPosition() const
 {
 	return deathPosition;
 }
-
 
 // Get whether the player killed the enemy
 bool EventEnemyDeath::getDidPlayerKill() const

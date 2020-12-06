@@ -24,7 +24,6 @@ float scaleFactor()
 	return x_scale / y_scale;
 }
 
-
 // Convert a vector from Dragonfly velocity to real velocity
 df::Vector convertToReal(df::Vector dragonfly_velocity)
 {
@@ -33,7 +32,6 @@ df::Vector convertToReal(df::Vector dragonfly_velocity)
 	return real_velocity;
 }
 
-
 // Convert a vector from real velocity to dragonfly velocity
 df::Vector convertToDragonfly(df::Vector real_velocity)
 {
@@ -41,7 +39,6 @@ df::Vector convertToDragonfly(df::Vector real_velocity)
 	dragonfly_velocity.setY(real_velocity.getY() / scaleFactor());
 	return dragonfly_velocity;
 }
-
 
 // Produces a vector in the indicated direction with the indicated magnitude
 // Y-component is automatically adjusted to accommodate the screen distortion
@@ -54,7 +51,6 @@ df::Vector makeRealVector(df::Vector direction, float magnitude)
 	return v;
 }
 
-
 // Rotates a vector counterclockwise by the indicated amount in degrees
 df::Vector rotateVector(df::Vector base_vector, float degrees)
 {
@@ -64,6 +60,7 @@ df::Vector rotateVector(df::Vector base_vector, float degrees)
 		LM.writeLog(1, "ERROR: Tried to get direction of 0-vector!");
 		return base_vector;
 	}
+
 	double direction = atan2(base_vector.getY(), base_vector.getX()) + degrees * PI / 180;
 	float magnitude = base_vector.getMagnitude();
 	df::Vector rv = Vector(magnitude * cos(direction), magnitude * sin(direction));

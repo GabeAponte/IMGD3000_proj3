@@ -14,9 +14,11 @@
 using namespace df;
 
 Laser::Laser(df::Vector position) {
+
 	// Set other object properties.
 	setType("Bullet");
 
+	// Set SOFT
 	setSolidness(SOFT);
 
 	// Set the weapon type
@@ -30,19 +32,22 @@ Laser::Laser(df::Vector position) {
 
 // Handle event.
 // Return 0 if ignored, else 1.
-int Laser::eventHandler(const df::Event* p_e) {
-
+int Laser::eventHandler(const df::Event* p_e) 
+{
+	// Step handler
 	if (p_e->getType() == df::STEP_EVENT) {
 		prevPos2 = prevPos1;
 		prevPos1 = getPosition() - getVelocity();
 		return 1;
 	}
 	
+	// Out of bounds handler
 	if (p_e->getType() == df::OUT_EVENT) {
 		out();
 		return 1;
 	}
 
+	// Colisions handler
 	if (p_e->getType() == df::COLLISION_EVENT) {
 		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
 		hit(p_collision_event);
@@ -53,6 +58,7 @@ int Laser::eventHandler(const df::Event* p_e) {
 	return 0;
 }
 
+// Draws the lazer
 int Laser::draw()
 {
 	DM.drawCh(prevPos2, '.', VIOLET);

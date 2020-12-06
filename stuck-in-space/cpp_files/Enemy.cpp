@@ -53,6 +53,7 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 }
 
 Enemy::~Enemy() {
+
 	// Declare that the enemy died
 	EventEnemyDeath eed(getPosition(), killedByPlayer);
 	WM.onEvent(&eed);
@@ -60,8 +61,8 @@ Enemy::~Enemy() {
 
 // Handle event.
 // Return 0 if ignored, else 1.
-int Enemy::eventHandler(const df::Event* p_e) {
-
+int Enemy::eventHandler(const df::Event* p_e) 
+{
 	// Collision event handler
 	if (p_e->getType() == df::COLLISION_EVENT) {
 		const df::EventCollision* p_collision_event = dynamic_cast <df::EventCollision const*> (p_e);
@@ -72,13 +73,14 @@ int Enemy::eventHandler(const df::Event* p_e) {
 	//Overload event handler
 	if (p_e->getType() == OVERLOAD_EVENT) {
 
-		// Create explosion.
+		// Create explosion
 		Explosion* p_explosion = new Explosion;
 		p_explosion->setPosition(this->getPosition());
 
-		// Delete self.
+		// Delete self
 		WM.markForDelete(this);
 
+		// Mark killed by player
 		killedByPlayer = true;
 
 		return 1;
@@ -102,8 +104,10 @@ int Enemy::eventHandler(const df::Event* p_e) {
 	// Step event
 	// Change direction of trickey based on step
 	// Stop motion and fire for shooter
+	// Regulate 'tough' sprite color
 	if (p_e->getType() == STEP_EVENT) {
 
+		// If tough, set sprite when hit
 		if (type == E_TOUGH) {
 
 			if (wasHit) {
@@ -121,16 +125,15 @@ int Enemy::eventHandler(const df::Event* p_e) {
 		if (type == E_SHOOTER) {
 
 			if (distance(DM.spacesToPixels(getPosition()), DM.spacesToPixels(Vector(WM.getBoundary().getHorizontal() / 2, 
-				WM.getBoundary().getVertical() / 2))) < 325 && canMove)
-			{
+				WM.getBoundary().getVertical() / 2))) < 325 && canMove) {
+
 				setVelocity(Vector()); // stop movement
 				canMove = false;
 				canFire = true; // set fire bool
 			}
 
 			// Fire weapon if cooldown allows
-			if (fireCooldown > 0)
-			{
+			if (fireCooldown > 0) {
 				fireCooldown--;
 			}
 			else if (canFire) {
@@ -143,8 +146,7 @@ int Enemy::eventHandler(const df::Event* p_e) {
 			stepCounter++; // regulates rate of direction change
 
 			// Check that the enemy has entered the world bounds
-			if (boxIntersectsBox(Box(Vector(10, 3), 100, 30), getWorldBox(this)) && !canZigZag)
-			{
+			if (boxIntersectsBox(Box(Vector(10, 3), 100, 30), getWorldBox(this)) && !canZigZag) {
 				canZigZag = true;
 			}
 
@@ -160,19 +162,22 @@ int Enemy::eventHandler(const df::Event* p_e) {
 	return 0;
 }
 
-// Called with Enemy collides.
-void Enemy::hit(const df::EventCollision* p_collision_event) {
-
+// Called with Enemy collides, handles collisions
+void Enemy::hit(const df::EventCollision* p_collision_event) 
+{
 	// If Bullet, reduce health and/or die
 	if ((p_collision_event->getObject1()->getType() == "Bullet") ||
 		(p_collision_event->getObject2()->getType() == "Bullet")) {
 
+		// Set wasHit to true for 'tough' so that sprite updates
 		if (type == E_TOUGH) {
 			wasHit = true;
 		}
 
+		// Remove hitpoints
 		hitPoints--;
 
+		// Check if now dead
 		if (hitPoints <= 0) {
 
 			// Create an explosion.
@@ -183,8 +188,10 @@ void Enemy::hit(const df::EventCollision* p_collision_event) {
 			df::Sound* p_sound = RM.getSound("explode");
 			p_sound->play();
 
+			// Mark killed by player
 			killedByPlayer = true;
 
+			// Delete self
 			WM.markForDelete(this);
 		}
 	}
@@ -322,7 +329,6 @@ void Enemy::applyZigZagMovement()
 	df::Vector v = convertToDragonfly(getVelocity());
 
 	if (stepCounter >= 15 && rotationIndex == 0) {
-		std::cout << "first" << "\n";
 		v = rotateVector(v, 45);
 		setVelocity(convertToReal(v));
 		rotationIndex = 1;
@@ -330,7 +336,6 @@ void Enemy::applyZigZagMovement()
 	}
 
 	if (stepCounter >= 15 && rotationIndex == 1) {
-		std::cout << "second" << "\n";
 		v = rotateVector(v, -90);
 		setVelocity(convertToReal(v));
 		stepCounter = 0;
@@ -338,7 +343,6 @@ void Enemy::applyZigZagMovement()
 	}
 
 	if (stepCounter >= 15 && rotationIndex == 2) {
-		std::cout << "third" << "\n";
 		v = rotateVector(v, 45);
 		setVelocity(convertToReal(v));
 		stepCounter = 0;
@@ -346,7 +350,6 @@ void Enemy::applyZigZagMovement()
 	}
 
 	if (stepCounter >= 15 && rotationIndex == 3) {
-		std::cout << "first" << "\n";
 		v = rotateVector(v, -90);
 		setVelocity(convertToReal(v));
 		rotationIndex = 4;
@@ -380,9 +383,9 @@ void Enemy::fire()
 	// Update cooldown
 	fireCooldown = 75;
 
-	// Play appropriate fire sound for the current weapon
-	//df::Sound* p_sound = RM.getSound("getone");
-	//p_sound->play();
+	// TODO: Play appropriate fire sound for the current weapon
+	// df::Sound* p_sound = RM.getSound("getone");
+	// p_sound->play();
 
 	// Calculate bullet velocity
 	df::Vector v = Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - getPosition(); // calculate aim vector
@@ -398,11 +401,13 @@ void Enemy::fire()
 	return;
 }
 
-// Set/get the enemy's real speed (df speed is unreliable)
+// Set the enemy's real speed (df speed is unreliable)
 void Enemy::setRealSpeed(float new_speed)
 {
 	realSpeed = new_speed;
 }
+
+// Get the enemy's real speed (df speed is unreliable)
 float Enemy::getRealSpeed() const
 {
 	return realSpeed;

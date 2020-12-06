@@ -25,6 +25,7 @@ void populateWorld(void);
 using namespace df;
 
 int main(int argc, char* argv[]) {
+
 	// Set window dimensions and title BEFORE STARTUP
 	DM.setWindowTitle("STUCK IN SPACE");
 	DM.setHorizontal(120);
@@ -39,6 +40,7 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
+	// Set boundary and view for screen shake functionality
 	WM.setBoundary(Box(Vector(-2, -2), 124, 40));
 	WM.setView(Box(Vector(0, 0), 120, 36));
 	WM.setViewFollowing(new ScreenShaker());
@@ -61,7 +63,10 @@ int main(int argc, char* argv[]) {
 
 // Load resources (sprites, sound effects, music).
 void loadResources(void) {
+
+	// Log level for what statements to print
 	LM.setLogLevel(2);
+
 	// Load sprites
 	RM.loadSprite("../sprites/spr_player.txt", "player");
 	RM.loadSprite("../sprites/spr_player_hit.txt", "player-hit");
@@ -88,11 +93,13 @@ void loadResources(void) {
 	RM.loadSprite("../sprites/spr_bombexplosion.txt", "bomb-explosion");
 	RM.loadSprite("../sprites/spr_gamestart.txt", "gamestart");
 	RM.loadSprite("../sprites/spr_gameover.txt", "gameover");
+
 	// Load sounds
 	RM.loadSound("../sounds/fire.wav", "fire");
 	RM.loadSound("../sounds/explode.wav", "explode");
 	RM.loadSound("../sounds/nuke.wav", "nuke");
 	RM.loadSound("../sounds/game-over.wav", "game over");
+
 	// Load music
 	RM.loadMusic("../sounds/start-music.wav", "start music");
 }

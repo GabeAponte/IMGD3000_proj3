@@ -71,6 +71,7 @@ Hero::Hero() {
 	weaponName[W_BOMB] = "BOMB";
 	weaponName[W_PLASMA] = "PLASMA";
 	weaponName[W_RAPID] = "RAPID";
+
 	// Initialize weapon ammo counts
 	weaponAmmo[W_MISSILE] = 0; // should always be 0
 	weaponAmmo[W_LASER] = 20;
@@ -78,6 +79,7 @@ Hero::Hero() {
 	weaponAmmo[W_BOMB] = 20;
 	weaponAmmo[W_PLASMA] = 20;
 	weaponAmmo[W_RAPID] = 20;
+
 	// Initialize weapon cooldowns
 	weaponCooldown[W_MISSILE] = 15;
 	weaponCooldown[W_LASER] = 20;
@@ -85,6 +87,7 @@ Hero::Hero() {
 	weaponCooldown[W_BOMB] = 20;
 	weaponCooldown[W_PLASMA] = 35;
 	weaponCooldown[W_RAPID] = 4;
+
 	// Initialize weapon sounds
 	weaponSound[W_MISSILE] = "fire";
 	weaponSound[W_LASER] = "fire";
@@ -96,9 +99,6 @@ Hero::Hero() {
 }
 
 Hero::~Hero() {
-
-	// Mark Reticle for deletion.
-	WM.deleteObjectsOfType("Reticle");
 
 	// Make sure background is black
 	DM.setBackgroundColor(BLACK);
@@ -124,8 +124,8 @@ Hero::~Hero() {
 
 // Handle event.
 // Return 0 if ignored, else 1.
-int Hero::eventHandler(const df::Event* p_e) {
-
+int Hero::eventHandler(const df::Event* p_e) 
+{
 	// Keyboard event handler
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const df::EventKeyboard* p_keyboard_event = dynamic_cast <const df::EventKeyboard*> (p_e);
@@ -164,10 +164,9 @@ int Hero::eventHandler(const df::Event* p_e) {
 	return 0;
 }
 
-
 // Take appropriate action according to mouse action.
-void Hero::mouse(const df::EventMouse* p_mouse_event) {
-
+void Hero::mouse(const df::EventMouse* p_mouse_event) 
+{
 	// Pressed button?
 	if (p_mouse_event->getMouseButton() == df::Mouse::LEFT)
 	{
@@ -182,13 +181,12 @@ void Hero::mouse(const df::EventMouse* p_mouse_event) {
 	}
 }
 
-
 // Take appropriate action according to key pressed.
-void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
-
+void Hero::kbd(const df::EventKeyboard* p_keyboard_event) 
+{
 	// handle key press events
-	if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
-	{
+	if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+
 		switch (p_keyboard_event->getKey()) {
 			// Q : Quit
 		case df::Keyboard::Q:
@@ -224,23 +222,21 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
 	return;
 }
 
-
 // Fire bullet towards target.
-void Hero::fire(df::Vector target, df::Vector origin) {
+void Hero::fire(df::Vector target, df::Vector origin) 
+{
 	// Update ammo (and skip firing if empty)
-	if (currentWeapon != W_MISSILE)
-	{
-		if (weaponAmmo[currentWeapon] <= 0)
-		{
-			// Play warning sound to indicate out of ammo
+	if (currentWeapon != W_MISSILE) {
+
+		if (weaponAmmo[currentWeapon] <= 0) {
+			// TODO: Play warning sound to indicate out of ammo
 			/*
 			df::Sound* p_sound = RM.getSound("no_ammo");
 			p_sound->play();
 			*/
 			return;
-		}
-		else
-		{
+		} 
+		else {
 			weaponAmmo[currentWeapon] -= 1;
 		}
 	}
@@ -257,8 +253,8 @@ void Hero::fire(df::Vector target, df::Vector origin) {
 	df::Vector v = makeRealVector(aim, 2); // convert to game vector
 
 	// Create and position weapon attack
-	switch (currentWeapon)
-	{
+	switch (currentWeapon) {
+
 	case W_MISSILE:
 	{
 		// Fire Missile towards target
@@ -324,14 +320,15 @@ void Hero::fire(df::Vector target, df::Vector origin) {
 	}
 }
 
-
 // Decrease rate restriction counters.
-void Hero::step() {
-
+void Hero::step() 
+{
+	// If hero was hit, set the sprite color
 	if (wasHit) {
 		setSprite("player-hit");
 		hitCooldown--;
 	}
+
 	if (hitCooldown == 0) {
 		if (shieldIntegrity > 0) {
 			setSprite("player");
@@ -343,10 +340,12 @@ void Hero::step() {
 		wasHit = false;
 	}
 
+	// Flash the screen if the shield was overloaded
 	if (shieldOverloaded) {
 		DM.setBackgroundColor(TEAL);
 		overloadCooldown--;
 	}
+
 	if (overloadCooldown == 0) {
 		DM.setBackgroundColor(BLACK);
 		overloadCooldown = 3;
@@ -354,12 +353,10 @@ void Hero::step() {
 	}
 
 	// Fire weapon
-	if (fireCooldown > 0)
-	{
+	if (fireCooldown > 0) {
 		fireCooldown--;
 	}
-	else if (firing)
-	{
+	else if (firing) {
 		fire(p_reticle->getPosition(), projectileStart);
 	}
 
@@ -375,18 +372,25 @@ void Hero::overloadShield() {
 	if (shieldIntegrity == 0)
 		return;
 
+	// Mark shield overloaded so that screen flashes
 	shieldOverloaded = true;
 
+	// If shields are greater than 15, reduce by 15 
 	if (shieldIntegrity > 15) {
+
 		shieldIntegrity -= 15;
 
 		// Send "view" event do decrease shield interested ViewObjects.
 		df::EventView ev("Shield Integrity %", -15, true);
 		WM.onEvent(&ev);
 	}
+
+	// Shield is less than 15 so set to zero and set lives to zero
 	else {
+
 		shieldIntegrity = 0;
 		lives = 0;
+
 		// Send "view" event do decrease shield interested ViewObjects.
 		df::EventView ev("Shield Integrity %", 0, false);
 		WM.onEvent(&ev);
@@ -416,6 +420,7 @@ void Hero::updateSprite()
 	float xPos = getPosition().getX();
 	float xReticle = p_reticle->getPosition().getX();
 	int new_index = 2;
+
 	if (xReticle < xPos - FAR_LOOK_THRESHOLD)
 	{
 		new_index = 0;
@@ -433,10 +438,11 @@ void Hero::updateSprite()
 		new_index = 3;
 	}
 
-	setProjectileStart(new_index);
 	this->setAnimationIndex(new_index);
-}
 
+	// Set projectile spwan to match the sprite animation
+	setProjectileStart(new_index);
+}
 
 // Set the location for projectiles to start at based on the sprite 
 void Hero::setProjectileStart(int index)
@@ -489,6 +495,7 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 		EventShake es = EventShake();
 		WM.onEvent(&es);
 
+		// Set wasHit so that sprite color changes
 		wasHit = true;
 
 		// Decrease the shield integrety by at most 10, only if it isn't already 0.
@@ -523,6 +530,9 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 				// Delete the hero and the enemy
 				WM.markForDelete(p_collision_event->getObject1());
 				WM.markForDelete(p_collision_event->getObject2());
+
+				// Mark Reticle for deletion.
+				WM.deleteObjectsOfType("Reticle");
 			}
 			else
 			{
@@ -532,7 +542,6 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 		}
 	}
 }
-
 
 // Draw the player and their ammo counts
 int Hero::draw()
@@ -553,9 +562,11 @@ int Hero::draw()
 		{
 			DM.drawCh(Vector(x_pos, DM.getVertical() - 3.5), 'V', YELLOW);
 		}
-		// draw weapon name
+
+		// Draw weapon name
 		DM.drawString(Vector(x_pos, DM.getVertical() - 2.5), weaponName[weapon], CENTER_JUSTIFIED, YELLOW);
-		// draw weapon ammo
+
+		// Draw weapon ammo
 		std::string ammo_string = "---";
 		if (weapon != W_MISSILE)
 		{

@@ -8,7 +8,8 @@
 
 #include "..\header_files\EventShake.h"
 
-EventShake::EventShake()
-{
+EventShake::EventShake() {
+
+	// Set type
 	setType(SHAKE_EVENT);
 }

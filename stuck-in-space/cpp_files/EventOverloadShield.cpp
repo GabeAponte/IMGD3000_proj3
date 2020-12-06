@@ -10,5 +10,7 @@
 #include "../header_files/EventOverloadShield.h"
 
 EventOverloadShield::EventOverloadShield() {
+
+	// Set type
 	setType(OVERLOAD_EVENT);
 };

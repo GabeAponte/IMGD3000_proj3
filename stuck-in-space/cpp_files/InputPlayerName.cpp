@@ -17,14 +17,16 @@
 
 using namespace df;
 
-InputPlayerName::InputPlayerName(int wave)
-{
+InputPlayerName::InputPlayerName(int wave) {
+
 	// Initialize vars
 	wavesCompleted = wave;
 	playerName = "";
 	keyRepeatWait = 0;
 	showTextCursor = true;
 	textCursorWait = TEXT_CURSOR_WAIT;
+
+	// Set altitude to max and position to center screen
 	setAltitude(MAX_ALTITUDE);
 	setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 }
@@ -32,9 +34,9 @@ InputPlayerName::InputPlayerName(int wave)
 // Function that handles events
 int InputPlayerName::eventHandler(const df::Event* p_e)
 {
+	// Handle keyboard input for name entry
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 
-		// Handle keyboard input for name entry
 		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*) p_e;
 		bool key_pressed = p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED;
 		bool key_held = p_keyboard_event->getKeyboardAction() == df::KEY_DOWN && keyRepeatWait <= 0;
@@ -182,11 +184,13 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
 		return 1;
 	}
 	if (p_e->getType() == df::STEP_EVENT) {
+
 		// Update text repeat timer
 		if (keyRepeatWait > 0)
 		{
 			keyRepeatWait--;
 		}
+
 		// Toggle whether text cursor displays
 		textCursorWait--;
 		if (textCursorWait < 0)
@@ -204,7 +208,6 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
 // Function that draws the InputPlayerName display
 int InputPlayerName::draw()
 {
-
 	// Toggle wave vs waves
 	std::string plural = "s";
 	if (wavesCompleted == 1)

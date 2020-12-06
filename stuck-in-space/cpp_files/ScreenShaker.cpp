@@ -13,9 +13,9 @@
 
 using namespace df;
 
-ScreenShaker::ScreenShaker()
-{
-	// Invisible and set at center of screen
+ScreenShaker::ScreenShaker() {
+
+	// Invisible, SPECTRAL and set at center of screen
 	setSolidness(SPECTRAL);
 	setPosition(Vector(WM.getView().getHorizontal() / 2, WM.getView().getVertical() / 2));
 	canShake = false;
@@ -45,6 +45,8 @@ int ScreenShaker::eventHandler(const df::Event* p_e)
 				shakeIndex++;
 			}
 			else if (shakeIndex == 4) {
+
+				// Reset the view on last shake index step
 				setVelocity(Vector());
 				WM.setView(Box(Vector(0, 0), 120, 36));
 				setPosition(Vector(WM.getView().getHorizontal() / 2, WM.getView().getVertical() / 2));
