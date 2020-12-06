@@ -7,12 +7,15 @@
 //
 
 #pragma once
+
 #include <Event.h>
 
 const std::string SHAKE_EVENT = "shake";
 
 class EventShake : public df::Event {
+
 public:
+
+	// Constructor
 	EventShake();
 };
-
