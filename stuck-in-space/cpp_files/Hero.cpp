@@ -46,8 +46,8 @@ Hero::Hero() {
 	// Set starting location to center of screen.
 	setPosition(Vector(WM.getView().getHorizontal() /2, WM.getView().getVertical() /2));
 
-	// Set to middle altitude
-	setAltitude(3);
+	// Set altitude
+	setAltitude(4);
 
 	// Create reticle for firing bullets.
 	p_reticle = new Reticle();
