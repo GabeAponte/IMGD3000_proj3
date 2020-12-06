@@ -10,13 +10,12 @@
 #include <Vector.h>
 #include <EventView.h>
 #include <WorldManager.h>
+#include <DisplayManager.h>
 #include "../header_files/EventEnemyDeath.h"
 #include "../header_files/EventPlayerDeath.h"
 #include "../header_files/Enemy.h"
 #include "../header_files/Ammo.h"
 #include "../header_files/WaveController.h"
-#include <LogManager.h>
-#include <DisplayManager.h>
 
 using namespace df;
 
