@@ -16,9 +16,9 @@ BombExplosion::BombExplosion(df::Vector spawn_position) {
 
 	// Link to "explosion" sprite.
 	if (setSprite("bomb-explosion") == 0)
-		time_to_live = getAnimation().getSprite()->getFrameCount()*2;
+		timeToLive = getAnimation().getSprite()->getFrameCount()*2;
 	else
-		time_to_live = 0;
+		timeToLive = 0;
 
 	setType("Bullet");
 

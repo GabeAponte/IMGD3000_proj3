@@ -26,9 +26,9 @@ GameOver::GameOver() {
 
 	// Link to "message" sprite.
 	if (setSprite("gameover") == 0)
-		time_to_live = getAnimation().getSprite()->getFrameCount() * 15;
+		timeToLive = getAnimation().getSprite()->getFrameCount() * 15;
 	else
-		time_to_live = 0;
+		timeToLive = 0;
 
 	// Put in center of window.
 	setLocation(df::CENTER_CENTER);
@@ -75,8 +75,8 @@ int GameOver::eventHandler(const df::Event* p_e) {
 
 // Count down to end of message.
 void GameOver::step() {
-	time_to_live--;
-	if (time_to_live <= 0) {
+	timeToLive--;
+	if (timeToLive <= 0) {
 		WM.markForDelete(this);
 	}
 }

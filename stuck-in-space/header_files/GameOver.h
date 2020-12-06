@@ -15,7 +15,7 @@
 class GameOver : public df::ViewObject {
 
 private:
-	int time_to_live;
+	int timeToLive;
 	df::Music* p_music;
 	void step();
 
