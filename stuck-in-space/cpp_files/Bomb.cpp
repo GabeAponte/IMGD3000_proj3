@@ -32,11 +32,13 @@ Bomb::Bomb() {
 // Return 0 if ignored, else 1.
 int Bomb::eventHandler(const df::Event* p_e) 
 {
+	// Out of bounds handler
 	if (p_e->getType() == df::OUT_EVENT) {
 		out();
 		return 1;
 	}
 
+	// Collisions handler
 	if (p_e->getType() == df::COLLISION_EVENT) {
 		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
 		hit(p_collision_event);

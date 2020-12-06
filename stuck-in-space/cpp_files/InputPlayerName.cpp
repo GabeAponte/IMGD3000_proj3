@@ -230,7 +230,8 @@ int InputPlayerName::draw()
 }
 
 // Function that trims the leading and trailing whitespaces of a string
-string InputPlayerName::trim(string s) {
+string InputPlayerName::trim(string s) 
+{
 	regex e("^\\s+|\\s+$");
 	return regex_replace(s, e, "");
 }

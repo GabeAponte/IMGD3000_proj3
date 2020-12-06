@@ -34,8 +34,8 @@ Explosion::Explosion() {
 
 // Handle event.
 // Return 0 if ignored, else 1.
-int Explosion::eventHandler(const df::Event* p_e) {
-
+int Explosion::eventHandler(const df::Event* p_e) 
+{
 	// Step handler
 	if (p_e->getType() == df::STEP_EVENT) {
 		step();
@@ -47,8 +47,8 @@ int Explosion::eventHandler(const df::Event* p_e) {
 }
 
 // Count down until explosion finished.
-void Explosion::step() {
-
+void Explosion::step() 
+{
 	// Decrement rate
 	timeToLive--;
 

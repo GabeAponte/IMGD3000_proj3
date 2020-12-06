@@ -62,8 +62,8 @@ GameOver::~GameOver() {
 
 // Handle event.
 // Return 0 if ignored, else 1.
-int GameOver::eventHandler(const df::Event* p_e) {
-
+int GameOver::eventHandler(const df::Event* p_e) 
+{
 	// Step handler
 	if (p_e->getType() == df::STEP_EVENT) {
 		step();
@@ -75,8 +75,8 @@ int GameOver::eventHandler(const df::Event* p_e) {
 }
 
 // Count down to end of message.
-void GameOver::step() {
-
+void GameOver::step() 
+{
 	// Decrement rate
 	timeToLive--;
 
@@ -95,7 +95,8 @@ void GameOver::step() {
 }
 
 // Override default draw so as not to display "value".
-int GameOver::draw() {
+int GameOver::draw() 
+{
 	df::Object::draw();
 	return 0;
 }

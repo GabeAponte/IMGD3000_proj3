@@ -40,16 +40,16 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	// Initialize shared vars
 	setSolidness(SOFT);
 	setPosition(start_pos);
-	killedByPlayer = false;
 	targetHero(start_pos);
+	canFire = false;
 	fireCooldown = 0;
 	canMove = true;
-	canFire = false;
 	canZigZag = false;
 	stepCounter = 0;
 	rotationIndex = 0;
 	wasHit = false;
 	hitCooldown = 3;
+	killedByPlayer = false;
 }
 
 Enemy::~Enemy() {

@@ -61,24 +61,22 @@ void WaveController::step()
 		return;
 
 	// Detect if wave complete
-	if (waveComplete)
-	{
+	if (waveComplete) {
 		waveBeginWait--;
-		if (waveBeginWait <= 0)
-		{
+
+		if (waveBeginWait <= 0) {
+
 			// Begin next wave
 			beginWave();
 		}
 	}
+
 	// Otherwise, handle wave updates
-	else
-	{
-		if (enemySpawnWait > 0)
-		{
+	else {
+		if (enemySpawnWait > 0) {
 			enemySpawnWait--;
 		}
-		else
-		{
+		else {
 			spawnEnemy();
 		}
 	}
@@ -91,8 +89,7 @@ void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 	enemyKillCount++;
 
 	// End wave if all enemies spawned and killed
-	if (enemyKillCount >= enemySpawnCount && enemySpawnList.empty())
-	{
+	if (enemyKillCount >= enemySpawnCount && enemySpawnList.empty()) {
 		waveComplete = true;
 		waveBeginWait = WAVE_BEGIN_DELAY;
 		// TODO: Popup wave clear notification
@@ -100,8 +97,7 @@ void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 
 	// Spawn ammo refill at enemy location if player killed enemy
 	// TODO: maybe more likely if low on ammo
-	if (p_enemydeath_event->getDidPlayerKill() && randomPercent() >= AMMO_SPAWN_CHANCE)
-	{
+	if (p_enemydeath_event->getDidPlayerKill() && randomPercent() >= AMMO_SPAWN_CHANCE) {
 		spawnAmmo(p_enemydeath_event->getPosition());
 	}
 }
@@ -126,17 +122,17 @@ void WaveController::beginWave()
 
 	// Generate wave contents based on difficulty budget
 	int difficulty_cost = 0;
-	while (difficulty_cost < difficulty)
-	{
-		for (std::vector<enemy_data>::reverse_iterator it = enemyOptions.rbegin(); it != enemyOptions.rend(); it++)
-		{
+	while (difficulty_cost < difficulty) {
+
+		for (std::vector<enemy_data>::reverse_iterator it = enemyOptions.rbegin(); it != enemyOptions.rend(); it++) {
+
 			// Ensure that enemy can be spawned
 			// (is available at current difficulty and is within budget)
-			if (it->minDifficulty <= difficulty && it->difficultyCost <= difficulty - difficulty_cost)
-			{
+			if (it->minDifficulty <= difficulty && it->difficultyCost <= difficulty - difficulty_cost) {
+
 				// Chance to spawn selected enemy. Otherwise, if no options found: default to basic enemy
-				if (randomPercent() < 0.5 || it == enemyOptions.rend() - 1)
-				{
+				if (randomPercent() < 0.5 || it == enemyOptions.rend() - 1) {
+
 					// Queue enemy for spawning, and add cost to accumulated difficulty cost
 					enemySpawnList.push_back(it->enemyType);
 					difficulty_cost += it->difficultyCost;
