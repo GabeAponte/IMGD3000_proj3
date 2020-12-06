@@ -53,6 +53,6 @@ int Star::eventHandler(const df::Event* p_e)
 // If Star moved off window, move back to top.
 void Star::out() 
 {
-	df::Vector p((float)(rand() % (int) WM.getBoundary().getHorizontal()), 0);
+	df::Vector p((float)(rand() % (int) WM.getBoundary().getHorizontal()), WM.getBoundary().getVertical());
 	setPosition(p);
 }

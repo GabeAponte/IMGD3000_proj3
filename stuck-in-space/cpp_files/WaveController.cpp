@@ -15,6 +15,7 @@
 #include "../header_files/Enemy.h"
 #include "../header_files/Ammo.h"
 #include "../header_files/WaveController.h"
+#include <LogManager.h>
 
 using namespace df;
 

@@ -39,25 +39,16 @@ GameOver::GameOver() {
 	// Play "game over" sound.
 	df::Sound* p_sound = RM.getSound("game over");
 	p_sound->play();
+
+	// Gets how many waves the player cleared before dying
+	setWavesSurvived();
 }
 
 // When done, game over so shut down.
 GameOver::~GameOver() {
 
-	// Get the wave controller
-	ObjectList ol = WM.objectsOfType("WaveController");
-	ObjectListIterator oli(&ol);
-	WaveController* p_wc = dynamic_cast <WaveController*> (oli.currentObject());
-
-	// Display results and let player input highscores
-	int wave = 1;
-	if (p_wc != nullptr)
-	{
-		wave = p_wc->getWaveNumber() - 1;
-	}
-
 	// Allow the player to record their score
-	new InputPlayerName(wave);
+	new InputPlayerName(wavesSurvived);
 }
 
 // Handle event.
@@ -99,4 +90,20 @@ int GameOver::draw()
 {
 	df::Object::draw();
 	return 0;
+}
+
+// Sets the value for wavesSurvived
+void GameOver::setWavesSurvived()
+{
+	// Get the wave controller
+	ObjectList ol = WM.objectsOfType("WaveController");
+	ObjectListIterator oli(&ol);
+	cout << ol.getCount() << "\ln";
+	WaveController* p_wc = dynamic_cast <WaveController*> (oli.currentObject());
+
+	// Display results and let player input highscores
+	if (p_wc != nullptr)
+	{
+		wavesSurvived = p_wc->getWaveNumber() - 1;
+	}
 }

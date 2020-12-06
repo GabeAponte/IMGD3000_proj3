@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
 void loadResources(void) {
 
 	// Log level for what statements to print
-	LM.setLogLevel(2);
+	LM.setLogLevel(3);
 
 	// Load sprites
 	RM.loadSprite("../sprites/spr_player.txt", "player");
