@@ -1,0 +1,41 @@
+<HEADER>
+frames 7
+width 5
+height 3
+color red
+slowdown 1
+transparency #
+</HEADER>
+<BODY>
+#####
+##*##
+#####
+end
+##v##
+#>*<#
+##^##
+end
+#.*.#
+#*.*#
+#'*'#
+end
+#***#
+*:#:*
+#***#
+end
+#***#
+*.#.*
+#***#
+end
+#.#.#
+:###:
+#.#.#
+end
+#####
+.###'
+#####
+end
+</BODY>
+<FOOTER>
+version 1
+</FOOTER>

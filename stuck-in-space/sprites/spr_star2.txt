@@ -1,14 +1,12 @@
 <HEADER>
-frames 2
-width 3
+frames 1
+width 1
 height 1
-color red
-slowdown 5
+color dkgray
+slowdown 3
 </HEADER>
 <BODY>
----
-end
---:
+.
 end
 </BODY>
 <FOOTER>

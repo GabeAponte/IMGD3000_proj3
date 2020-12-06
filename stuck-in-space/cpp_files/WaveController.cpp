@@ -31,10 +31,10 @@ WaveController::WaveController()
 	enemyOptions.push_back(enemy_data{ E_BASIC, START_DIFFICULTY, 1 }); // basic enemy must require difficulty 0
 	enemyOptions.push_back(enemy_data{ E_TOUGH, 0, 1 });
 	enemyOptions.push_back(enemy_data{ E_FAST, 0, 1 });
-	enemyOptions.push_back(enemy_data{ E_TRICKY, 0, 1 });
-	enemyOptions.push_back(enemy_data{ E_SPIRAL, 0, 1 });
-	enemyOptions.push_back(enemy_data{ E_SWARM, 20, 1 });
-	enemyOptions.push_back(enemy_data{ E_SHOOTER, 20, 1 });
+	enemyOptions.push_back(enemy_data{ E_TRICKY, 10, 2 });
+	enemyOptions.push_back(enemy_data{ E_SPIRAL, 20, 2 });
+	enemyOptions.push_back(enemy_data{ E_SWARM, 30, 4 });
+	enemyOptions.push_back(enemy_data{ E_SHOOTER, 40, 3 });
 
 	enemySpawnCount = 0;
 	enemyKillCount = 0;

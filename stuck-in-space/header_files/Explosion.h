@@ -8,7 +8,7 @@
 
 class Explosion : public df::Object {
 
-private:
+protected:
 	int time_to_live;
 	void step();
 

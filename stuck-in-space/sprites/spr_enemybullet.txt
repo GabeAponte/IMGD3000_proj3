@@ -1,14 +1,14 @@
 <HEADER>
 frames 2
-width 2
+width 3
 height 1
 color red
-slowdown 5
+slowdown 3
 </HEADER>
 <BODY>
->-
+(O}
 end
->:
+{O)
 end
 </BODY>
 <FOOTER>

@@ -19,6 +19,8 @@
 #include <WorldManager.h>
 #include "../header_files/Velocity.h"
 #include "../header_files/Bullet.h"
+#include "../header_files/Bomb.h"
+#include "../header_files/Laser.h"
 #include "../header_files/Explosion.h"
 #include "../header_files/GameOver.h"
 #include "../header_files/EventOverloadShield.h"
@@ -74,10 +76,10 @@ Hero::Hero() {
 	weaponAmmo[W_RAPID] = 20;
 	// Initialize weapon cooldowns
 	weaponCooldown[W_MISSILE] = 15;
-	weaponCooldown[W_LASER] = 15;
+	weaponCooldown[W_LASER] = 20;
 	weaponCooldown[W_SPREAD] = 20;
 	weaponCooldown[W_BOMB] = 20;
-	weaponCooldown[W_PLASMA] = 30;
+	weaponCooldown[W_PLASMA] = 35;
 	weaponCooldown[W_RAPID] = 4;
 	// Initialize weapon sounds
 	weaponSound[W_MISSILE] = "fire";
@@ -261,11 +263,10 @@ void Hero::fire(df::Vector target, df::Vector origin) {
 	case W_LASER:
 	{
 		// Fire Laser towards target
-		/*
-		Laser* laser = new Bullet();
-		laser->setVelocity(v);
-		laser->setPosition(getPojectileStart(target));
-		*/
+		Laser* p_laser = new Laser(origin);
+		df::Vector laser_vel = v;
+		laser_vel.scale(2);
+		p_laser->setVelocity(laser_vel);
 		return;
 	}
 	case W_SPREAD:
@@ -286,11 +287,9 @@ void Hero::fire(df::Vector target, df::Vector origin) {
 	case W_BOMB:
 	{
 		// Fire Bomb towards target, exploding on impact
-		/*
-		Bomb* bomb = new Bomb();
-		bomb->setVelocity(v);
-		bomb->setPosition(origin);
-		*/
+		Bomb* p_bomb = new Bomb();
+		p_bomb->setVelocity(v);
+		p_bomb->setPosition(origin);
 		return;
 	}
 	case W_PLASMA:
