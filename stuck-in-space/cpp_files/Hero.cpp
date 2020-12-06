@@ -98,7 +98,7 @@ Hero::Hero() {
 Hero::~Hero() {
 
 	// Mark Reticle for deletion.
-	WM.markForDelete(p_reticle);
+	WM.deleteObjectsOfType("Reticle");
 
 	// Make sure background is black
 	DM.setBackgroundColor(BLACK);
@@ -344,7 +344,7 @@ void Hero::step() {
 	}
 
 	if (shieldOverloaded) {
-		DM.setBackgroundColor(MIDBLUE);
+		DM.setBackgroundColor(TEAL);
 		overloadCooldown--;
 	}
 	if (overloadCooldown == 0) {

@@ -46,6 +46,7 @@ int ScreenShaker::eventHandler(const df::Event* p_e)
 			}
 			else if (shakeIndex == 4) {
 				setVelocity(Vector());
+				WM.setView(Box(Vector(0, 0), 120, 36));
 				setPosition(Vector(WM.getView().getHorizontal() / 2, WM.getView().getVertical() / 2));
 				WM.setViewFollowing(this);
 				shakeIndex = 0;
