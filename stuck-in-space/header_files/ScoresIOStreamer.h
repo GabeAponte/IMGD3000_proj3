@@ -23,8 +23,8 @@ const string LEADERBOARD_TXT = "leaderboard.txt";
 // Shorthand to access the ScoresIOStreamer singleton implementation
 #define LEADERBOARD ScoresIOStreamer::getInstance()
 
-class ScoresIOStreamer
-{
+class ScoresIOStreamer {
+
 public:
 
 	// Struct that stores the player name and their score
@@ -47,6 +47,7 @@ public:
 	vector<Score*> getAllScores();
 
 private:
+
 	ScoresIOStreamer();                         // Private since a singleton.
 	ScoresIOStreamer(ScoresIOStreamer const&);  // Don't allow copy.
 	void operator=(ScoresIOStreamer const&);    // Don't allow assignment.

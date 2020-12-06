@@ -7,6 +7,7 @@
 //
 
 #pragma once
+
 #include <Event.h>
 #include <Vector.h>
 #include "../header_files/Hero.h"
@@ -14,12 +15,14 @@
 const std::string AMMO_EVENT = "ammo";
 
 class EventAmmo : public df::Event {
+
 private:
-	EventAmmo(); // inaccessible
-	player_weapon ammoType;
-	int ammoValue;
+
+	player_weapon ammoType; // Type of ammo pick up
+	int ammoValue; // Amount of ammo
 
 public:
+
 	// Constructor requires initial values
 	EventAmmo(player_weapon ammo_type, int ammo_value);
 

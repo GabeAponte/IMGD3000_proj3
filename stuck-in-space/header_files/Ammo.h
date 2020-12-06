@@ -29,6 +29,7 @@ private:
 	void hit(const df::EventCollision* p_collision_event);
 
 public:
+
 	// Constructor that requires initial values
 	Ammo(df::Vector position, player_weapon ammo_type, int ammo_value);
 

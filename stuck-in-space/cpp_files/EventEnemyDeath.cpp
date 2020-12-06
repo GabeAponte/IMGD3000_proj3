@@ -8,10 +8,6 @@
 
 #include "../header_files/EventEnemyDeath.h"
 
-// inaccessible
-EventEnemyDeath::EventEnemyDeath() {};
-
-// this constructor is required
 EventEnemyDeath::EventEnemyDeath(df::Vector death_position, bool killed_by_player) {
 	setType(ENEMY_DEATH_EVENT);
 	deathPosition = death_position;

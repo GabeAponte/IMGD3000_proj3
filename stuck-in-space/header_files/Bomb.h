@@ -16,9 +16,13 @@
 class Bomb : public Bullet {
 
 private:
+
+	// Handles collision events
 	void hit(const df::EventCollision* p_collision_event);
 
 public:
+
+	// Constructor
 	Bomb();
 
 	// Handle events

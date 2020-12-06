@@ -16,9 +16,10 @@
 #define KEY_REPEAT_WAIT 4
 #define TEXT_CURSOR_WAIT 15
 
-class InputPlayerName : public df::Object
-{
+class InputPlayerName : public df::Object {
+
 private:
+
 	int wavesCompleted;		// Value of the last wave survived
 	string playerName;		// Value of the current player
 	int keyRepeatWait;      // Indicates the rate at which to register repeated keys

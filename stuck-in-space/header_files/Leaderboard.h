@@ -12,8 +12,8 @@
 #include <Vector.h>
 #include "../header_files/ScoresIOStreamer.h"
 
-class Leaderboard : public df::Object
-{
+class Leaderboard : public df::Object {
+
 private:
 	
 	int latestScore;				// The value of the most recent recored score
@@ -37,5 +37,3 @@ public:
 	// Constructor that takes in the latest player and their score
 	Leaderboard(string playerName, int score);
 };
-
-

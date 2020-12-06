@@ -16,8 +16,8 @@ class GameOver : public df::ViewObject {
 
 private:
 
-	int timeToLive; // Rate at which to show GameOver
-	df::Music* p_music; // GameOver music
+	int timeToLive;			// Rate at which to show GameOver
+	df::Music* p_music;		// GameOver music
 
 	// Handles the step event
 	void step();

@@ -7,11 +7,15 @@
 //
 
 #pragma once
+
 #include <Event.h>
 
 const std::string PLAYER_DEATH_EVENT = "playerdeath";
 
 class EventPlayerDeath : public df::Event {
+
 public:
+
+	// Constructor
 	EventPlayerDeath();
 };

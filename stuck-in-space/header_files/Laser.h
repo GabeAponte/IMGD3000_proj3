@@ -19,6 +19,7 @@ private:
 
 	df::Vector prevPos1; // Vector of last position
 	df::Vector prevPos2; // Additional vector of last position
+
 public:
 
 	// Constructor that sets the last position
