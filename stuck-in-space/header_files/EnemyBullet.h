@@ -8,16 +8,22 @@
 
 #pragma once
 
-#include <EventCollision.h>
 #include <Object.h>
+#include <EventCollision.h>
 
 class EnemyBullet : public df::Object {
 
 private:
+
+	// Handles out of bounds event
 	void out();
+
+	// Handles collisions with the player and bullets
 	void hit(const df::EventCollision* p_collision_event);
 
 public:
+
+	// Constructor
 	EnemyBullet();
 
 	// Handle events
