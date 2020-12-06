@@ -64,6 +64,8 @@ void loadResources(void) {
 	LM.setLogLevel(2);
 	// Load sprites
 	RM.loadSprite("../sprites/spr_player.txt", "player");
+	RM.loadSprite("../sprites/spr_player_hit.txt", "player-hit");
+	RM.loadSprite("../sprites/spr_player_no_shield.txt", "player-no-shield");
 	RM.loadSprite("../sprites/spr_ammo.txt", "ammo");
 	RM.loadSprite("../sprites/spr_star0.txt", "star0");
 	RM.loadSprite("../sprites/spr_star1.txt", "star1");
@@ -77,6 +79,7 @@ void loadResources(void) {
 	RM.loadSprite("../sprites/spr_enemy_fast.txt", "fast-enemy");
 	RM.loadSprite("../sprites/spr_enemy_swarm.txt", "swarm-enemy");
 	RM.loadSprite("../sprites/spr_enemy_tough.txt", "tough-enemy");
+	RM.loadSprite("../sprites/spr_enemy_tough_hit.txt", "tough-enemy-hit");
 	RM.loadSprite("../sprites/spr_enemy_tricky.txt", "tricky-enemy");
 	RM.loadSprite("../sprites/spr_enemy_shooter.txt", "shooter-enemy");
 	RM.loadSprite("../sprites/spr_enemy_spiral.txt", "spiral-enemy");

@@ -2,7 +2,7 @@
 frames 5
 width 15
 height 5
-color cyan
+color white
 slowdown 1
 transparency #
 </HEADER>

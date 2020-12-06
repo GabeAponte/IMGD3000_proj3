@@ -25,6 +25,8 @@ private:
 	bool canFire;
 	int stepCounter;
 	int rotationIndex;
+	bool wasHit;
+	int hitCooldown;
 	void hit(const df::EventCollision* p_collision_event);
 	void targetHero(df::Vector position);
 	void setEnemyTypeSpeed();

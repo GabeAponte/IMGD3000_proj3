@@ -47,6 +47,8 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	canZigZag = false;
 	stepCounter = 0;
 	rotationIndex = 0;
+	wasHit = false;
+	hitCooldown = 3;
 }
 
 Enemy::~Enemy() {
@@ -101,6 +103,19 @@ int Enemy::eventHandler(const df::Event* p_e) {
 	// Stop motion and fire for shooter
 	if (p_e->getType() == STEP_EVENT) {
 
+		if (type == E_TOUGH) {
+
+			if (wasHit) {
+				setSprite("tough-enemy-hit");
+				hitCooldown--;
+			}
+			if (hitCooldown == 0) {
+				setSprite("tough-enemy");
+				hitCooldown = 3;
+				wasHit = false;
+			}
+		}
+
 		// If shooter, stop movement once close enough to the center of the screen
 		if (type == E_SHOOTER) {
 
@@ -150,6 +165,10 @@ void Enemy::hit(const df::EventCollision* p_collision_event) {
 	// If Bullet, reduce health and/or die
 	if ((p_collision_event->getObject1()->getType() == "Bullet") ||
 		(p_collision_event->getObject2()->getType() == "Bullet")) {
+
+		if (type == E_TOUGH) {
+			wasHit = true;
+		}
 
 		hitPoints--;
 

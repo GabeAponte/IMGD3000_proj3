@@ -38,10 +38,14 @@ class Hero : public df::Object {
 private:
 	Reticle* p_reticle;
 
+	bool shieldOverloaded;
 	bool firing;
 	int fireCooldown;
+	int overloadCooldown;
 	int shieldIntegrity;
 	int lives;
+	bool wasHit;
+	int hitCooldown;
 	std::map<player_weapon, std::string> weaponName;
 	std::map<player_weapon, int> weaponAmmo;
 	std::map<player_weapon, int> weaponCooldown;
