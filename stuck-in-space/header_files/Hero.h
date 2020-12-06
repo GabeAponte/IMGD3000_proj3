@@ -22,8 +22,9 @@
 #define HITBOX_WIDTH        9
 #define HITBOX_HEIGHT       5
 #define WEAPON_COUNT        6
-#define SPREAD_SPACING      10  // the spacing (in degrees) between Spread bullets
+#define SPREAD_SPACING      10  // The spacing (in degrees) between Spread bullets
 
+// Enum to represent all possible player weapon types
 enum player_weapon {
 	W_MISSILE,
 	W_LASER,
@@ -36,25 +37,29 @@ enum player_weapon {
 class Hero : public df::Object {
 
 private:
-	Reticle* p_reticle;
+	Reticle* p_reticle;				// Reticle displayed for aiming
+	bool firing;					// Indicates if the player can fire their weapon
+	int fireCooldown;				// The rate at which a weapon can fire
+	bool shieldOverloaded;			// Indicates if the shield overload attack was used 
+	int overloadCooldown;			// The rate at which to flash the screen for the shield overload event
+	int shieldIntegrity;			// Value of the player's shields
+	int lives;						// Value of the lives the player has (1)
+	bool wasHit;					// Indicates if the player was hit by an enemy
+	int hitCooldown;				// The rate at which to change the player sprite when hit
+	player_weapon currentWeapon;	// The weapon current equiped 
+	df::Vector projectileStart;		// The position a projectile will spawn from (based on sprite animation)
+	std::map<player_weapon, std::string> weaponName;	// Maps the weapons to thier name
+	std::map<player_weapon, int> weaponAmmo;			// Maps the weapons to their ammo counts
+	std::map<player_weapon, int> weaponCooldown;		// Maps the weapons to their cooldown rates
+	std::map<player_weapon, std::string> weaponSound;	// Maps the weapons to their audo sounds
 
-	bool shieldOverloaded;
-	bool firing;
-	int fireCooldown;
-	int overloadCooldown;
-	int shieldIntegrity;
-	int lives;
-	bool wasHit;
-	int hitCooldown;
-	std::map<player_weapon, std::string> weaponName;
-	std::map<player_weapon, int> weaponAmmo;
-	std::map<player_weapon, int> weaponCooldown;
-	std::map<player_weapon, std::string> weaponSound;
-	player_weapon currentWeapon;
-	df::Vector projectileStart; // the position projectiles currently spawn from
-
+	// Handle mouse events
 	void mouse(const df::EventMouse* p_mouse_event);
+
+	// Handle keyboard events
 	void kbd(const df::EventKeyboard* p_keyboard_event);
+
+	// Handles the shooting of all weapon types
 	void fire(df::Vector target, df::Vector origin);
 
 	// Handle step event
@@ -77,8 +82,14 @@ private:
 	void setProjectileStart(int index);
 
 public:
+
+	// Constructor / Deconstructor
 	Hero();
 	~Hero();
-	int eventHandler(const df::Event* p_e); // OVERRIDE
-	int draw(); // OVERRIDE
+
+	// Handles events (override)
+	int eventHandler(const df::Event* p_e);
+
+	// Handles drawing the hero (override)
+	int draw();
 };
