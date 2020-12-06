@@ -7,16 +7,22 @@
 //
 
 #pragma once
+
 #include "Object.h"
 
-class ScreenShaker : public df::Object
-{
+class ScreenShaker : public df::Object {
+
 public:
+
+	// Constructor
 	ScreenShaker();
 
 private:
-	int shakeIndex;
-	bool canShake;
+
+	int shakeIndex; // Indicates which velocity to apply to the shake
+	bool canShake;  // Toggles the ability to shake the screen
+
+	// Handles events
 	int eventHandler(const df::Event* p_e);
 };
 

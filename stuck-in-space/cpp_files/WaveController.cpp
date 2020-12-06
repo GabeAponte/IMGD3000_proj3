@@ -32,7 +32,6 @@ WaveController::WaveController()
 	enemyOptions.push_back(enemy_data{ E_TOUGH, 0, 1 });
 	enemyOptions.push_back(enemy_data{ E_FAST, 0, 1 });
 	enemyOptions.push_back(enemy_data{ E_TRICKY, 10, 2 });
-	enemyOptions.push_back(enemy_data{ E_SPIRAL, 20, 2 });
 	enemyOptions.push_back(enemy_data{ E_SWARM, 30, 4 });
 	enemyOptions.push_back(enemy_data{ E_SHOOTER, 40, 3 });
 
@@ -221,12 +220,6 @@ void WaveController::spawnEnemy()
 		enemySpawnCount++;
 		break;
 	}
-	case E_SPIRAL:
-	{
-		new Enemy(spawn_pos, E_SPIRAL);
-		enemySpawnCount++;
-		break;
-	}
 	case E_SWARM:
 	{
 		new Enemy(spawn_pos, E_SWARM);
@@ -320,7 +313,7 @@ int WaveController::eventHandler(const Event* p_e) {
 
 
 // Get the current wave number
-int WaveController::getWave()
+int WaveController::getWaveNumber()
 {
 	return waveNumber;
 }

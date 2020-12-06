@@ -8,6 +8,7 @@
 //
 
 #pragma once
+
 #include <Vector.h>
 
 #define PI 3.14159

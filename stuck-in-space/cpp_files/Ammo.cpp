@@ -15,8 +15,6 @@
 
 using namespace df;
 
-// inaccessible
-Ammo::Ammo() {}
 
 Ammo::Ammo(df::Vector position, player_weapon ammo_type, int ammo_value) {
 

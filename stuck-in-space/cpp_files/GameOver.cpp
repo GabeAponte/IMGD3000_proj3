@@ -52,7 +52,7 @@ GameOver::~GameOver() {
 	int wave = 1;
 	if (p_wc != nullptr)
 	{
-		wave = p_wc->getWave() - 1;
+		wave = p_wc->getWaveNumber() - 1;
 	}
 	new InputPlayerName(wave);
 

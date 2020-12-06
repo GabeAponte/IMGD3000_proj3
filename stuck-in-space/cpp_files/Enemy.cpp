@@ -226,11 +226,6 @@ void Enemy::setEnemyTypeSpeed()
 		setRealSpeed(1);
 		break;
 	}
-	case E_SPIRAL:
-	{
-		setRealSpeed(.35);
-		break;
-	}
 	case E_SWARM:
 	{
 		setRealSpeed(.25);
@@ -269,11 +264,6 @@ void Enemy::setEnemyTypeSprite()
 		setSprite("tricky-enemy");
 		break;
 	}
-	case E_SPIRAL:
-	{
-		setSprite("spiral-enemy");
-		break;
-	}
 	case E_SWARM:
 	{
 		setSprite("swarm-enemy");
@@ -308,11 +298,6 @@ void Enemy::setEnemyTypeHitPoints()
 		break;
 	}
 	case E_TRICKY:
-	{
-		hitPoints = 1;
-		break;
-	}
-	case E_SPIRAL:
 	{
 		hitPoints = 1;
 		break;

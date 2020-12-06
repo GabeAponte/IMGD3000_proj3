@@ -21,18 +21,17 @@ class InputPlayerName : public df::Object
 private:
 	int wavesCompleted;		// Value of the last wave survived
 	string playerName;		// Value of the current player
-	std::vector<ScoresIOStreamer::Score*> allScores;	// Vector of all the scores 
-	int keyRepeatWait;
+	int keyRepeatWait;      // Indicates the rate at which to register repeated keys
 	bool showTextCursor;	// Bool that toggles showing the text cursor
-	int textCursorWait;
+	int textCursorWait;     // Indiactes the rate at which to show the text cursor
 
-	// Function that handles events
+	// Handles events
 	int eventHandler(const df::Event* p_e);
 
-	// Function that draws the InputPlayerName display
+	// Draws the InputPlayerName display
 	int draw();
 
-	// Function that trims the leading and trailing whitespaces of a string
+	// Trims the leading and trailing whitespaces of a string
 	string trim(string s);
 
 public:

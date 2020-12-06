@@ -11,7 +11,13 @@
 class Reticle : public df::Object {
 
 public:
+
+	// Constructor 
 	Reticle();
+
+	// Draws the recticle
 	int draw(void);
+
+	// Handles events
 	int eventHandler(const df::Event* p_e);
 };

@@ -17,12 +17,10 @@
 class Ammo : public df::Object {
 
 private:
-	player_weapon ammoType; // the type of ammo the pickup will provide
-	char ammoChar;          // the character id of ammo type
-	int ammoValue;          // the amount of ammo to pickup
-	int decayTimer;         // the timer determining when the ammo despawns
-
-	Ammo(); // inaccessible
+	player_weapon ammoType; // The type of ammo the pickup will provide
+	char ammoChar;          // The character id of ammo type
+	int ammoValue;          // The amount of ammo to pickup
+	int decayTimer;         // The timer determining when the ammo despawns
 
 	// Handle decay timer
 	void step();
@@ -31,7 +29,7 @@ private:
 	void hit(const df::EventCollision* p_collision_event);
 
 public:
-	// constructor requires initial values
+	// Constructor that requires initial values
 	Ammo(df::Vector position, player_weapon ammo_type, int ammo_value);
 
 	// Handle events

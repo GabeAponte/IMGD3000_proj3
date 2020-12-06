@@ -13,27 +13,28 @@
 #include <EventStep.h>
 #include "../header_files/EventEnemyDeath.h"
 
-#define START_DIFFICULTY    0   // the starting difficulty.
-#define DIFFICULTY_INCREASE 5   // the difficulty increase per wave (including the start of the first one)
-#define WAVE_BEGIN_DELAY    60  // the downtime between one wave ending and the next starting
-#define ENEMY_SPAWN_DELAY   15  // the delay before the first enemy of a wave appears
-#define MAX_ENEMY_SPAWN_DELAY 60
-#define SPAWN_X_OFFSET      8   // the horizontal distance off screen to spawn enemies at
-#define SPAWN_Y_OFFSET      5   // the Vertical distance off screen to spawn enemies at
-#define SIDE_SPAWN_CHANCE   0.8 // the probability that a spawned enemy will appear from the side of the screen
-#define AMMO_SPAWN_CHANCE   0.5 // the probability that an ammo pickup will spawn when an enemy dies
-#define RAND_DICE_SIZE     100  // the size of the "die" rolled when choosing spawn chance (it picks a random int up to DICE_SIZE and divides it by DICE_SIZE)
+#define START_DIFFICULTY    0	    // The starting difficulty.
+#define DIFFICULTY_INCREASE 5		// The difficulty increase per wave (including the start of the first one)
+#define WAVE_BEGIN_DELAY    60		// The downtime between one wave ending and the next starting
+#define ENEMY_SPAWN_DELAY   15		// The delay before the first enemy of a wave appears
+#define MAX_ENEMY_SPAWN_DELAY 60    // The maximum delay before the first enemy of a wave appears
+#define SPAWN_X_OFFSET      8		// The horizontal distance off screen to spawn enemies at
+#define SPAWN_Y_OFFSET      5		// The Vertical distance off screen to spawn enemies at
+#define SIDE_SPAWN_CHANCE   0.8		// The probability that a spawned enemy will appear from the side of the screen
+#define AMMO_SPAWN_CHANCE   0.5		// The probability that an ammo pickup will spawn when an enemy dies
+#define RAND_DICE_SIZE     100		// The size of the "die" rolled when choosing spawn chance (it picks a random int up to DICE_SIZE and divides it by DICE_SIZE)
 
+// Enum values for all the possible enemy types
 enum enemy_type {
 	E_BASIC,
 	E_TOUGH,
 	E_FAST,
 	E_TRICKY,
-	E_SPIRAL,
 	E_SWARM,
 	E_SHOOTER,
 };
 
+// Struct that holds information on all the enemies
 struct enemy_data {
 	enemy_type enemyType;
 	int minDifficulty;
@@ -43,19 +44,17 @@ struct enemy_data {
 class WaveController : public df::Object {
 
 private:
-	bool disabled; // set to true to shut down wave controller updates
 
-	int waveNumber;
-	int difficulty;
-	std::vector<struct enemy_data> enemyOptions;
-
-	bool waveComplete;   // whether the current wave is complete
-	int waveBeginWait;   // the delay before the next wave spawns
-
-	int enemySpawnCount; // the number of enemies spawned so far this wave
-	int enemyKillCount;  // the number of enemies killed so far this wave
-	int enemySpawnWait;  // the delay before the next enemy spawns
+	bool disabled;		 // Set to true to shut down wave controller updates
+	int waveNumber;		 // The current wave the player is on
+	int difficulty;		 // The current value of enemy difficulties
+	bool waveComplete;   // Whether the current wave is complete
+	int waveBeginWait;   // The delay before the next wave spawns
+	int enemySpawnCount; // The number of enemies spawned so far this wave
+	int enemyKillCount;  // The number of enemies killed so far this wave
+	int enemySpawnWait;  // The delay before the next enemy spawns
 	std::vector<enemy_type> enemySpawnList; // the list of enemies to spawn
+	std::vector<struct enemy_data> enemyOptions; // Vector containg all enemy type spawn settings
 
 	// Handle step event
 	void step();
@@ -76,12 +75,14 @@ private:
 	float randomPercent();
 
 public:
+
+	// Constructor / Deconstructors
 	WaveController();
 	~WaveController();
 
-	// Handle game events
+	// Handles events
 	int eventHandler(const df::Event* p_e); // OVERRIDE
 
 	// Get the current wave number
-	int getWave();
+	int getWaveNumber();
 };
