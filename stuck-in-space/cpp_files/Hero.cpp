@@ -89,11 +89,11 @@ Hero::Hero() {
 	weaponCooldown[W_RAPID] = 4;
 
 	// Initialize weapon sounds
-	weaponSound[W_MISSILE] = "fire";
-	weaponSound[W_LASER] = "fire";
-	weaponSound[W_SPREAD] = "fire";
-	weaponSound[W_BOMB] = "fire";
-	weaponSound[W_PLASMA] = "fire";
+	weaponSound[W_MISSILE] = "missile";
+	weaponSound[W_LASER] = "laser";
+	weaponSound[W_SPREAD] = "spread";
+	weaponSound[W_BOMB] = "bomb";
+	weaponSound[W_PLASMA] = "plasma";
 	weaponSound[W_RAPID] = "fire";
 	// TODO: maybe condense these into a map to a struct?
 }
@@ -291,7 +291,9 @@ void Hero::fire(df::Vector target, df::Vector origin)
 	{
 		// Fire Bomb towards target, exploding on impact
 		Bomb* p_bomb = new Bomb();
-		p_bomb->setVelocity(v);
+		df::Vector bomb_vel = v;
+		bomb_vel.scale(.5);
+		p_bomb->setVelocity(bomb_vel);
 		p_bomb->setPosition(origin);
 		return;
 	}
@@ -400,8 +402,8 @@ void Hero::overloadShield() {
 	EventOverloadShield overload;
 	WM.onEvent(&overload);
 
-	// Play "overload" sound.
-	df::Sound* p_sound = RM.getSound("nuke");
+	// Play shield overload sound
+	df::Sound* p_sound = df::RM.getSound("shield-overload");
 	p_sound->play();
 }
 
@@ -512,6 +514,10 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 
 		// Colision did not kill the hero
 		if (shieldIntegrity != 0 || (shieldIntegrity == 0 && lives == 1)) {
+
+			// Play shield hit sound
+			df::Sound* p_sound = df::RM.getSound("shield-hit");
+			p_sound->play();
 
 			// Delete only the enemy
 			if (p_collision_event->getObject1()->getType() == "Enemy") {

@@ -99,6 +99,15 @@ void loadResources(void) {
 	RM.loadSound("../sounds/explode.wav", "explode");
 	RM.loadSound("../sounds/nuke.wav", "nuke");
 	RM.loadSound("../sounds/game-over.wav", "game over");
+	RM.loadSound("../sounds/laser.wav", "laser");
+	RM.loadSound("../sounds/spread.wav", "spread");
+	RM.loadSound("../sounds/missile.wav", "missile");
+	RM.loadSound("../sounds/plasma.wav", "plasma");
+	RM.loadSound("../sounds/bomb.wav", "bomb");
+	RM.loadSound("../sounds/bomb-explosion.wav", "bomb-explosion");
+	RM.loadSound("../sounds/shield-overload.wav", "shield-overload");
+	RM.loadSound("../sounds/shield-hit.wav", "shield-hit");
+	RM.loadSound("../sounds/ammo-pickup.wav", "ammo-pickup");
 
 	// Load music
 	RM.loadMusic("../sounds/start-music.wav", "start music");

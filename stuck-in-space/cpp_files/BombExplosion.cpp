@@ -23,6 +23,10 @@ BombExplosion::BombExplosion(df::Vector spawn_position) {
 		timeToLive = 0;
 	}
 
+	// Play explosion sound
+	df::Sound* p_sound = df::RM.getSound("bomb-explosion");
+	p_sound->play();
+
 	// Set to type bullet
 	setType("Bullet");
 

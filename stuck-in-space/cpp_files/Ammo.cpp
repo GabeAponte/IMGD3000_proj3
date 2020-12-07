@@ -12,6 +12,8 @@
 #include "../header_files/EventAmmo.h"
 #include "../header_files/Bullet.h"
 #include "../header_files/Ammo.h"
+#include <Sound.h>
+#include <ResourceManager.h>
 
 using namespace df;
 
@@ -121,10 +123,14 @@ void Ammo::hit(const df::EventCollision* p_collision_event) {
 		return;
 	}
 
+	// Play ammo pick up sound
+	Sound* p_sound = RM.getSound("ammo-pickup");
+	p_sound->play();
+
 	// Remove this object
 	WM.markForDelete(this);
 
-	// report that ammo was collected
+	// Report that ammo was collected
 	EventAmmo ea(ammoType, ammoValue);
 	WM.onEvent(&ea);
 }
