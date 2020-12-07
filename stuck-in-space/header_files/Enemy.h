@@ -12,6 +12,8 @@
 #include "EventCollision.h"
 #include "../header_files/WaveController.h"
 
+#define FIRE_COOLDOWN 75
+
 class Enemy : public df::Object {
 
 private:
@@ -34,11 +36,6 @@ private:
 
 	// Set the velocity to be towards the player
 	void targetHero(df::Vector position);
-
-	// Setters for enemy specific values
-	void setEnemyTypeSpeed();
-	void setEnemyTypeSprite();
-	void setEnemyTypeHitPoints();
 
 	// Applies the zig zag movement for 'tricky' enemy
 	void applyZigZagMovement();

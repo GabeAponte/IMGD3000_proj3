@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
 void loadResources(void) {
 
 	// Log level for what statements to print
-	LM.setLogLevel(3);
+	LM.setLogLevel(2);
 
 	// Load sprites
 	RM.loadSprite("../sprites/spr_player.txt", "player");
@@ -87,7 +87,6 @@ void loadResources(void) {
 	RM.loadSprite("../sprites/spr_enemy_tough_hit.txt", "tough-enemy-hit");
 	RM.loadSprite("../sprites/spr_enemy_tricky.txt", "tricky-enemy");
 	RM.loadSprite("../sprites/spr_enemy_shooter.txt", "shooter-enemy");
-	RM.loadSprite("../sprites/spr_enemy_spiral.txt", "spiral-enemy");
 	RM.loadSprite("../sprites/spr_enemybullet.txt", "enemy-bullet");
 	RM.loadSprite("../sprites/spr_explosion.txt", "explosion");
 	RM.loadSprite("../sprites/spr_bombexplosion.txt", "bomb-explosion");
@@ -105,8 +104,8 @@ void loadResources(void) {
 	RM.loadSound("../sounds/plasma.wav", "plasma");
 	RM.loadSound("../sounds/bomb.wav", "bomb");
 	RM.loadSound("../sounds/bomb-explosion.wav", "bomb-explosion");
-	RM.loadSound("../sounds/shield-overload.wav", "shield-overload");
-	RM.loadSound("../sounds/shield-hit.wav", "shield-hit");
+	RM.loadSound("../sounds/sfx_shield_overload.wav", "shield-overload");
+	RM.loadSound("../sounds/sfx_shield_hit.wav", "shield-hit");
 	RM.loadSound("../sounds/ammo-pickup.wav", "ammo-pickup");
 
 	// Load music

@@ -59,13 +59,17 @@ int GameStart::eventHandler(const df::Event* p_e)
 		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*) p_e;
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
 			switch (p_keyboard_event->getKey()) {
-			case df::Keyboard::P: 			// play
+			// Enter : Play (P also supported)
+			case df::Keyboard::RETURN:
+			case df::Keyboard::P:
 				start();
 				break;
-			case df::Keyboard::Q:			// quit
+			// Escape : Quit
+			case df::Keyboard::ESCAPE:
 				GM.setGameOver();
 				break;
-			case df::Keyboard::L:			// see leaderboards
+			// L : Show Leaderboard
+			case df::Keyboard::L:
 				new Leaderboard();
 				df::WM.markForDelete(this);
 				break;

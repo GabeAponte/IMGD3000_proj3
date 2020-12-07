@@ -1,0 +1,80 @@
+IMGD 3000 
+Project 3 - Final
+
+===============
+ ASSET CREDITS
+===============
+
+-------
+ENGINE:
+-------
+Joseph Henry Stadolnik IV
+Gabriel Aponte
+
+------------
+PROGRAMMING:
+------------
+Joseph Henry Stadolnik IV
+Gabriel Aponte
+
+-----------
+SPRITE ART:
+-----------
+Joseph Henry Stadolnik IV
+
+------
+MUSIC:
+------
+start-music - "Jungle Starvation", by RepaidGateman 
+http://www.flashkit.com/loops/Ambient/Electronica/Jungle_S-RepaidGa-10582/index.php
+
+--------------
+SOUND EFFECTS:
+--------------
+ammo-pickup.wav - "Spacey 1up/Power up", by GameAudio
+https://freesound.org/people/GameAudio/sounds/220173/
+
+bomb.wav - "Grenade Launcher", by LeMudCrab
+https://freesound.org/people/LeMudCrab/sounds/163458/
+
+bomb-explosion.wav - "Musket Explosion", by Willlewis
+https://freesound.org/people/Willlewis/sounds/244345/
+
+explode.wav - "Weird Explosion", by Angler
+http://www.flashkit.com/soundfx/Mayhem/Explosives/Weird_Ex-Angler-8806/index.php
+
+fire.wav - "laser", by domson
+http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Ambience/laser-domson-8694/laser-domson-8694_hifi.mp3
+
+game-over.wav - "BOOOOOMMM!!!", by Katanaman
+http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Cartoon/Explosions/BOOOOOMM-Katanama-7525/BOOOOOMM-Katanama-7525_hifi.mp3
+
+laser.wav - "acid ray gun.wav", by djgriffin
+https://freesound.org/people/djgriffin/sounds/21999/
+
+nuke.wav - "Nuklear Explosion", by Staberxpert
+http://www.flashkit.com/soundfx/Cartoon/Explosions/Nuklear_-Staberxp-8147/index.php
+
+missile.wav - "BLASTER (multiple)", by C3Sabertooth
+https://freesound.org/people/C3Sabertooth/sounds/480872/
+
+missile_unused.wav - "plasmapistol_shot.wav", by Stugs
+https://freesound.org/people/Stugs/sounds/450757/
+
+plasma.wav - "05780 space missile.wav", by Robinhood76
+https://freesound.org/people/Robinhood76/sounds/273332/
+
+sfx_shield_hit.wav - Custom sound by Joseph Henry Stadolnik IV
+Combines shield_hit.wav and shield_overload.wav with added effects.
+
+sfx_shield_hit.wav - Custom sound by Joseph Henry Stadolnik IV
+Combines shield-overload.wav and overload.wav with added effects.
+
+shield-hit.wav - "Sci-Fi Force Field Impact 15.wav", by StormwaveAudio
+https://freesound.org/people/StormwaveAudio/sounds/330629/
+
+shield-overload.wav - "ufo-shield.ogg", by jorgerosa
+https://freesound.org/people/jorgerosa/sounds/458690/
+
+spread.wav - "Laser Shot Silenced", by bubaproducer
+https://freesound.org/people/bubaproducer/sounds/151022/

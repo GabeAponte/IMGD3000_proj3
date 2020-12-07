@@ -2,7 +2,7 @@
 frames 4
 width 3
 height 1
-color gray
+color dkgray
 slowdown 4
 </HEADER>
 <BODY>

@@ -188,8 +188,8 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event)
 	if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 
 		switch (p_keyboard_event->getKey()) {
-			// Q : Quit
-		case df::Keyboard::Q:
+			// Escape : Quit
+		case df::Keyboard::ESCAPE:
 			GM.setGameOver();
 			break;
 			// Space : Overload Shield

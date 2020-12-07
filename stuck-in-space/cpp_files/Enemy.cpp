@@ -32,10 +32,51 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	setType("Enemy");
 	type = e_type;
 
-	// Set type diffrences
-	setEnemyTypeSpeed();
-	setEnemyTypeSprite();
-	setEnemyTypeHitPoints();
+	// Set type differences
+	hitPoints = 1;
+	switch (type)
+	{
+	case E_BASIC:
+	{
+		setSprite("basic-enemy");
+		setRealSpeed(.4);
+		break;
+	}
+	case E_TOUGH:
+	{
+		setSprite("tough-enemy");
+		setRealSpeed(.30);
+		hitPoints = 3;
+		break;
+	}
+	case E_FAST:
+	{
+		setSprite("fast-enemy");
+		setBox(Box(Vector(-2.5, -1.5), 5, 3));
+		setRealSpeed(1.2);
+		break;
+	}
+	case E_TRICKY:
+	{
+		setSprite("tricky-enemy");
+		setRealSpeed(0.7);
+		break;
+	}
+	case E_SWARM:
+	{
+		setSprite("swarm-enemy");
+		setBox(Box(Vector(-3.5, -2), 7, 4));
+		setAnimationIndex(rand() % 4);
+		setRealSpeed(.25);
+		break;
+	}
+	case E_SHOOTER:
+	{
+		setSprite("shooter-enemy");
+		setRealSpeed(1);
+		break;
+	}
+	}
 
 	// Initialize shared vars
 	setSolidness(SOFT);
@@ -43,7 +84,7 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	setPosition(start_pos);
 	targetHero(start_pos);
 	canFire = false;
-	fireCooldown = 0;
+	fireCooldown = FIRE_COOLDOWN/2;
 	canMove = true;
 	canZigZag = false;
 	stepCounter = 0;
@@ -209,120 +250,6 @@ void Enemy::targetHero(df::Vector position)
 	setVelocity(dir);
 }
 
-// Sets the speed based of teh type of enemy
-void Enemy::setEnemyTypeSpeed()
-{
-	switch (type)
-	{
-	case E_BASIC:
-	{
-		setRealSpeed(.35);
-		break;
-	}
-	case E_TOUGH:
-	{
-		setRealSpeed(.30);
-		break;
-	}
-	case E_FAST:
-	{
-		setRealSpeed(1.5);
-		break;
-	}
-	case E_TRICKY:
-	{
-		setRealSpeed(1);
-		break;
-	}
-	case E_SWARM:
-	{
-		setRealSpeed(.25);
-		break;
-	}
-	case E_SHOOTER:
-	{
-		setRealSpeed(1);
-		break;
-	}
-	}
-}
-
-// Sets the sprite based off the type of enemy
-void Enemy::setEnemyTypeSprite()
-{
-	switch (type)
-	{
-	case E_BASIC:
-	{
-		setSprite("basic-enemy");
-		break;
-	}
-	case E_TOUGH:
-	{
-		setSprite("tough-enemy");
-		break;
-	}
-	case E_FAST:
-	{
-		setSprite("fast-enemy");
-		break;
-	}
-	case E_TRICKY:
-	{
-		setSprite("tricky-enemy");
-		break;
-	}
-	case E_SWARM:
-	{
-		setSprite("swarm-enemy");
-		break;
-	}
-	case E_SHOOTER:
-	{
-		setSprite("shooter-enemy");
-		break;
-	}
-	}
-}
-
-// Sets the hit points based off the type of enemy
-void Enemy::setEnemyTypeHitPoints()
-{
-	switch (type)
-	{
-	case E_BASIC:
-	{
-		hitPoints = 1;
-		break;
-	}
-	case E_TOUGH:
-	{
-		hitPoints = 3;
-		break;
-	}
-	case E_FAST:
-	{
-		hitPoints = 1;
-		break;
-	}
-	case E_TRICKY:
-	{
-		hitPoints = 1;
-		break;
-	}
-	case E_SWARM:
-	{
-		hitPoints = 1;
-		break;
-	}
-	case E_SHOOTER:
-	{
-		hitPoints = 1;
-		break;
-	}
-	}
-}
-
 // Changes the veclocity of tricky to the current diagonal every 15 steps
 // Last rotation will target enemy directly
 void Enemy::applyZigZagMovement()
@@ -382,7 +309,7 @@ void Enemy::applyZigZagMovement()
 void Enemy::fire()
 {
 	// Update cooldown
-	fireCooldown = 75;
+	fireCooldown = FIRE_COOLDOWN;
 
 	// TODO: Play appropriate fire sound for the current weapon
 	// df::Sound* p_sound = RM.getSound("getone");
@@ -392,7 +319,7 @@ void Enemy::fire()
 	df::Vector v = Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - getPosition(); // calculate aim vector
 	v = convertToDragonfly(v);      // adjust aim for screen coordinates
 	v.normalize();                  // convert aim to direction
-	v.scale(1);                     // apply bullet speed
+	v.scale(0.5);                     // apply bullet speed
 	v = convertToReal(v);           // adjust velocity for screen coordinates
 
 	 // Fire Missile towards target

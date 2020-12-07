@@ -8,11 +8,11 @@ slowdown 4
 <BODY>
 *
 end
-x
++
 end
 *
 end
-+
+x
 end
 </BODY>
 <FOOTER>
