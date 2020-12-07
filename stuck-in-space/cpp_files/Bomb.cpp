@@ -15,17 +15,32 @@
 using namespace df;
 
 Bomb::Bomb() {
+	if (activeBomb != NULL)
+	{
+		// detonate existing bomb
+		activeBomb->explode();
+		// remove self
+		WM.markForDelete(this);
+	}
+	else
+	{
+		// store self as active bomb
+		activeBomb = this;
 
-	// Link to bomb sprite.
-	setSprite("w_bomb");
-
-	// Set other object properties.
-	setType("Bullet");
+		// setup as bomb
+		setSprite("w_bomb");
+		setType("Bullet");
+	}
 
 	setSolidness(SOFT);
 
 	// Set the weapon type
 	weaponType = W_BOMB;
+}
+
+Bomb::~Bomb()
+{
+	activeBomb = NULL;
 }
 
 // Handle event.
@@ -56,10 +71,16 @@ void Bomb::hit(const df::EventCollision* p_collision_event)
 	if ((p_collision_event->getObject1()->getType() == "Enemy") || (p_collision_event->getObject2()->getType() == "Enemy")
 		|| (p_collision_event->getObject1()->getType() == "EnemyBullet") || (p_collision_event->getObject2()->getType() == "EnemyBullet")) {
 
-		// Delete this projectile object
-		WM.markForDelete(this);
-
-		// Spawn a big explosion
-		new BombExplosion(getPosition()+getVelocity());
+		explode();
 	}
+}
+
+// Detonates the bomb
+void Bomb::explode()
+{
+	// Delete this projectile object
+	WM.markForDelete(this);
+
+	// Spawn a big explosion
+	new BombExplosion(getPosition() + getVelocity());
 }

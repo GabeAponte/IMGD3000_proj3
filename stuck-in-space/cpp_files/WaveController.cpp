@@ -38,7 +38,7 @@ WaveController::WaveController() {
 	enemyOptions.push_back(enemy_data{ E_FAST, 15, 2 });
 	enemyOptions.push_back(enemy_data{ E_TRICKY, 20, 3 });
 	enemyOptions.push_back(enemy_data{ E_SWARM, 30, 5 });
-	enemyOptions.push_back(enemy_data{ E_SHOOTER, 40, 4 });
+	enemyOptions.push_back(enemy_data{ E_SHOOTER, 40, 5 });
 
 	// Initialize vars
 	enemySpawnCount = 0;

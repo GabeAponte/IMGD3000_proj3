@@ -78,9 +78,9 @@ int Leaderboard::draw()
 {
 	float mid_x = WM.getView().getCorner().getX() + WM.getView().getHorizontal() / 2;
 	float bottom_y = WM.getView().getCorner().getY() + WM.getView().getVertical();
-	DM.drawString(Vector(mid_x, 3), "\\===\\  L E A D E R B O A R D  /===/", df::CENTER_JUSTIFIED, df::Color::YELLOW);
-	DM.drawString(Vector(mid_x - 25, 6), "Waves Survived:", df::CENTER_JUSTIFIED, df::Color::YELLOW);
-	DM.drawString(Vector(mid_x + 20, 6), "Player Name:", df::CENTER_JUSTIFIED, df::Color::YELLOW);
+	DM.drawString(Vector(mid_x, 3), "\\===\\  L E A D E R B O A R D  /===/", df::CENTER_JUSTIFIED);
+	DM.drawString(Vector(mid_x - 25, 6), "Waves Survived:", df::CENTER_JUSTIFIED);
+	DM.drawString(Vector(mid_x + 20, 6), "Player Name:", df::CENTER_JUSTIFIED);
 	DM.drawString(Vector(mid_x, bottom_y-3), "RETURN: [Enter]", df::CENTER_JUSTIFIED);
 	DM.drawString(Vector(mid_x, bottom_y-2), "QUIT: [Esc]", df::CENTER_JUSTIFIED);
 
@@ -90,11 +90,11 @@ int Leaderboard::draw()
 	// Draw up to 15 of the top scores
 	std::vector<ScoresIOStreamer::Score*>::iterator it;
 	for (it = allScores.begin(); it != allScores.end() && index <= 15; it++) {
-		df::Color player_color = df::Color::GREEN;
+		df::Color player_color = df::Color::LTGRAY;
 		// If drawing currsnt round's score, use a different color
 		if (latestScore != NULL && latestScore == (*it)->score && latestPlayer == (*it)->player)
 		{
-			player_color = df::Color::WHITE;
+			player_color = df::Color::YELLOW;
 		}
 
 		DM.drawString(Vector(mid_x - 25, xPosition), std::to_string((*it)->score), df::CENTER_JUSTIFIED, player_color);

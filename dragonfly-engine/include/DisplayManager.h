@@ -98,7 +98,7 @@ namespace df {
 		
 		// DRAWING FUNCTIONS
 
-		// Set defauly background color
+		// Set default background color
 		// Return 0 if ok, -1 if false
 		int setBackgroundColor(Color color);
 

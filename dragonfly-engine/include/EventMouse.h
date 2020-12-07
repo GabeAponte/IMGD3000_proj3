@@ -11,8 +11,9 @@ namespace df {
 		UNDEFINED_MOUSE_ACTION = -1,
 		CLICKED,	// mouse button was just pressed
 		RELEASED,	// mouse button was just released
-		PRESSED,	// mouse button is held down (inconsistent with keyboard) >:(
+		PRESSED,	// mouse button is held down (inconsistent terminology with key press)
 		MOVED,		// mouse was moved
+		SCROLLED,	// mouse wheel was scrolled
 	};
 
 	// Keys Dragonfly recognizes
@@ -30,6 +31,7 @@ namespace df {
 		EventMouseAction m_mouse_action;
 		Mouse::Button m_mouse_button;
 		Vector m_mouse_xy;
+		float m_mouse_scroll;
 
 	public:
 		EventMouse();
@@ -39,12 +41,16 @@ namespace df {
 		void setMouseAction(EventMouseAction new_action);
 		EventMouseAction getMouseAction() const;
 
-		// Get/Set mouse event button
+		// Get/Set mouse button
 		void setMouseButton(Mouse::Button new_button);
 		Mouse::Button getMouseButton() const;
 
-		// Get/Set mouse event button
+		// Get/Set mouse position
 		void setMousePosition(Vector new_position);
 		Vector getMousePosition() const;
+
+		// Get/Set mouse scroll delta
+		void setMouseScroll(float scroll_delta);
+		float getMouseScroll() const;
 	};
 }

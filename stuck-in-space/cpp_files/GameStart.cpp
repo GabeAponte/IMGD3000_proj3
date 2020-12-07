@@ -91,14 +91,12 @@ void GameStart::start()
 	p_fuel->setLocation(df::TOP_LEFT);
 	p_fuel->setViewString("Shield Integrity %");
 	p_fuel->setValue(100);
-	p_fuel->setColor(df::YELLOW);
 
 	// Wave display
 	df::ViewObject* p_wave = new df::ViewObject; 
 	p_wave->setLocation(df::TOP_RIGHT);
 	p_wave->setViewString("WAVE");
 	p_wave->setValue(1);
-	p_wave->setColor(df::YELLOW);
 
 	// Pause game music.
 	MUSICPLAYER.pauseMusic();

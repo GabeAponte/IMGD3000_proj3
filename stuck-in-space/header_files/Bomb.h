@@ -16,15 +16,19 @@
 class Bomb : public Bullet {
 
 private:
-
 	// Handles collision events
 	void hit(const df::EventCollision* p_collision_event);
 
+	// Detonates the bomb
+	void explode();
+
 public:
 
-	// Constructor
 	Bomb();
+	~Bomb();
 
 	// Handle events
 	int eventHandler(const df::Event* p_e);
 };
+
+static Bomb* activeBomb = NULL;

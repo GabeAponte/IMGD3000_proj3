@@ -14,6 +14,7 @@ namespace df {
 		bool show_message = true;
 		bool toggle_color = false;
 		Vector m_cursor;
+		char m_cursor_char = '+';
 
 	public:
 		TestDisplay();

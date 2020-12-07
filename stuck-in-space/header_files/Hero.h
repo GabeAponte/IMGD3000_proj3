@@ -23,6 +23,7 @@
 #define HITBOX_HEIGHT       5
 #define WEAPON_COUNT        6
 #define SPREAD_SPACING      10  // The spacing (in degrees) between Spread bullets
+#define SCROLL_COOLDOWN     3   // The number of steps to wait between detecting mouse scroll events
 
 // Enum to represent all possible player weapon types
 enum player_weapon {
@@ -47,8 +48,9 @@ private:
 	int lives;						// Value of the lives the player has (1)
 	bool wasHit;					// Indicates if the player was hit by an enemy
 	int hitCooldown;				// The rate at which to change the player sprite when hit
-	int noAmmoCooldown;               // The rate at which to play out of ammo sound
+	int noAmmoCooldown;             // The rate at which to play out of ammo sound
 	player_weapon currentWeapon;	// The weapon current equiped 
+	int changeWeaponCooldown;		// Cooldown between mouse scroll events
 	df::Vector projectileStart;		// The position a projectile will spawn from (based on sprite animation)
 	std::map<player_weapon, std::string> weaponName;	// Maps the weapons to thier name
 	std::map<player_weapon, int> weaponAmmo;			// Maps the weapons to their ammo counts
@@ -74,8 +76,13 @@ private:
 	void hit(const df::EventCollision* p_collision_event);
 
 	// Change the player's currently-equipped weapon
-	// Also adjusts the cooldown if active to prevent abusing it
 	void changeWeapon(player_weapon new_weapon);
+
+	// Switch to the next weapon
+	void nextWeapon();
+
+	// Switch to the previous weapon
+	void previousWeapon();
 
 	// Update the player's sprite based on the reticle location
 	void updateSprite();

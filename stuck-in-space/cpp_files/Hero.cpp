@@ -96,7 +96,6 @@ Hero::Hero() {
 	weaponSound[W_BOMB] = "bomb";
 	weaponSound[W_PLASMA] = "plasma";
 	weaponSound[W_RAPID] = "rapid";
-	// TODO: maybe condense these into a map to a struct?
 }
 
 Hero::~Hero() {
@@ -180,6 +179,27 @@ void Hero::mouse(const df::EventMouse* p_mouse_event)
 			firing = false;
 		}
 	}
+	// Scrolled?
+	if (p_mouse_event->getMouseAction() == df::SCROLLED)
+	{
+		// Skip if on cooldown
+		if (changeWeaponCooldown > 0)
+		{
+			return;
+		}
+
+		float scroll = p_mouse_event->getMouseScroll();
+		if (scroll > 0)
+		{
+			previousWeapon();
+			changeWeaponCooldown = SCROLL_COOLDOWN;
+		}
+		else if (scroll < 0)
+		{
+			nextWeapon();
+			changeWeaponCooldown = SCROLL_COOLDOWN;
+		}
+	}
 }
 
 // Take appropriate action according to key pressed.
@@ -189,15 +209,15 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event)
 	if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 
 		switch (p_keyboard_event->getKey()) {
-			// Escape : Quit
+		// Escape : Quit
 		case df::Keyboard::ESCAPE:
 			GM.setGameOver();
 			break;
-			// Space : Overload Shield
+		// Space : Overload Shield
 		case df::Keyboard::SPACE:
 			overloadShield();
 			break;
-			// 1-6 : Switch Weapon
+		// 1-6 : Switch Weapon
 		case df::Keyboard::NUM1:
 			changeWeapon(W_MISSILE);
 			break;
@@ -215,6 +235,16 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event)
 			break;
 		case df::Keyboard::NUM6:
 			changeWeapon(W_RAPID);
+			break;
+		// A : Previous Weapon (also supports Left Arrow)
+		case df::Keyboard::A:
+		case df::Keyboard::LEFTARROW:
+			previousWeapon();
+			break;
+		// D : Next Weapon (also supports Right Arrow)
+		case df::Keyboard::D:
+		case df::Keyboard::RIGHTARROW:
+			nextWeapon();
 			break;
 		default:
 			break;
@@ -330,6 +360,11 @@ void Hero::fire(df::Vector target, df::Vector origin)
 // Decrease rate restriction counters.
 void Hero::step()
 {
+	// Update mouse scroll cooldown
+	if (changeWeaponCooldown > 0) {
+		changeWeaponCooldown--;
+	}
+
 	// If hero was hit, set the sprite color
 	if (wasHit) {
 		setSprite("player-hit");
@@ -419,10 +454,23 @@ void Hero::overloadShield() {
 
 
 // Change the player's currently-equipped weapon
-// Also adjusts the cooldown if active to prevent abusing it
 void Hero::changeWeapon(player_weapon new_weapon)
 {
 	currentWeapon = new_weapon;
+}
+
+
+// Switch to the previous weapon
+void Hero::previousWeapon()
+{
+	changeWeapon((player_weapon)((((int)currentWeapon) + WEAPON_COUNT - 1) % WEAPON_COUNT));
+}
+
+
+// Switch to the next weapon
+void Hero::nextWeapon()
+{
+	changeWeapon((player_weapon)((((int)currentWeapon) + 1) % WEAPON_COUNT));
 }
 
 
@@ -576,15 +624,15 @@ int Hero::draw()
 		// draw selection indicator
 		if (currentWeapon == weapon)
 		{
-			DM.drawCh(Vector(x_pos, DM.getVertical() - 3.5), 'V', YELLOW);
+			DM.drawCh(Vector(x_pos, DM.getVertical() - 3.5), 'V');
 		}
 
 		// Draw weapon name
-		DM.drawString(Vector(x_pos, DM.getVertical() - 2.5), weaponName[weapon], CENTER_JUSTIFIED, YELLOW);
+		DM.drawString(Vector(x_pos, DM.getVertical() - 2.5), weaponName[weapon], CENTER_JUSTIFIED);
 
 		// Draw weapon ammo
 		std::string ammo_string = "---";
-		Color color = YELLOW;
+		Color color = df::LTGRAY;
 
 		if (weapon != W_MISSILE)
 		{
