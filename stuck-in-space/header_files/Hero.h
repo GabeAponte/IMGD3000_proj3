@@ -47,6 +47,7 @@ private:
 	int lives;						// Value of the lives the player has (1)
 	bool wasHit;					// Indicates if the player was hit by an enemy
 	int hitCooldown;				// The rate at which to change the player sprite when hit
+	int noAmmoCooldown;               // The rate at which to play out of ammo sound
 	player_weapon currentWeapon;	// The weapon current equiped 
 	df::Vector projectileStart;		// The position a projectile will spawn from (based on sprite animation)
 	std::map<player_weapon, std::string> weaponName;	// Maps the weapons to thier name

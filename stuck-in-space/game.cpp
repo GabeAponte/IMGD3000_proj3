@@ -107,6 +107,10 @@ void loadResources(void) {
 	RM.loadSound("../sounds/sfx_shield_overload.wav", "shield-overload");
 	RM.loadSound("../sounds/sfx_shield_hit.wav", "shield-hit");
 	RM.loadSound("../sounds/ammo-pickup.wav", "ammo-pickup");
+	RM.loadSound("../sounds/rapid.wav", "rapid");
+	RM.loadSound("../sounds/enemy-bullet.wav", "enemy-bullet");
+	RM.loadSound("../sounds/tough-hit.wav", "tough-hit");
+	RM.loadSound("../sounds/out-of-ammo.wav", "out-of-ammo");
 
 	// Load music
 	RM.loadMusic("../sounds/game-music.wav", "game-music");

@@ -149,6 +149,12 @@ int Enemy::eventHandler(const df::Event* p_e)
 	// Regulate 'tough' sprite color
 	if (p_e->getType() == STEP_EVENT) {
 
+		// Check if damage needs to be taken and then reset toogle if so
+		if (takeDamage) {
+			hitPoints--;
+			takeDamage = false;
+		}
+
 		// If tough, set sprite when hit
 		if (type == E_TOUGH) {
 
@@ -211,14 +217,23 @@ void Enemy::hit(const df::EventCollision* p_collision_event)
 	if ((p_collision_event->getObject1()->getType() == "Bullet") ||
 		(p_collision_event->getObject2()->getType() == "Bullet")) {
 
-		// Set wasHit to true for 'tough' so that sprite updates
+		// Remove hitpoints
+		takeDamage = true;
+
+		std::cout << "hit" << "\n";
+
+		// Set wasHit to true for 'tough' so that sprite updates and play tough hit sound if still has health
 		if (type == E_TOUGH) {
 			wasHit = true;
+
+			if (hitPoints > 0) {
+				// Play tough-hit sound
+				df::Sound* p_sound = df::RM.getSound("tough-hit");
+				p_sound->play();
+			}
 		}
 
-		// Remove hitpoints
-		hitPoints--;
-
+		
 		// Check if now dead
 		if (hitPoints <= 0) {
 
@@ -311,9 +326,9 @@ void Enemy::fire()
 	// Update cooldown
 	fireCooldown = FIRE_COOLDOWN;
 
-	// TODO: Play appropriate fire sound for the current weapon
-	// df::Sound* p_sound = RM.getSound("getone");
-	// p_sound->play();
+	// Play enemy bullet sound
+	df::Sound* p_sound = df::RM.getSound("enemy-bullet");
+	p_sound->play();
 
 	// Calculate bullet velocity
 	df::Vector v = Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - getPosition(); // calculate aim vector

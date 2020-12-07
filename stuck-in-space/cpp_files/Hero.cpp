@@ -63,6 +63,7 @@ Hero::Hero() {
 	projectileStart = Vector();
 	shieldOverloaded = false;
 	wasHit = false;
+	noAmmoCooldown = 0;
 
 	// Initialize weapon names
 	weaponName[W_MISSILE] = "MISSILE";
@@ -74,7 +75,7 @@ Hero::Hero() {
 
 	// Initialize weapon ammo counts
 	weaponAmmo[W_MISSILE] = 0; // should always be 0
-	weaponAmmo[W_LASER] = 20;
+	weaponAmmo[W_LASER] = 0;
 	weaponAmmo[W_SPREAD] = 20;
 	weaponAmmo[W_BOMB] = 20;
 	weaponAmmo[W_PLASMA] = 20;
@@ -94,7 +95,7 @@ Hero::Hero() {
 	weaponSound[W_SPREAD] = "spread";
 	weaponSound[W_BOMB] = "bomb";
 	weaponSound[W_PLASMA] = "plasma";
-	weaponSound[W_RAPID] = "fire";
+	weaponSound[W_RAPID] = "rapid";
 	// TODO: maybe condense these into a map to a struct?
 }
 
@@ -229,11 +230,15 @@ void Hero::fire(df::Vector target, df::Vector origin)
 	if (currentWeapon != W_MISSILE) {
 
 		if (weaponAmmo[currentWeapon] <= 0) {
-			// TODO: Play warning sound to indicate out of ammo
-			/*
-			df::Sound* p_sound = RM.getSound("no_ammo");
-			p_sound->play();
-			*/
+
+			// Play warning sound to indicate out of ammo
+			if (noAmmoCooldown <= 0) {
+
+				df::Sound* p_sound = RM.getSound("out-of-ammo");
+				p_sound->play();
+
+				noAmmoCooldown = 15;
+			}
 			return;
 		} 
 		else {
@@ -323,7 +328,7 @@ void Hero::fire(df::Vector target, df::Vector origin)
 }
 
 // Decrease rate restriction counters.
-void Hero::step() 
+void Hero::step()
 {
 	// If hero was hit, set the sprite color
 	if (wasHit) {
@@ -360,6 +365,11 @@ void Hero::step()
 	}
 	else if (firing) {
 		fire(p_reticle->getPosition(), projectileStart);
+	}
+
+	// Control no ammo sound cooldown rate every step
+	if (noAmmoCooldown > 0) {
+		noAmmoCooldown--;
 	}
 
 	// Update sprite
@@ -574,11 +584,18 @@ int Hero::draw()
 
 		// Draw weapon ammo
 		std::string ammo_string = "---";
+		Color color = YELLOW;
+
 		if (weapon != W_MISSILE)
 		{
 			ammo_string = std::to_string(weaponAmmo[weapon]);
+			
+			// Make ammo count red if there is no ammo
+			if (weaponAmmo[weapon] <= 0) {
+				color = RED;
+			}
 		}
-		DM.drawString(Vector(x_pos, DM.getVertical() - 1.5), ammo_string, CENTER_JUSTIFIED, YELLOW);
+		DM.drawString(Vector(x_pos, DM.getVertical() - 1.5), ammo_string, CENTER_JUSTIFIED, color);
 	}
 
 	return 0;

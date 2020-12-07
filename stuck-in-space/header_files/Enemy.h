@@ -30,6 +30,7 @@ private:
 	int rotationIndex;		// Tracks which rotation to apply when zig zaging
 	bool wasHit;			// Tracks if the enemy was hit (used to change sprite of 'tough' enemy)
 	int hitCooldown;		// Rate at which to flicker the sprite chnage for 'tough' enemy
+	int takeDamage;			// Toggles the removal of a hit point;
 
 	// Handle collision events between player and bullets
 	void hit(const df::EventCollision* p_collision_event);

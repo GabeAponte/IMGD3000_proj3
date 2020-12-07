@@ -79,5 +79,17 @@ https://freesound.org/people/jorgerosa/sounds/458690/
 spread.wav - "Laser Shot Silenced", by bubaproducer
 https://freesound.org/people/bubaproducer/sounds/151022/
 
-game-music.wave - "Through Space", by maxstack
+game-music.wav - "Through Space", by maxstack
 https://opengameart.org/content/through-space
+
+rapid.wav - "Laser2", by jobro
+https://freesound.org/people/jobro/sounds/35679/
+
+enemy-bullet.wav - "Retro_Laser_Shot_04", by Matrixxx_
+https://freesound.org/people/MATRIXXX_/sounds/414888/
+
+tough-hit.wav - "Swoard Hit Heavy", by EminYildirim
+https://freesound.org/people/EminYildirim/sounds/536104/
+
+out-of-ammo.wav - "Error_04", by distillerystudio
+https://freesound.org/people/distillerystudio/sounds/327735/
