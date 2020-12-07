@@ -2,7 +2,7 @@
 frames 6
 width 6
 height 3
-color orange
+color tan
 slowdown 4
 transparency #
 </HEADER>

@@ -2,7 +2,7 @@
 frames 5
 width 17
 height 7
-color orange
+color yellow
 slowdown 2
 transparency #
 </HEADER>

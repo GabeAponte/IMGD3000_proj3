@@ -44,12 +44,14 @@ namespace df {
 		PINK,
 		LIME,
 		SKYBLUE,
-		EGGSHELL,
+		IVORY,
 		SEAFOAM,
 		INDIGO,
-		// Skin
+		// Misc.
 		TAN,
 		CHOCOLATE,
+		CORAL,
+		SEAMETAL,
 	};
 
 	// Default color used if none specified
@@ -109,7 +111,7 @@ namespace df {
 			case BURGUNDY:
 				return sf::Color(63, 15, 33);
 			case DKGREEN:
-				return sf::Color(138, 148, 255);
+				return sf::Color(25, 77, 46);
 			case DKBLUE:
 				return sf::Color(14, 9, 154);
 			case BROWN:
@@ -125,17 +127,21 @@ namespace df {
 				return sf::Color(182, 255, 0);
 			case SKYBLUE:
 				return sf::Color(0, 160, 255);
-			case EGGSHELL:
+			case IVORY:
 				return sf::Color(249, 223, 175);
 			case SEAFOAM:
-				return sf::Color(153, 255, 206);
+				return sf::Color(163, 255, 212);
 			case INDIGO:
 				return sf::Color(138, 148, 255);
-			// Skin
+			// Misc.
 			case TAN:
 				return sf::Color(214, 155, 91);
 			case CHOCOLATE:
 				return sf::Color(78, 42, 29);
+			case CORAL:
+				return sf::Color(255, 96, 81);
+			case SEAMETAL:
+				return sf::Color(96, 140, 132);
 			// Default to white
 			default:
 				return sf::Color::White;
@@ -207,17 +213,21 @@ namespace df {
 			return LIME;
 		} else if (color_string == "skyblue") {
 			return SKYBLUE;
-		} else if (color_string == "eggshell") {
-			return EGGSHELL;
+		} else if (color_string == "ivory") {
+			return IVORY;
 		} else if (color_string == "seafoam") {
 			return SEAFOAM;
 		} else if (color_string == "indigo") {
 			return INDIGO;
-		// Skin
+		// Misc.
 		} else if (color_string == "tan") {
 			return TAN;
 		} else if (color_string == "chocolate") {
 			return CHOCOLATE;
+		} else if (color_string == "coral") {
+			return CORAL;
+		} else if (color_string == "seametal") {
+			return SEAMETAL;
 		// Other
 		} else {
 			return UNDEFINED_COLOR;

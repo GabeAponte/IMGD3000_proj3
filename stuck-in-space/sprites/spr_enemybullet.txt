@@ -2,7 +2,7 @@
 frames 2
 width 3
 height 1
-color red
+color coral
 slowdown 3
 </HEADER>
 <BODY>

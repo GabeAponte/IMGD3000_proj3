@@ -61,8 +61,8 @@ int Laser::eventHandler(const df::Event* p_e)
 // Draws the lazer
 int Laser::draw()
 {
-	DM.drawCh(prevPos2, '.', VIOLET);
-	DM.drawCh(prevPos1, 'o', VIOLET);
-	DM.drawCh(getPosition(), 'O', VIOLET);
+	DM.drawCh(prevPos2, '.', INDIGO);
+	DM.drawCh(prevPos1, 'o', INDIGO);
+	DM.drawCh(getPosition(), 'O', INDIGO);
 	return 0;
 }
