@@ -17,6 +17,7 @@
 #include "../header_files/GameStart.h"
 #include "../header_files/WaveController.h"
 #include "../header_files/InputPlayerName.h"
+#include "../header_files/MusicPlayer.h"
 
 using namespace df;
 
@@ -46,6 +47,9 @@ GameOver::GameOver() {
 
 // When done, game over so shut down.
 GameOver::~GameOver() {
+
+	// Play game music
+	MUSICPLAYER.playMusic();
 
 	// Allow the player to record their score
 	new InputPlayerName(wavesSurvived);

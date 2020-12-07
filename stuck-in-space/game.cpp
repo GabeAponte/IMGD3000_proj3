@@ -12,10 +12,10 @@
 #include "LogManager.h"
 #include "DisplayManager.h"
 #include "ResourceManager.h"
+#include "WorldManager.h"
 #include "header_files/GameStart.h"
 #include "header_files/Star.h"
 #include "header_files/ScoresIOStreamer.h"
-#include <WorldManager.h>
 #include "header_files/ScreenShaker.h"
 
 // Function prototypes.
@@ -109,7 +109,7 @@ void loadResources(void) {
 	RM.loadSound("../sounds/ammo-pickup.wav", "ammo-pickup");
 
 	// Load music
-	RM.loadMusic("../sounds/start-music.wav", "start music");
+	RM.loadMusic("../sounds/game-music.wav", "game-music");
 }
 
 // Populate world with some objects.

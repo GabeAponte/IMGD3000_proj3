@@ -17,8 +17,6 @@ class GameStart : public df::ViewObject {
 
 private:
 
-	df::Music* p_music; // GameStart music
-
 	// Handles starting the game
 	void start();
 
@@ -32,7 +30,4 @@ public:
 
 	// Draws the start menue
 	int draw();
-
-	// Plays the start music
-	void playMusic();
 };

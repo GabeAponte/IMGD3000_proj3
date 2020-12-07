@@ -9,18 +9,19 @@
 //
 
 #include "Color.h"
+#include "Music.h"
 #include "EventKeyboard.h"
 #include "GameManager.h"
 #include "LogManager.h"
 #include "ResourceManager.h"
 #include "WorldManager.h"
-#include "Music.h"
 #include "../header_files/GameStart.h"
 #include "../header_files/Hero.h"
 #include "../header_files/Points.h"
 #include "../header_files/Enemy.h"
 #include "../header_files/WaveController.h"
 #include "../header_files/Leaderboard.h"
+#include "../header_files/MusicPlayer.h"
 
 using namespace df;
 
@@ -39,15 +40,8 @@ GameStart::GameStart() {
 	// Put in center of screen.
 	setLocation(df::CENTER_CENTER);
 
-	// Play start music.
-	p_music = RM.getMusic("start music");
-	playMusic();
-}
-
-// Play start music.
-void GameStart::playMusic() 
-{
-	p_music->play();
+	// Play game music.
+	MUSICPLAYER.playMusic();
 }
 
 // Handle event.
@@ -106,8 +100,8 @@ void GameStart::start()
 	p_wave->setValue(1);
 	p_wave->setColor(df::YELLOW);
 
-	// Pause start music.
-	p_music->pause();
+	// Pause game music.
+	MUSICPLAYER.pauseMusic();
 
 	// When game starts, destroy this object.
 	WM.markForDelete(this);

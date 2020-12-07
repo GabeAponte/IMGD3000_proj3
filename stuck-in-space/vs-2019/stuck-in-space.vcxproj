@@ -44,6 +44,7 @@
     <ClCompile Include="..\cpp_files\EnemyBullet.cpp" />
     <ClCompile Include="..\cpp_files\ScreenShaker.cpp" />
     <ClCompile Include="..\cpp_files\EventShake.cpp" />
+    <ClCompile Include="..\cpp_files\MusicPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Ammo.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="..\header_files\EnemyBullet.h" />
     <ClInclude Include="..\header_files\ScreenShaker.h" />
     <ClInclude Include="..\header_files\EventShake.h" />
+    <ClInclude Include="..\header_files\MusicPlayer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
