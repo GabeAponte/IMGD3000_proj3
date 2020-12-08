@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <Vector.h>
-#include <EventView.h>
 #include <WorldManager.h>
 #include <DisplayManager.h>
 #include "../header_files/EventEnemyDeath.h"
@@ -26,6 +25,9 @@ WaveController::WaveController() {
 
 	// Set to SPECTRAL
 	setSolidness(SPECTRAL);
+
+	// Set to draw above things
+	setAltitude(MAX_ALTITUDE);
 
 	// Initialize vars
 	waveNumber = 0;
@@ -103,7 +105,6 @@ void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 	}
 
 	// Spawn ammo refill at enemy location if player killed enemy
-	// TODO: maybe more likely if low on ammo
 	if (p_enemydeath_event->getDidPlayerKill() && randomPercent() >= AMMO_SPAWN_CHANCE) {
 		spawnAmmo(p_enemydeath_event->getPosition());
 	}
@@ -123,9 +124,7 @@ void WaveController::beginWave()
 	// Toggle wave started message
 	displayWaveStart = true;
 
-	//std::cout << "STARTING WAVE " << waveNumber << "\n";
-	EventView ev("WAVE", waveNumber, false);
-	WM.onEvent(&ev);
+	std::cout << "STARTING WAVE " << waveNumber << "\n";
 	waveComplete = false;
 
 	// Advance difficulty
@@ -147,7 +146,7 @@ void WaveController::beginWave()
 					// Queue enemy for spawning, and add cost to accumulated difficulty cost
 					enemySpawnList.push_back(it->enemyType);
 					difficulty_cost += it->difficultyCost;
-					//std::cout << "~ Queuing enemy of type " << (int)it->enemyType << " (Cost: " << difficulty_cost << "/" << difficulty << ")\n";
+					std::cout << "~ Queuing enemy of type " << (int)it->enemyType << " (Cost: " << difficulty_cost << "/" << difficulty << ")\n";
 					break;
 				}
 			}
@@ -324,10 +323,17 @@ int WaveController::getWaveNumber()
 // Draws messages when waves start and end
 int WaveController::draw() 
 {
+	float mid_x = WM.getView().getCorner().getX() + WM.getView().getHorizontal() / 2;
+	float top_y = WM.getView().getCorner().getY();
+	float mid_y = top_y + WM.getView().getVertical() / 2;
+
+	// Display wave count over player HUD
+	DM.drawString(Vector(mid_x, top_y+2), "WAVE " + std::to_string(waveNumber), df::CENTER_JUSTIFIED, df::Color::GREEN);
+
 	// Display wave start message if it is toggled
 	if (displayWaveStart) {
 		if (messageCooldown > 0) {
-			DM.drawString(Vector(WM.getView().getHorizontal() / 2 , WM.getView().getVertical() / 2 - 10), "Wave " + std::to_string(waveNumber) + " starting...", df::CENTER_JUSTIFIED, df::Color::GREEN);
+			DM.drawString(Vector(mid_x, mid_y - 10), "Wave " + std::to_string(waveNumber) + " starting...", df::CENTER_JUSTIFIED, df::Color::GREEN);
 			messageCooldown--;
 		}
 
@@ -343,7 +349,7 @@ int WaveController::draw()
 	// Display wave end message if it is toggled
 	if (displayWaveEnd) {
 		if (messageCooldown > 0) {
-			DM.drawString(Vector(WM.getView().getHorizontal() / 2, WM.getView().getVertical() / 2 - 10), "Wave " + std::to_string(waveNumber) + " cleared.", df::CENTER_JUSTIFIED, df::Color::GREEN);
+			DM.drawString(Vector(mid_x, mid_y - 10), "Wave " + std::to_string(waveNumber) + " cleared.", df::CENTER_JUSTIFIED, df::Color::GREEN);
 			messageCooldown--;
 		}
 

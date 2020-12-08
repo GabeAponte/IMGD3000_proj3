@@ -78,7 +78,6 @@ private:
 	float randomPercent();
 
 public:
-
 	// Constructor / Deconstructors
 	WaveController();
 	~WaveController();
@@ -89,6 +88,6 @@ public:
 	// Get the current wave number
 	int getWaveNumber();
 
-	// Draws the wave ended and wave started messages
+	// Draws the current wave and wave ended/started messages
 	int draw();
 };

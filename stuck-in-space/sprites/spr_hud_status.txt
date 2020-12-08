@@ -1,0 +1,18 @@
+<HEADER>
+frames 1
+width 34
+height 4
+color dkgray
+slowdown 1
+transparency #
+</HEADER>
+<BODY>
+\\##############################//
+#\\_____##################_____//#
+##\\...\\################//...//##
+###\\___\\______________//___//###
+end
+</BODY>
+<FOOTER>
+version 1
+</FOOTER>
