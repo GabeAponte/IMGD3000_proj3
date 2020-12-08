@@ -120,7 +120,7 @@ void loadResources(void) {
 
 // Populate world with some objects.
 void populateWorld(void) {
-
+	
 	// Spawn some Stars.
 	for (int i = 0; i < 32; i++)
 		new Star;

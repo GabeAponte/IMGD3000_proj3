@@ -457,10 +457,12 @@ void Hero::step()
 
 // Send "overloadShield" event to all objects.
 void Hero::overloadShield() {
+
 	if (overloadCooldown > 0)
 	{
 		return;
 	}
+
 	// Check if shields left.
 	if (shieldIntegrity <= 0)
 	{
@@ -485,6 +487,8 @@ void Hero::overloadShield() {
 	else {
 		shieldIntegrity = 0;
 		lives = 0;
+		setSprite("player-no-shield");
+		applyHitbox();
 	}
 
 	// Create "overload" event and send to interested Objects.
@@ -599,11 +603,11 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 		wasHit = true;
 
 		// Decrease the shield integrety by at most 10, only if it isn't already 0.
-		if (shieldIntegrity < 10) {
-			shieldIntegrity = 0;
-		}
-		else if (shieldIntegrity != 0) {
+		if (shieldIntegrity > 10) {
 			shieldIntegrity -= 10;
+		}
+		else {
+			shieldIntegrity = 0;
 		}
 
 		// Colision did not kill the hero
@@ -625,6 +629,7 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 		// Check hero still alive
 		if (shieldIntegrity <= 0) {
 			setSprite("player-no-shield");
+			applyHitbox();
 			if (lives <= 0)
 			{
 				// Delete the hero and the enemy
