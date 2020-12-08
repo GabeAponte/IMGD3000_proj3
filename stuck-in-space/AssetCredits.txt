@@ -25,8 +25,8 @@ Joseph Henry Stadolnik IV
 ------
 MUSIC:
 ------
-start-music - "Jungle Starvation", by RepaidGateman 
-http://www.flashkit.com/loops/Ambient/Electronica/Jungle_S-RepaidGa-10582/index.php
+game-music.wav - "Through Space", by maxstack
+https://opengameart.org/content/through-space
 
 --------------
 SOUND EFFECTS:
@@ -40,8 +40,8 @@ https://freesound.org/people/LeMudCrab/sounds/163458/
 bomb-explosion.wav - "Musket Explosion", by Willlewis
 https://freesound.org/people/Willlewis/sounds/244345/
 
-explode.wav - "Weird Explosion", by Angler
-http://www.flashkit.com/soundfx/Mayhem/Explosives/Weird_Ex-Angler-8806/index.php
+explode.wav - "Explosion", by Nbs Dark
+https://freesound.org/people/Nbs%20Dark/sounds/94185/
 
 fire.wav - "laser", by domson
 http://www.flashkit.com/imagesvr_ce/flashkit/soundfx/Ambience/laser-domson-8694/laser-domson-8694_hifi.mp3
@@ -79,9 +79,6 @@ https://freesound.org/people/jorgerosa/sounds/458690/
 spread.wav - "Laser Shot Silenced", by bubaproducer
 https://freesound.org/people/bubaproducer/sounds/151022/
 
-game-music.wav - "Through Space", by maxstack
-https://opengameart.org/content/through-space
-
 rapid.wav - "Laser2", by jobro
 https://freesound.org/people/jobro/sounds/35679/
 
@@ -93,3 +90,6 @@ https://freesound.org/people/EminYildirim/sounds/536104/
 
 out-of-ammo.wav - "Error_04", by distillerystudio
 https://freesound.org/people/distillerystudio/sounds/327735/
+
+hero-died.wav - "Distant Explosion", by Mozfoo
+https://freesound.org/people/Mozfoo/sounds/436871/

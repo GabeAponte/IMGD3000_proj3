@@ -54,7 +54,7 @@ Hero::Hero() {
 
 	// Set attributes that control actions.
 	currentWeapon = W_MISSILE;
-	firing = false;
+	canFire = false;
 	fireCooldown = 0;
 	overloadCooldown = 3;
 	hitCooldown = 3;
@@ -107,7 +107,7 @@ Hero::~Hero() {
 	new GameOver;
 
 	// Make big explosion.
-	for (int i = -8; i <= 8; i += 5) {
+	for (int i = -16; i <= 16; i += 5) {
 		for (int j = -5; j <= 5; j += 3) {
 			df::Vector temp_pos = this->getPosition();
 			temp_pos.setX(this->getPosition().getX() + i);
@@ -172,11 +172,11 @@ void Hero::mouse(const df::EventMouse* p_mouse_event)
 	{
 		if (p_mouse_event->getMouseAction() == df::CLICKED)
 		{
-			firing = true;
+			canFire = true;
 		}
 		else if (p_mouse_event->getMouseAction() == df::RELEASED)
 		{
-			firing = false;
+			canFire = false;
 		}
 	}
 	// Scrolled?
@@ -274,7 +274,8 @@ void Hero::fire(df::Vector target, df::Vector origin)
 				noAmmoCooldown = 15;
 			}
 			return;
-		} else {
+		} 
+		else {
 			weaponAmmo[currentWeapon] -= 1;
 		}
 	}
@@ -283,12 +284,15 @@ void Hero::fire(df::Vector target, df::Vector origin)
 	fireCooldown = weaponCooldown[currentWeapon];
 
 	// Play appropriate fire sound for the current weapon
-	df::Sound* p_sound = RM.getSound(weaponSound[currentWeapon]);
-	p_sound->play();
-
-	std::cout << target.getX() << " " << target.getY() << "\n";
-	std::cout << origin.getX() << " " << origin.getY() << "\n";
-	std::cout << "\n";
+	// Only play bomb sound if not detonating an active bomb
+	if (currentWeapon != W_BOMB) {
+		df::Sound* p_sound = RM.getSound(weaponSound[currentWeapon]);
+		p_sound->play();
+	} 
+	else if (!Bomb::isActive()) {
+		df::Sound* p_sound = RM.getSound(weaponSound[currentWeapon]);
+		p_sound->play();
+	}
 
 	// Calculate bullet velocity
 	df::Vector aim = target - origin;      // calculate aim vector
@@ -414,15 +418,18 @@ void Hero::step()
 	if (fireCooldown > 0) {
 		fireCooldown--;
 	}
-	if (firing) {
+
+	if (canFire) {
+
+		// Fire bullet as normal
 		if (fireCooldown <= 0)
 		{
-			// fire bullet
 			fire(p_reticle->getPosition(), projectileStart);
 		}
-		else if (currentWeapon == W_BOMB && fireCooldown < weaponCooldown[W_BOMB]-5)
+
+		// Check if bomb needs to be exploded
+		else if (currentWeapon == W_BOMB && fireCooldown < weaponCooldown[W_BOMB] - 5)
 		{
-			// detonate existing bomb
 			Bomb::detonate();
 		}
 	}

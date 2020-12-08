@@ -123,7 +123,7 @@ void WaveController::beginWave()
 	// Toggle wave started message
 	displayWaveStart = true;
 
-	std::cout << "STARTING WAVE " << waveNumber << "\n";
+	//std::cout << "STARTING WAVE " << waveNumber << "\n";
 	EventView ev("WAVE", waveNumber, false);
 	WM.onEvent(&ev);
 	waveComplete = false;
@@ -147,7 +147,7 @@ void WaveController::beginWave()
 					// Queue enemy for spawning, and add cost to accumulated difficulty cost
 					enemySpawnList.push_back(it->enemyType);
 					difficulty_cost += it->difficultyCost;
-					std::cout << "~ Queuing enemy of type " << (int)it->enemyType << " (Cost: " << difficulty_cost << "/" << difficulty << ")\n";
+					//std::cout << "~ Queuing enemy of type " << (int)it->enemyType << " (Cost: " << difficulty_cost << "/" << difficulty << ")\n";
 					break;
 				}
 			}

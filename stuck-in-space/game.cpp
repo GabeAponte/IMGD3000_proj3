@@ -111,6 +111,7 @@ void loadResources(void) {
 	RM.loadSound("../sounds/enemy-bullet.wav", "enemy-bullet");
 	RM.loadSound("../sounds/tough-hit.wav", "tough-hit");
 	RM.loadSound("../sounds/out-of-ammo.wav", "out-of-ammo");
+	RM.loadSound("../sounds/hero-died.wav", "hero-died");
 
 	// Load music
 	RM.loadMusic("../sounds/game-music.wav", "game-music");

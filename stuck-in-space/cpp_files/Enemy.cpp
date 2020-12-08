@@ -220,8 +220,6 @@ void Enemy::hit(const df::EventCollision* p_collision_event)
 		// Remove hitpoints
 		takeDamage = true;
 
-		std::cout << "hit" << "\n";
-
 		// Set wasHit to true for 'tough' so that sprite updates and play tough hit sound if still has health
 		if (type == E_TOUGH) {
 			wasHit = true;

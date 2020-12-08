@@ -37,8 +37,8 @@ GameOver::GameOver() {
 	// Put in center of window.
 	setLocation(df::CENTER_CENTER);
 
-	// Play "game over" sound.
-	df::Sound* p_sound = RM.getSound("game over");
+	// Play hero died sound.
+	df::Sound* p_sound = RM.getSound("hero-died");
 	p_sound->play();
 
 	// Gets how many waves the player cleared before dying
@@ -102,7 +102,6 @@ void GameOver::setWavesSurvived()
 	// Get the wave controller
 	ObjectList ol = WM.objectsOfType("WaveController");
 	ObjectListIterator oli(&ol);
-	cout << ol.getCount() << "\ln";
 	WaveController* p_wc = dynamic_cast <WaveController*> (oli.currentObject());
 
 	// Display results and let player input highscores
