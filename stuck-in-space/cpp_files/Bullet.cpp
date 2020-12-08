@@ -27,7 +27,6 @@ Bullet::Bullet(player_weapon weapon_type) {
 
 	// Set the weapon type
 	// NOTE: All weapon attacks should have the "Bullet" type to allow general collision
-	// TODO: modify this per weapon type
 	weaponType = weapon_type;
 }
 

@@ -30,10 +30,10 @@ Leaderboard::Leaderboard() {
 Leaderboard::Leaderboard(string playerName, int score) {
 
 	// Initialize vars
-	LEADERBOARD.writeNewScore(score, playerName);
+	LEADERBOARD.writeNewScore(10, playerName);
 	allScores = LEADERBOARD.getAllScores();
 	latestPlayer = playerName;
-	latestScore = score;
+	latestScore = 10;
 
 	// Set altitude and center the position
 	setAltitude(MAX_ALTITUDE);
@@ -89,7 +89,10 @@ int Leaderboard::draw()
 	bool player_on_board = false;
 	std::vector<ScoresIOStreamer::Score*>::iterator it;
 	for (it = allScores.begin(); it != allScores.end() && index <= 15; it++) {
+
+		// Score color will be light gray
 		df::Color player_color = df::Color::LTGRAY;
+
 		// If drawing current round's score, use a different color
 		if (latestScore != NULL && latestScore == (*it)->score && latestPlayer == (*it)->player)
 		{
@@ -109,9 +112,9 @@ int Leaderboard::draw()
 		// Check if there are at least 15 scores already drawn
 		if (allScores.size() >= 15) {
 
-			// Set the 15th player and scores
-			lastTopScore = allScores[15]->score;
-			lastTopPlayer = allScores[15]->player;
+			// Set the 15th player and scores (14 in list cause index starts at 0).
+			lastTopScore = allScores[14]->score;
+			lastTopPlayer = allScores[14]->player;
 		}
 
 		// Toggle the display of a lower score if it is not present in the top 15

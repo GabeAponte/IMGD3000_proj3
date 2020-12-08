@@ -13,8 +13,8 @@
 #include "../header_files/WaveController.h"
 
 #define FIRE_COOLDOWN 75
-#define SHOOTER_STOP_RADIUS    325 // radial distance from the center of the screen (in pixels) at which the shooter stops to attack
-#define SHOOTER_STOP_YDISTANCE 225 // vertical distance... (see above)  
+#define SHOOTER_STOP_RADIUS    325 // The radial distance from the center of the screen (in pixels) at which the shooter stops to attack
+#define SHOOTER_STOP_YDISTANCE 225 // The vertical distance... (see above)  
 
 class Enemy : public df::Object {
 

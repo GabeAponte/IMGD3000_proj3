@@ -19,11 +19,11 @@ BombExplosion::BombExplosion(df::Vector spawn_position) {
 	if (setSprite("bomb-explosion") == 0)
 	{
 		timeToLive = getAnimation().getSprite()->getFrameCount() * 2;
-		// use big hitbox
+
+		// Use a big hitbox
 		setBox(df::Box(df::Vector(-9.5, -4.5), 19, 9));
 	}
-	else 
-	{
+	else {
 		timeToLive = 0;
 	}
 

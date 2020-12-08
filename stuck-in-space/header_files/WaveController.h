@@ -82,6 +82,7 @@ private:
 	float randomPercent();
 
 public:
+
 	// Constructor / Deconstructors
 	WaveController();
 	~WaveController();
