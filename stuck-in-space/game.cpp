@@ -94,7 +94,6 @@ void loadResources(void) {
 	RM.loadSprite("../sprites/spr_gameover.txt", "gameover");
 
 	// Load sounds
-	RM.loadSound("../sounds/fire.wav", "fire");
 	RM.loadSound("../sounds/explode.wav", "explode");
 	RM.loadSound("../sounds/nuke.wav", "nuke");
 	RM.loadSound("../sounds/game-over.wav", "game over");

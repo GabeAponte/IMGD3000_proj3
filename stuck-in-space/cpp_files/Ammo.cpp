@@ -6,14 +6,14 @@
 // An ammo pickup, with different weapon types assignable
 //
 
+#include <Sound.h>
 #include <WorldManager.h>
 #include <DisplayManager.h>
 #include <EventStep.h>
+#include <ResourceManager.h>
 #include "../header_files/EventAmmo.h"
 #include "../header_files/Bullet.h"
 #include "../header_files/Ammo.h"
-#include <Sound.h>
-#include <ResourceManager.h>
 
 using namespace df;
 

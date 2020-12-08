@@ -231,7 +231,6 @@ void Enemy::hit(const df::EventCollision* p_collision_event)
 			}
 		}
 
-		
 		// Check if now dead
 		if (hitPoints <= 0) {
 

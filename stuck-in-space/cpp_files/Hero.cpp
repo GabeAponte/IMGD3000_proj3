@@ -179,6 +179,7 @@ void Hero::mouse(const df::EventMouse* p_mouse_event)
 			canFire = false;
 		}
 	}
+
 	// Scrolled?
 	if (p_mouse_event->getMouseAction() == df::SCROLLED)
 	{
@@ -248,7 +249,7 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event)
 			break;
 		default:
 			break;
-		};
+		}
 	}
 	return;
 }
@@ -256,6 +257,8 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event)
 // Fire bullet towards target.
 void Hero::fire(df::Vector target, df::Vector origin) 
 {
+
+	// Don't fire if target is inside of the hero
 	if (boxContainsPosition(getWorldBox(this), target)) {
 		return;
 	}
@@ -443,7 +446,6 @@ void Hero::step()
 	updateSprite();
 }
 
-
 // Send "overloadShield" event to all objects.
 void Hero::overloadShield() {
 
@@ -484,13 +486,11 @@ void Hero::overloadShield() {
 	p_sound->play();
 }
 
-
 // Change the player's currently-equipped weapon
 void Hero::changeWeapon(player_weapon new_weapon)
 {
 	currentWeapon = new_weapon;
 }
-
 
 // Switch to the previous weapon
 void Hero::previousWeapon()
@@ -498,13 +498,11 @@ void Hero::previousWeapon()
 	changeWeapon((player_weapon)((((int)currentWeapon) + WEAPON_COUNT - 1) % WEAPON_COUNT));
 }
 
-
 // Switch to the next weapon
 void Hero::nextWeapon()
 {
 	changeWeapon((player_weapon)((((int)currentWeapon) + 1) % WEAPON_COUNT));
 }
-
 
 // Update the player's sprite based on the reticle location
 void Hero::updateSprite()

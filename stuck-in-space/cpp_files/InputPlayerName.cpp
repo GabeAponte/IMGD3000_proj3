@@ -6,12 +6,12 @@
 // Handles the InputPlayerName display
 //
 
+#include <regex>
+#include <string>
 #include <DisplayManager.h>
 #include <WorldManager.h>
 #include <EventKeyboard.h>
 #include <EventStep.h>
-#include <regex>
-#include <string>
 #include "..\header_files\Leaderboard.h"
 #include "..\header_files\InputPlayerName.h"
 

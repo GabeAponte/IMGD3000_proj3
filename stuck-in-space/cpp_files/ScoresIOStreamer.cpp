@@ -16,7 +16,7 @@ ScoresIOStreamer& ScoresIOStreamer::getInstance()
 {
 	static ScoresIOStreamer leaderboard;
 	return leaderboard;
-};
+}
 
 // Writes a new player's score to the leaderboard file
 void ScoresIOStreamer::writeNewScore(int score, string player)

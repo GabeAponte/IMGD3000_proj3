@@ -13,4 +13,4 @@ EventOverloadShield::EventOverloadShield() {
 
 	// Set type
 	setType(OVERLOAD_EVENT);
-};
+}

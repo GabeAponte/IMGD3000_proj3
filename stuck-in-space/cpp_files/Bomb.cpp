@@ -15,31 +15,35 @@
 using namespace df;
 
 Bomb::Bomb() {
-	if (activeBomb != NULL)
-	{
-		// detonate existing bomb
+
+	// Check if there is a bomb on screen already
+	if (activeBomb != NULL) {
+
+		// Detonate existing bomb
 		activeBomb->explode();
-		// remove self
+
+		// Remove self
 		WM.markForDelete(this);
 	}
-	else
-	{
-		// store self as active bomb
+	else {
+
+		// There is no bomb, so store self as the active bomb
 		activeBomb = this;
 
-		// setup as bomb
+		// Setup as bomb
 		setSprite("w_bomb");
 		setType("Bullet");
 	}
 
+	// Set to SOFT
 	setSolidness(SOFT);
 
 	// Set the weapon type
 	weaponType = W_BOMB;
 }
 
-Bomb::~Bomb()
-{
+Bomb::~Bomb() {
+
 	activeBomb = NULL;
 }
 
@@ -85,12 +89,10 @@ void Bomb::explode()
 	new BombExplosion(getPosition() + getVelocity());
 }
 
-
 // Remotely detonate the current bomb, if present
 void Bomb::detonate()
 {
-	if (activeBomb != NULL)
-	{
+	if (activeBomb != NULL) {
 		activeBomb->explode();
 	}
 }
