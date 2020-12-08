@@ -124,7 +124,7 @@ void WaveController::beginWave()
 	// Toggle wave started message
 	displayWaveStart = true;
 
-	std::cout << "STARTING WAVE " << waveNumber << "\n";
+	//std::cout << "STARTING WAVE " << waveNumber << "\n";
 	waveComplete = false;
 
 	// Advance difficulty

@@ -87,6 +87,26 @@ int Leaderboard::draw()
 	int index = 1;
 	float xPosition = 8.0;
 
+	// Check if this leaderboard is being drawn after a player dies
+	if (latestScore != NULL) {
+
+		// Check if there are at least 15 scores already drawn
+		if (allScores.size() >= 15 && registerLatestBadScore) {
+
+			// Set the 15th player and scores
+			lastTopScore = allScores[15]->score;
+			lastTopPlayer = allScores[15]->player;
+
+			// No need to last player in list again register again
+			registerLatestBadScore = false;
+		}
+
+		// Toggle the display of a lower score if it is not present in the top 15
+		if (latestScore < lastTopScore || (latestScore == lastTopScore && lastTopPlayer != latestPlayer)) {
+			displayLatestBadScore = true;
+		}
+	}
+
 	// Draw up to 15 of the top scores
 	std::vector<ScoresIOStreamer::Score*>::iterator it;
 	for (it = allScores.begin(); it != allScores.end() && index <= 15; it++) {
@@ -101,26 +121,6 @@ int Leaderboard::draw()
 		DM.drawString(Vector(mid_x + 20, xPosition), (*it)->player, df::CENTER_JUSTIFIED, player_color);
 		xPosition += 1.5;
 		index++;
-
-		// Check if this leaderboard is being drawn after a player dies
-		if (latestScore != NULL) {
-
-			// Check if there are at least 15 scores already drawn
-			if (index == 15 && registerLatestBadScore) {
-
-				// Set the 15th player and scores
-				lastTopScore = (*it)->score;
-				lastTopPlayer = (*it)->player;
-
-				// No need to last player in list again register again
-				registerLatestBadScore = false;
-			}
-
-			// Toggle the display of a lower score if it is not present in the top 15
-			if (latestScore < lastTopScore || (latestScore == lastTopScore && lastTopPlayer != latestPlayer)) {
-				displayLatestBadScore = true;
-			}
-		}
 
 		// Draws the lastest bad score underneath the top 15 in red
 		if (displayLatestBadScore) {
