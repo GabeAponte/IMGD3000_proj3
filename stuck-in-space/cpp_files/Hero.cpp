@@ -332,11 +332,12 @@ void Hero::fire(df::Vector target, df::Vector origin)
 	case W_SPREAD:
 	{
 		// Fire Spread of 4 bullets towards target
+		df::Vector pixel_aim = DM.spacesToPixels(aim);
 		for (int i = 0; i < 4; i++)
 		{
 			Bullet* p_spread = new Bullet(W_SPREAD);
 			p_spread->setSprite("w_spread");
-			df::Vector spread_vel = rotateVector(aim, SPREAD_SPACING * (i - 1.5));
+			df::Vector spread_vel = rotateVector(pixel_aim, SPREAD_SPACING * (i - 1.5));
 			spread_vel.normalize();
 			spread_vel.scale(2);
 			p_spread->setVelocity(convertToReal(spread_vel));
