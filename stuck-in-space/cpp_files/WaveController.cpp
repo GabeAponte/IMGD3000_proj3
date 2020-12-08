@@ -54,6 +54,9 @@ WaveController::WaveController() {
 	displayWaveStart = false;
 	messageCooldown = 45;
 	setAltitude(4);
+
+	// Center so UI elements won't go off screen
+	setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 }
 
 WaveController::~WaveController()
