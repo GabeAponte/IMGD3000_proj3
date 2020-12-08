@@ -36,7 +36,7 @@ Hero::Hero() {
 	// Link to "player" sprite.
 	setSprite("player");
 
-	// custom collision box
+	// Set custom collision box
 	setBox(Box(Vector(-HITBOX_WIDTH / 2, (-HITBOX_HEIGHT / 2) - 1), HITBOX_WIDTH, HITBOX_HEIGHT));
 	setAnimationState(false);
 
