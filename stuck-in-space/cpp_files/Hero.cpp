@@ -256,6 +256,10 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event)
 // Fire bullet towards target.
 void Hero::fire(df::Vector target, df::Vector origin) 
 {
+	if (boxContainsPosition(getWorldBox(this), target)) {
+		return;
+	}
+
 	// Update ammo (and skip firing if empty)
 	if (currentWeapon != W_MISSILE) {
 
@@ -282,6 +286,10 @@ void Hero::fire(df::Vector target, df::Vector origin)
 	// Play appropriate fire sound for the current weapon
 	df::Sound* p_sound = RM.getSound(weaponSound[currentWeapon]);
 	p_sound->play();
+
+	std::cout << target.getX() << " " << target.getY() << "\n";
+	std::cout << origin.getX() << " " << origin.getY() << "\n";
+	std::cout << "\n";
 
 	// Calculate bullet velocity
 	df::Vector aim = target - origin;      // calculate aim vector
