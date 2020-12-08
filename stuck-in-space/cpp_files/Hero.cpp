@@ -34,10 +34,10 @@ Hero::Hero() {
 
 	// Link to "player" sprite.
 	setSprite("player");
+	setAnimationState(false);
 
 	// Set custom collision box
-	setBox(Box(Vector(-HITBOX_WIDTH / 2, (-HITBOX_HEIGHT / 2) - 1), HITBOX_WIDTH, HITBOX_HEIGHT));
-	setAnimationState(false);
+	applyHitbox();
 
 	// Set object type.
 	setType("Hero");
@@ -80,11 +80,11 @@ Hero::Hero() {
 
 	// Initialize weapon ammo counts
 	weaponAmmo[W_MISSILE] = 0; // should always be 0
-	weaponAmmo[W_LASER] = 0;
-	weaponAmmo[W_SPREAD] = 20;
-	weaponAmmo[W_BOMB] = 20;
-	weaponAmmo[W_PLASMA] = 20;
-	weaponAmmo[W_RAPID] = 20;
+	weaponAmmo[W_LASER] = 3;
+	weaponAmmo[W_SPREAD] = 0;
+	weaponAmmo[W_BOMB] = 0;
+	weaponAmmo[W_PLASMA] = 0;
+	weaponAmmo[W_RAPID] = 0;
 
 	// Initialize weapon cooldowns
 	weaponCooldown[W_MISSILE] = 15;
@@ -112,13 +112,16 @@ Hero::~Hero() {
 	new GameOver;
 
 	// Make big explosion.
-	for (int i = -16; i <= 16; i += 5) {
-		for (int j = -5; j <= 5; j += 3) {
-			df::Vector temp_pos = this->getPosition();
-			temp_pos.setX(this->getPosition().getX() + i);
-			temp_pos.setY(this->getPosition().getY() + j);
-			Explosion* p_explosion = new Explosion;
-			p_explosion->setPosition(temp_pos);
+	for (int i = -2; i <= 2; i++) {
+		for (int j = -2; j <= 2; j++) {
+			if (abs(i) != 2 || abs(j) != 2)
+			{
+				df::Vector temp_pos = this->getPosition();
+				temp_pos.setX(this->getPosition().getX() + i * 7);
+				temp_pos.setY(this->getPosition().getY() + j * 3);
+				Explosion* p_explosion = new Explosion;
+				p_explosion->setPosition(temp_pos);
+			}
 		}
 	}
 
@@ -408,22 +411,17 @@ void Hero::step()
 	}
 
 	// Reset the custom collision box
-	setBox(Box(Vector(-HITBOX_WIDTH / 2, (-HITBOX_HEIGHT / 2) - 1), HITBOX_WIDTH, HITBOX_HEIGHT));
+	applyHitbox();
 
 	// Flash the screen if the shield was overloaded
-	if (shieldOverloaded) {
-		DM.setBackgroundColor(TEAL);
+	if (overloadCooldown > 0) {
 		overloadCooldown--;
 	}
-	if (showOverloadCooldown > 0)
-	{
+	if (showOverloadCooldown > 0) {
 		showOverloadCooldown--;
 	}
-
 	if (shieldOverloaded && overloadCooldown == 0) {
-		DM.setBackgroundColor(BLACK);
-		overloadCooldown = OVERLOAD_COOLDOWN;
-		showOverloadCooldown = SHOW_OVERLOAD_COOLDOWN;
+		DM.setBackgroundColor(df::BLACK);
 		shieldOverloaded = false;
 	}
 
@@ -458,13 +456,24 @@ void Hero::step()
 
 // Send "overloadShield" event to all objects.
 void Hero::overloadShield() {
-
-	// Check if shields left.
-	if (shieldIntegrity == 0)
+	if (overloadCooldown > 0)
+	{
 		return;
+	}
+	// Check if shields left.
+	if (shieldIntegrity <= 0)
+	{
+		// Alert player that they are out of shields
+		df::Sound* p_sound = RM.getSound("shield-error");
+		p_sound->play();
+		return;
+	}
 
-	// Mark shield overloaded so that screen flashes
+	// Mark shield overloaded and flash the screen
 	shieldOverloaded = true;
+	overloadCooldown = OVERLOAD_COOLDOWN;
+	showOverloadCooldown = SHOW_OVERLOAD_COOLDOWN;
+	DM.setBackgroundColor(df::TEAL);
 
 	// If shields are greater than 15, reduce by 15 
 	if (shieldIntegrity > 15)
@@ -631,6 +640,12 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 			}
 		}
 	}
+}
+
+// Set to a custom hitbox
+void Hero::applyHitbox()
+{
+	setBox(Box(Vector(-HITBOX_WIDTH / 2, (-HITBOX_HEIGHT / 2)-0.25), HITBOX_WIDTH, HITBOX_HEIGHT));
 }
 
 // Draw the player and their ammo counts

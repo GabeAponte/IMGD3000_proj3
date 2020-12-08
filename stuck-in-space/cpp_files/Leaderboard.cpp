@@ -20,7 +20,6 @@ Leaderboard::Leaderboard() {
 	// Initialize vars
 	allScores = LEADERBOARD.getAllScores();
 	latestScore = NULL;
-	displayLatestBadScore = false;
 
 	// Set altitude and center the position
 	setAltitude(MAX_ALTITUDE);
@@ -35,7 +34,6 @@ Leaderboard::Leaderboard(string playerName, int score) {
 	allScores = LEADERBOARD.getAllScores();
 	latestPlayer = playerName;
 	latestScore = score;
-	displayLatestBadScore = false;
 
 	// Set altitude and center the position
 	setAltitude(MAX_ALTITUDE);
@@ -85,45 +83,41 @@ int Leaderboard::draw()
 	DM.drawString(Vector(mid_x, bottom_y-2), "QUIT: [Esc]", df::CENTER_JUSTIFIED);
 
 	int index = 1;
-	float xPosition = 8.0;
+	float y_position = 8.0;
+
+	// Draw up to 15 of the top scores
+	bool player_on_board = false;
+	std::vector<ScoresIOStreamer::Score*>::iterator it;
+	for (it = allScores.begin(); it != allScores.end() && index <= 15; it++) {
+		df::Color player_color = df::Color::LTGRAY;
+		// If drawing current round's score, use a different color
+		if (latestScore != NULL && latestScore == (*it)->score && latestPlayer == (*it)->player)
+		{
+			player_color = df::Color::YELLOW;
+			player_on_board = true;
+		}
+
+		DM.drawString(Vector(mid_x - 25, y_position), std::to_string((*it)->score), df::CENTER_JUSTIFIED, player_color);
+		DM.drawString(Vector(mid_x + 20, y_position), (*it)->player, df::CENTER_JUSTIFIED, player_color);
+		y_position += 1.5;
+		index++;
+	}
 
 	// Check if this leaderboard is being drawn after a player dies
 	if (latestScore != NULL) {
 
 		// Check if there are at least 15 scores already drawn
-		if (allScores.size() >= 15 && registerLatestBadScore) {
+		if (allScores.size() >= 15) {
 
 			// Set the 15th player and scores
 			lastTopScore = allScores[15]->score;
 			lastTopPlayer = allScores[15]->player;
-
-			// No need to last player in list again register again
-			registerLatestBadScore = false;
 		}
 
 		// Toggle the display of a lower score if it is not present in the top 15
-		if (latestScore < lastTopScore || (latestScore == lastTopScore && lastTopPlayer != latestPlayer)) {
-			displayLatestBadScore = true;
-		}
-	}
-
-	// Draw up to 15 of the top scores
-	std::vector<ScoresIOStreamer::Score*>::iterator it;
-	for (it = allScores.begin(); it != allScores.end() && index <= 15; it++) {
-		df::Color player_color = df::Color::LTGRAY;
-		// If drawing currsnt round's score, use a different color
-		if (latestScore != NULL && latestScore == (*it)->score && latestPlayer == (*it)->player)
+		if (!player_on_board)
 		{
-			player_color = df::Color::YELLOW;
-		}
-
-		DM.drawString(Vector(mid_x - 25, xPosition), std::to_string((*it)->score), df::CENTER_JUSTIFIED, player_color);
-		DM.drawString(Vector(mid_x + 20, xPosition), (*it)->player, df::CENTER_JUSTIFIED, player_color);
-		xPosition += 1.5;
-		index++;
-
-		// Draws the lastest bad score underneath the top 15 in red
-		if (displayLatestBadScore) {
+			// Draws the lastest bad score underneath the top 15 in red
 			DM.drawString(Vector(mid_x - 25, bottom_y - 5), std::to_string(latestScore), df::CENTER_JUSTIFIED, df::Color::RED);
 			DM.drawString(Vector(mid_x + 20, bottom_y - 5), latestPlayer, df::CENTER_JUSTIFIED, df::Color::RED);
 		}

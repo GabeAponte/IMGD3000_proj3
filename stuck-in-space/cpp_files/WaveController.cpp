@@ -43,8 +43,10 @@ WaveController::WaveController() {
 	enemyOptions.push_back(enemy_data{ E_SHOOTER, 40, 5 });
 
 	// Initialize vars
+	enemySpawnTotal = 0;
 	enemySpawnCount = 0;
 	enemyKillCount = 0;
+	ammoSpawnCount = 0;
 	waveComplete = true;
 	waveBeginWait = WAVE_BEGIN_DELAY;
 	disabled = false; // start enabled
@@ -105,7 +107,11 @@ void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 	}
 
 	// Spawn ammo refill at enemy location if player killed enemy
-	if (p_enemydeath_event->getDidPlayerKill() && randomPercent() >= AMMO_SPAWN_CHANCE) {
+	// This happens either randomly or by force if the quota amount of ammo hasn't dropped
+	bool did_player_kill = p_enemydeath_event->getDidPlayerKill();
+	bool rng_ammo_spawn = (randomPercent() <= AMMO_SPAWN_CHANCE);
+	bool forced_ammo_spawn = (ammoSpawnCount < ammoSpawnQuota) && (enemySpawnTotal - enemyKillCount < ammoSpawnQuota);
+	if (did_player_kill && (rng_ammo_spawn || forced_ammo_spawn)) {
 		spawnAmmo(p_enemydeath_event->getPosition());
 	}
 }
@@ -114,9 +120,11 @@ void WaveController::enemyDead(const EventEnemyDeath* p_enemydeath_event)
 void WaveController::beginWave()
 {
 	// Reset counts
+	enemySpawnTotal = 0;
 	enemySpawnCount = 0;
 	enemyKillCount = 0;
 	enemySpawnList.clear();
+	ammoSpawnCount = 0;
 
 	// Advance wave
 	waveNumber++;
@@ -129,6 +137,10 @@ void WaveController::beginWave()
 
 	// Advance difficulty
 	difficulty += DIFFICULTY_INCREASE;
+
+	// Calculate ammo spawn quota
+	// At least one, increasing as difficulty rises
+	ammoSpawnQuota = std::max(1,(int) sqrt(difficulty*AMMO_QUOTA_FACTOR));
 
 	// Generate wave contents based on difficulty budget
 	int difficulty_cost = 0;
@@ -146,7 +158,15 @@ void WaveController::beginWave()
 					// Queue enemy for spawning, and add cost to accumulated difficulty cost
 					enemySpawnList.push_back(it->enemyType);
 					difficulty_cost += it->difficultyCost;
-					std::cout << "~ Queuing enemy of type " << (int)it->enemyType << " (Cost: " << difficulty_cost << "/" << difficulty << ")\n";
+					if (it->enemyType == E_SWARM)
+					{
+						enemySpawnTotal += 5;
+					}
+					else
+					{
+						enemySpawnTotal++;
+					}
+					//std::cout << "~ Queuing enemy of type " << (int)it->enemyType << " (Cost: " << difficulty_cost << "/" << difficulty << ")\n";
 					break;
 				}
 			}
@@ -259,27 +279,28 @@ void WaveController::spawnAmmo(df::Vector position)
 		// No case for W_MISSILE
 	case 0:
 		ammo_type = W_LASER;
-		ammo_value = 10;
+		ammo_value = 8;
 		break;
 	case 1:
 		ammo_type = W_SPREAD;
-		ammo_value = 15;
+		ammo_value = 10;
 		break;
 	case 2:
 		ammo_type = W_BOMB;
-		ammo_value = 10;
+		ammo_value = 8;
 		break;
 	case 3:
 		ammo_type = W_PLASMA;
-		ammo_value = 5;
+		ammo_value = 4;
 		break;
 	case 4:
 		ammo_type = W_RAPID;
-		ammo_value = 25;
+		ammo_value = 15;
 		break;
 	}
 
 	new Ammo(position, ammo_type, ammo_value);
+	ammoSpawnCount++;
 }
 
 // Generate a random float from 0 to 1
@@ -328,7 +349,7 @@ int WaveController::draw()
 	float mid_y = top_y + WM.getView().getVertical() / 2;
 
 	// Display wave count over player HUD
-	DM.drawString(Vector(mid_x, top_y+2), "WAVE " + std::to_string(waveNumber), df::CENTER_JUSTIFIED, df::Color::GREEN);
+	DM.drawString(Vector(mid_x, top_y+2), "WAVE " + std::to_string(std::max(1,waveNumber)), df::CENTER_JUSTIFIED, df::Color::GREEN);
 
 	// Display wave start message if it is toggled
 	if (displayWaveStart) {

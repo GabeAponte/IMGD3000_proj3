@@ -98,21 +98,20 @@ void loadResources(void) {
 
 	// Load sounds
 	RM.loadSound("../sounds/explode.wav", "explode");
-	RM.loadSound("../sounds/nuke.wav", "nuke");
-	RM.loadSound("../sounds/game-over.wav", "game over");
 	RM.loadSound("../sounds/laser.wav", "laser");
 	RM.loadSound("../sounds/spread.wav", "spread");
 	RM.loadSound("../sounds/missile.wav", "missile");
 	RM.loadSound("../sounds/plasma.wav", "plasma");
 	RM.loadSound("../sounds/bomb.wav", "bomb");
 	RM.loadSound("../sounds/bomb-explosion.wav", "bomb-explosion");
-	RM.loadSound("../sounds/sfx_shield_overload.wav", "shield-overload");
+	RM.loadSound("../sounds/sfx_shield_error.wav", "shield-error");
 	RM.loadSound("../sounds/sfx_shield_hit.wav", "shield-hit");
+	RM.loadSound("../sounds/sfx_shield_overload.wav", "shield-overload");
 	RM.loadSound("../sounds/ammo-pickup.wav", "ammo-pickup");
 	RM.loadSound("../sounds/rapid.wav", "rapid");
 	RM.loadSound("../sounds/enemy-bullet.wav", "enemy-bullet");
-	RM.loadSound("../sounds/tough-hit.wav", "tough-hit");
-	RM.loadSound("../sounds/out-of-ammo.wav", "out-of-ammo");
+	RM.loadSound("../sounds/sfx_tough_hit.wav", "tough-hit");
+	RM.loadSound("../sounds/sfx_no_ammo.wav", "out-of-ammo");
 	RM.loadSound("../sounds/hero-died.wav", "hero-died");
 
 	// Load music

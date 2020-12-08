@@ -8,11 +8,11 @@
 // Handles GameOver functionality
 //
 
-#include "EventStep.h"
-#include "GameManager.h"
-#include "LogManager.h"
-#include "ResourceManager.h"
-#include "WorldManager.h"
+#include <EventStep.h>
+#include <GameManager.h>
+#include <LogManager.h>
+#include <ResourceManager.h>
+#include <WorldManager.h>
 #include "../header_files/GameOver.h"
 #include "../header_files/GameStart.h"
 #include "../header_files/WaveController.h"
@@ -28,7 +28,7 @@ GameOver::GameOver() {
 
 	// Link to "message" sprite.
 	if (setSprite("gameover") == 0) {
-		timeToLive = getAnimation().getSprite()->getFrameCount() * 15;
+		timeToLive = getAnimation().getSprite()->getFrameCount() * 6;
 	}
 	else {
 		timeToLive = 0;

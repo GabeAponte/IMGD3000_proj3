@@ -21,12 +21,12 @@
 
 #define FAR_LOOK_THRESHOLD  8
 #define NEAR_LOOK_THRESHOLD 3
-#define HITBOX_WIDTH        9
-#define HITBOX_HEIGHT       5
+#define HITBOX_WIDTH        10
+#define HITBOX_HEIGHT       4
 #define WEAPON_COUNT        6
 #define SPREAD_SPACING      10  // The spacing (in degrees) between Spread bullets
 #define SCROLL_COOLDOWN     3   // The number of steps to wait between detecting mouse scroll events
-#define OVERLOAD_COOLDOWN   5   // The number of steps to wait between using Shield Overload ability
+#define OVERLOAD_COOLDOWN   8   // The number of steps to wait between using Shield Overload ability
 #define SHOW_OVERLOAD_COOLDOWN   15   // The number of steps to display that you used the Shield Overload ability
 #define HIT_COOLDOWN		3   // The number of steps to wait before being able to take damage again after a hit
 
@@ -98,6 +98,9 @@ private:
 
 	// Update the position the player's projectiles spawn from
 	void setProjectileStart(int index);
+
+	// Set to a custom hitbox
+	void applyHitbox();
 
 public:
 

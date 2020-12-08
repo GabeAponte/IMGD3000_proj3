@@ -24,9 +24,9 @@ Star::Star() {
 	setType("Star");
 
 	// Set to spectral
+	setSolidness(df::SPECTRAL);
 
 	// Set velocity and altitude
-	setSolidness(df::SPECTRAL);
 	setVelocity(Vector(0,(float) -(1+ rand() % 3)/200));
 	setAltitude(0);	// Make Stars in the background.
 
