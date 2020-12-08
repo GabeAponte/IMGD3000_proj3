@@ -29,6 +29,12 @@ public:
 
 	// Handle events
 	int eventHandler(const df::Event* p_e);
+
+	// Remotely detonate the current bomb, if present
+	static void detonate();
+
+	// Check if there is an active bomb
+	static bool isActive();
 };
 
 static Bomb* activeBomb = NULL;

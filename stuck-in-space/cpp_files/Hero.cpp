@@ -274,8 +274,7 @@ void Hero::fire(df::Vector target, df::Vector origin)
 				noAmmoCooldown = 15;
 			}
 			return;
-		} 
-		else {
+		} else {
 			weaponAmmo[currentWeapon] -= 1;
 		}
 	}
@@ -332,6 +331,12 @@ void Hero::fire(df::Vector target, df::Vector origin)
 	}
 	case W_BOMB:
 	{
+		// Refund ammo if only detonating existing bomb
+		if (Bomb::isActive())
+		{
+			weaponAmmo[W_BOMB]++;
+		}
+
 		// Fire Bomb towards target, exploding on impact
 		Bomb* p_bomb = new Bomb();
 		df::Vector bomb_vel = v;
@@ -406,8 +411,17 @@ void Hero::step()
 	if (fireCooldown > 0) {
 		fireCooldown--;
 	}
-	else if (firing) {
-		fire(p_reticle->getPosition(), projectileStart);
+	if (firing) {
+		if (fireCooldown <= 0)
+		{
+			// fire bullet
+			fire(p_reticle->getPosition(), projectileStart);
+		}
+		else if (currentWeapon == W_BOMB && fireCooldown < weaponCooldown[W_BOMB]-5)
+		{
+			// detonate existing bomb
+			Bomb::detonate();
+		}
 	}
 
 	// Control no ammo sound cooldown rate every step

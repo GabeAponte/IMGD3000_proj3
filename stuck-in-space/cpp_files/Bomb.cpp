@@ -84,3 +84,19 @@ void Bomb::explode()
 	// Spawn a big explosion
 	new BombExplosion(getPosition() + getVelocity());
 }
+
+
+// Remotely detonate the current bomb, if present
+void Bomb::detonate()
+{
+	if (activeBomb != NULL)
+	{
+		activeBomb->explode();
+	}
+}
+
+// Check if there is an active bomb
+bool Bomb::isActive()
+{
+	return activeBomb != NULL;
+}
