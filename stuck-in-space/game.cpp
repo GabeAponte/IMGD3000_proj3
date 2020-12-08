@@ -92,6 +92,9 @@ void loadResources(void) {
 	RM.loadSprite("../sprites/spr_bombexplosion.txt", "bomb-explosion");
 	RM.loadSprite("../sprites/spr_gamestart.txt", "gamestart");
 	RM.loadSprite("../sprites/spr_gameover.txt", "gameover");
+	RM.loadSprite("../sprites/spr_hud_weapons.txt", "hud-weapons");
+	RM.loadSprite("../sprites/spr_hud_selection.txt", "hud-selection");
+	RM.loadSprite("../sprites/spr_hud_status.txt", "hud-status");
 
 	// Load sounds
 	RM.loadSound("../sounds/fire.wav", "fire");

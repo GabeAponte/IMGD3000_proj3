@@ -12,7 +12,6 @@
 #include <Utility.h>
 #include <EventMouse.h>
 #include <EventStep.h>
-#include <EventView.h>
 #include <GameManager.h>
 #include <DisplayManager.h>
 #include <ResourceManager.h>
@@ -47,10 +46,16 @@ Hero::Hero() {
 	setPosition(Vector(WM.getView().getHorizontal() /2, WM.getView().getVertical() /2));
 
 	// Set altitude
-	setAltitude(4);
+	setAltitude(MAX_ALTITUDE-1);
 
 	// Create reticle for firing bullets.
 	p_reticle = new Reticle();
+
+	// Load sprites
+	hudStatus = RM.getSprite("hud-status");
+	hudWeapons = RM.getSprite("hud-weapons");
+	hudSelectAnim = Animation();
+	hudSelectAnim.setSprite(RM.getSprite("hud-selection"));
 
 	// Set attributes that control actions.
 	currentWeapon = W_MISSILE;
@@ -391,7 +396,7 @@ void Hero::step()
 		else {
 			setSprite("player-no-shield");
 		}
-		hitCooldown = 3;
+		hitCooldown = HIT_COOLDOWN;
 		wasHit = false;
 	}
 
@@ -403,10 +408,15 @@ void Hero::step()
 		DM.setBackgroundColor(TEAL);
 		overloadCooldown--;
 	}
+	if (showOverloadCooldown > 0)
+	{
+		showOverloadCooldown--;
+	}
 
-	if (overloadCooldown == 0) {
+	if (shieldOverloaded && overloadCooldown == 0) {
 		DM.setBackgroundColor(BLACK);
-		overloadCooldown = 3;
+		overloadCooldown = OVERLOAD_COOLDOWN;
+		showOverloadCooldown = SHOW_OVERLOAD_COOLDOWN;
 		shieldOverloaded = false;
 	}
 
@@ -448,24 +458,14 @@ void Hero::overloadShield() {
 	shieldOverloaded = true;
 
 	// If shields are greater than 15, reduce by 15 
-	if (shieldIntegrity > 15) {
-
+	if (shieldIntegrity > 15)
+	{
 		shieldIntegrity -= 15;
-
-		// Send "view" event do decrease shield interested ViewObjects.
-		df::EventView ev("Shield Integrity %", -15, true);
-		WM.onEvent(&ev);
 	}
-
 	// Shield is less than 15 so set to zero and set lives to zero
 	else {
-
 		shieldIntegrity = 0;
 		lives = 0;
-
-		// Send "view" event do decrease shield interested ViewObjects.
-		df::EventView ev("Shield Integrity %", 0, false);
-		WM.onEvent(&ev);
 	}
 
 	// Create "overload" event and send to interested Objects.
@@ -586,13 +586,9 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 		// Decrease the shield integrety by at most 10, only if it isn't already 0.
 		if (shieldIntegrity < 10) {
 			shieldIntegrity = 0;
-			df::EventView ev("Shield Integrity %", 0, false);
-			WM.onEvent(&ev);
 		}
 		else if (shieldIntegrity != 0) {
 			shieldIntegrity -= 10;
-			df::EventView ev("Shield Integrity %", -10, true);
-			WM.onEvent(&ev);
 		}
 
 		// Colision did not kill the hero
@@ -635,30 +631,60 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 // Draw the player and their ammo counts
 int Hero::draw()
 {
+	float mid_x = WM.getView().getCorner().getX() + WM.getView().getHorizontal() / 2;
+	float top_y = WM.getView().getCorner().getY();
+	float bottom_y = top_y + WM.getView().getVertical();
+
 	// Draw player
 	Object::draw();
+	
+	// Draw HUD
+	hudStatus->draw(0, Vector(mid_x, top_y+2));
+	hudWeapons->draw(0, Vector(mid_x, bottom_y-3));
 
-	// Draw ammo
-	// TODO: Polish this up visually
-	int width = 8;
+	// Draw shield integrity
+	Color shield_color = df::CYAN;
+	float shield_x_offset = 0;
+	std::string shield_string = "SHIELD INTEGRITY: " + std::to_string(shieldIntegrity) + "%";
+	if (showOverloadCooldown > 0)
+	{
+		shield_string = "!!! SHIELD OVERLOADED !!!";
+		shield_color = df::YELLOW;
+	}
+	else if (shieldIntegrity <= 0)
+	{
+		shield_color = df::RED;
+	}
+	DM.drawString(Vector(mid_x, top_y + 0.5), shield_string, CENTER_JUSTIFIED, shield_color);
+
+	// Draw ammo readout
+	int width = 10;
+	
 	for (int i = 0; i < WEAPON_COUNT; i++)
 	{
 		player_weapon weapon = static_cast<player_weapon>(i);
-		float x_pos = (float)(DM.getHorizontal() / 2 - (WEAPON_COUNT - 1) * width / 2 + i * width);
+		float x_pos = (float)(mid_x - (WEAPON_COUNT - 1) * width / 2 + i * width -0.5);
+		Color color = df::WHITE;
 
-		// draw selection indicator
+		// Draw selection indicator na duse selection color
 		if (currentWeapon == weapon)
 		{
-			DM.drawCh(Vector(x_pos, DM.getVertical() - 3.5), 'V');
+			hudSelectAnim.draw(Vector(x_pos+0.5, bottom_y - 3.5));
+			color = df::YELLOW;
 		}
 
 		// Draw weapon name
-		DM.drawString(Vector(x_pos, DM.getVertical() - 2.5), weaponName[weapon], CENTER_JUSTIFIED);
+		float x_offset = 0;
+		std::string str = weaponName[weapon];
+		if (str.length() % 2 == 0)
+		{
+			// even strings need offset
+			x_offset = 0.5;
+		}
+		DM.drawString(Vector(x_pos+x_offset, bottom_y - 2.5), str, CENTER_JUSTIFIED, color);
 
 		// Draw weapon ammo
 		std::string ammo_string = "---";
-		Color color = df::LTGRAY;
-
 		if (weapon != W_MISSILE)
 		{
 			ammo_string = std::to_string(weaponAmmo[weapon]);
@@ -668,7 +694,16 @@ int Hero::draw()
 				color = RED;
 			}
 		}
-		DM.drawString(Vector(x_pos, DM.getVertical() - 1.5), ammo_string, CENTER_JUSTIFIED, color);
+		if (ammo_string.length() % 2 == 0)
+		{
+			// even strings need offset
+			x_offset = 0.5;
+		}
+		else
+		{
+			x_offset = 0;
+		}
+		DM.drawString(Vector(x_pos+x_offset, bottom_y - 1.5), ammo_string, CENTER_JUSTIFIED, color);
 	}
 
 	return 0;

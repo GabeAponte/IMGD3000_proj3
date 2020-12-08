@@ -11,11 +11,13 @@
 #pragma once
 
 #include <map>
-#include "EventKeyboard.h"
-#include "EventMouse.h"
-#include "EventCollision.h"
-#include "Object.h"
-#include "Reticle.h"
+#include <Sprite.h>
+#include <Animation.h>
+#include <EventKeyboard.h>
+#include <EventMouse.h>
+#include <EventCollision.h>
+#include <Object.h>
+#include "..\header_files\Reticle.h"
 
 #define FAR_LOOK_THRESHOLD  8
 #define NEAR_LOOK_THRESHOLD 3
@@ -24,6 +26,9 @@
 #define WEAPON_COUNT        6
 #define SPREAD_SPACING      10  // The spacing (in degrees) between Spread bullets
 #define SCROLL_COOLDOWN     3   // The number of steps to wait between detecting mouse scroll events
+#define OVERLOAD_COOLDOWN   5   // The number of steps to wait between using Shield Overload ability
+#define SHOW_OVERLOAD_COOLDOWN   15   // The number of steps to display that you used the Shield Overload ability
+#define HIT_COOLDOWN		3   // The number of steps to wait before being able to take damage again after a hit
 
 // Enum to represent all possible player weapon types
 enum player_weapon {
@@ -42,8 +47,9 @@ private:
 	Reticle* p_reticle;				// Reticle displayed for aiming
 	bool firing;					// Indicates if the player can fire their weapon
 	int fireCooldown;				// The rate at which a weapon can fire
-	bool shieldOverloaded;			// Indicates if the shield overload attack was used 
+	bool shieldOverloaded;			// Indicates if the shield overload attack was used
 	int overloadCooldown;			// The rate at which to flash the screen for the shield overload event
+	int showOverloadCooldown;		// How long to display that the player has overloaded shields
 	int shieldIntegrity;			// Value of the player's shields
 	int lives;						// Value of the lives the player has (1)
 	bool wasHit;					// Indicates if the player was hit by an enemy
@@ -56,6 +62,9 @@ private:
 	std::map<player_weapon, int> weaponAmmo;			// Maps the weapons to their ammo counts
 	std::map<player_weapon, int> weaponCooldown;		// Maps the weapons to their cooldown rates
 	std::map<player_weapon, std::string> weaponSound;	// Maps the weapons to their audo sounds
+	df::Sprite* hudStatus;			// Sprite for status HUD
+	df::Sprite* hudWeapons;			// Sprite for weapon HUD
+	df::Animation hudSelectAnim;	// Animates HUD select sprite
 
 	// Handle mouse events
 	void mouse(const df::EventMouse* p_mouse_event);

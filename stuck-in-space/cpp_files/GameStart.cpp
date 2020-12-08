@@ -86,18 +86,6 @@ void GameStart::start()
 	// Create hero.
 	new Hero;
 
-	// Shield display
-	df::ViewObject* p_fuel = new df::ViewObject; 
-	p_fuel->setLocation(df::TOP_LEFT);
-	p_fuel->setViewString("Shield Integrity %");
-	p_fuel->setValue(100);
-
-	// Wave display
-	df::ViewObject* p_wave = new df::ViewObject; 
-	p_wave->setLocation(df::TOP_RIGHT);
-	p_wave->setViewString("WAVE");
-	p_wave->setValue(1);
-
 	// Pause game music.
 	MUSICPLAYER.pauseMusic();
 
