@@ -37,7 +37,7 @@ Hero::Hero() {
 	setSprite("player");
 
 	// custom collision box
-	setBox(Box(Vector(-HITBOX_WIDTH / 2, -HITBOX_HEIGHT / 2), HITBOX_WIDTH, HITBOX_HEIGHT));
+	setBox(Box(Vector(-HITBOX_WIDTH / 2, (-HITBOX_HEIGHT / 2) - 1), HITBOX_WIDTH, HITBOX_HEIGHT));
 	setAnimationState(false);
 
 	// Set object type.
@@ -395,6 +395,9 @@ void Hero::step()
 		wasHit = false;
 	}
 
+	// Reset the custom collision box
+	setBox(Box(Vector(-HITBOX_WIDTH / 2, (-HITBOX_HEIGHT / 2) - 1), HITBOX_WIDTH, HITBOX_HEIGHT));
+
 	// Flash the screen if the shield was overloaded
 	if (shieldOverloaded) {
 		DM.setBackgroundColor(TEAL);
@@ -531,35 +534,35 @@ void Hero::setProjectileStart(int index)
 {
 	if (index == 2) {
 		if (p_reticle->getPosition().getY() > this->getPosition().getY()) {
-			projectileStart = (Vector(this->getPosition().getX(), this->getPosition().getY() + 1 + HITBOX_HEIGHT / 2));
+			projectileStart = (Vector(this->getPosition().getX(), this->getPosition().getY() + HITBOX_HEIGHT / 2));
 		}
 		else {
-			projectileStart = (Vector(this->getPosition().getX(), this->getPosition().getY() - 1 - HITBOX_HEIGHT / 2));
+			projectileStart = (Vector(this->getPosition().getX(), this->getPosition().getY() - HITBOX_HEIGHT / 2));
 		}
 	}
 	if (index == 0) {
-		projectileStart = (Vector(this->getPosition().getX() - 3 - HITBOX_WIDTH / 2, this->getPosition().getY()));
+		projectileStart = (Vector(this->getPosition().getX() - 2 - HITBOX_WIDTH / 2, this->getPosition().getY()));
 	}
 
 	if (index == 4) {
-		projectileStart = (Vector(this->getPosition().getX() + 3 + HITBOX_WIDTH / 2, this->getPosition().getY()));
+		projectileStart = (Vector(this->getPosition().getX() + 2 + HITBOX_WIDTH / 2, this->getPosition().getY()));
 	}
 
 	if (index == 1) {
 		if (p_reticle->getPosition().getY() > this->getPosition().getY()) {
-			projectileStart = (Vector(this->getPosition().getX() - 1 - HITBOX_WIDTH / 2, this->getPosition().getY() + HITBOX_HEIGHT / 2));
+			projectileStart = (Vector(this->getPosition().getX() - HITBOX_WIDTH / 2, this->getPosition().getY() + HITBOX_HEIGHT / 2 - .75));
 		}
 		else {
-			projectileStart = (Vector(this->getPosition().getX() - 1 - HITBOX_WIDTH / 2, this->getPosition().getY() - HITBOX_HEIGHT / 2));
+			projectileStart = (Vector(this->getPosition().getX() - HITBOX_WIDTH / 2, this->getPosition().getY() - HITBOX_HEIGHT / 2 + .75));
 		}
 	}
 
 	if (index == 3) {
 		if (p_reticle->getPosition().getY() > this->getPosition().getY()) {
-			projectileStart = (Vector(this->getPosition().getX() + 1 + HITBOX_WIDTH / 2, this->getPosition().getY() + HITBOX_HEIGHT / 2));
+			projectileStart = (Vector(this->getPosition().getX() + HITBOX_WIDTH / 2, this->getPosition().getY() + HITBOX_HEIGHT / 2 - .75));
 		}
 		else {
-			projectileStart = (Vector(this->getPosition().getX() + 1 + HITBOX_WIDTH / 2, this->getPosition().getY() - HITBOX_HEIGHT / 2));
+			projectileStart = (Vector(this->getPosition().getX() + HITBOX_WIDTH / 2, this->getPosition().getY() - HITBOX_HEIGHT / 2 + .75));
 		}
 	}
 }

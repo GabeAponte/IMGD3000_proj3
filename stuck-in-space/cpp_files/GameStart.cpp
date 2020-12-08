@@ -81,7 +81,7 @@ int GameStart::eventHandler(const df::Event* p_e)
 void GameStart::start() 
 {
 	// Create Wave Controller
-	//new WaveController;
+	new WaveController;
 
 	// Create hero.
 	new Hero;
