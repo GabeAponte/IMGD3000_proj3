@@ -43,6 +43,9 @@ GameOver::GameOver() {
 
 	// Gets how many waves the player cleared before dying
 	setWavesSurvived();
+
+	// Delete wave controller
+	WM.deleteObjectsOfType("WaveController");
 }
 
 // When done, game over so shut down.
@@ -77,12 +80,6 @@ void GameOver::step()
 
 	// Check if animation done
 	if (timeToLive <= 0) {
-
-		// Clear view objects
-		WM.deleteObjectsOfType("ViewObject");
-
-		// Delete wave controller
-		WM.deleteObjectsOfType("WaveController");
 
 		// Mark self for deletion
 		WM.markForDelete(this);

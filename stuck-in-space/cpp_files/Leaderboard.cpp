@@ -30,10 +30,10 @@ Leaderboard::Leaderboard() {
 Leaderboard::Leaderboard(string playerName, int score) {
 
 	// Initialize vars
-	LEADERBOARD.writeNewScore(10, playerName);
+	LEADERBOARD.writeNewScore(score, playerName);
 	allScores = LEADERBOARD.getAllScores();
 	latestPlayer = playerName;
-	latestScore = 10;
+	latestScore = score;
 
 	// Set altitude and center the position
 	setAltitude(MAX_ALTITUDE);
