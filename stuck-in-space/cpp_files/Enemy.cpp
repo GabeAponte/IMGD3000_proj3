@@ -169,7 +169,7 @@ int Enemy::eventHandler(const df::Event* p_e)
 		// If shooter, stop movement once close enough to the center of the screen
 		if (type == E_SHOOTER) {
 			Vector pixel_position = DM.spacesToPixels(getPosition());
-			Vector pixel_center = WM.getBoundary().getCorner() + DM.spacesToPixels(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
+			Vector pixel_center = WM.getBoundary().getCorner() + DM.spacesToPixels(Vector(WM.getBoundary().getHorizontal() / 2, (WM.getBoundary().getVertical() / 2) - 2));
 			if (canMove && abs(pixel_position.getY()-pixel_center.getY()) < SHOOTER_STOP_YDISTANCE && distance(pixel_position, pixel_center) < SHOOTER_STOP_RADIUS) {
 
 				setVelocity(Vector()); // stop movement
