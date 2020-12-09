@@ -42,7 +42,7 @@ Hero::Hero() {
 	setType("Hero");
 
 	// Set starting location to center of screen.
-	setPosition(WM.getView().getCorner() + Vector(WM.getView().getHorizontal() / 2, (WM.getView().getVertical() / 2) - 1));
+	setPosition(WM.getBoundary().getCorner() + Vector(WM.getBoundary().getHorizontal() / 2, (WM.getBoundary().getVertical() / 2) - 1));
 
 	// Set altitude
 	setAltitude(MAX_ALTITUDE-1);
@@ -63,10 +63,12 @@ Hero::Hero() {
 	currentWeapon = W_MISSILE;
 	canFire = false;
 	fireCooldown = 0;
-	overloadCooldown = 3;
-	hitCooldown = 3;
-	lives = 1;
-	shieldIntegrity = 100;
+	overloadCooldown = 0;
+	showOverloadCooldown = 0;
+	hitCooldown = 0;
+	changeWeaponCooldown = 0;
+	lives = LIVES;
+	shieldIntegrity = SHIELD_INTEGRITY;
 	projectileStart = getPosition();
 	shieldOverloaded = false;
 	wasHit = false;
@@ -86,7 +88,7 @@ Hero::Hero() {
 	weaponAmmo[W_MISSILE] = 0; // should always be 0
 	weaponAmmo[W_LASER] = 3;
 	weaponAmmo[W_SPREAD] = 0;
-	weaponAmmo[W_BOMB] = 0;
+	weaponAmmo[W_BOMB] = 00;
 	weaponAmmo[W_PLASMA] = 0;
 	weaponAmmo[W_RAPID] = 0;
 
@@ -323,6 +325,7 @@ void Hero::fire(df::Vector target, df::Vector origin)
 	{
 		// Fire Missile towards target
 		Bullet* p_bullet = new Bullet();
+		p_bullet->setSprite("w_bullet");
 		p_bullet->setVelocity(v);
 		p_bullet->setPosition(origin);
 		return;
@@ -442,15 +445,18 @@ void Hero::step()
 	applyHitbox();
 
 	// Flash the screen if the shield was overloaded
-	if (overloadCooldown > 0) {
-		overloadCooldown--;
+	if (shieldOverloaded)
+	{
+		if (overloadCooldown > 0) {
+			overloadCooldown--;
+		}
+		if (overloadCooldown == 0) {
+			DM.setBackgroundColor(df::BLACK);
+			shieldOverloaded = false;
+		}
 	}
 	if (showOverloadCooldown > 0) {
 		showOverloadCooldown--;
-	}
-	if (shieldOverloaded && overloadCooldown == 0) {
-		DM.setBackgroundColor(df::BLACK);
-		shieldOverloaded = false;
 	}
 
 	// Fire weapon
@@ -467,7 +473,7 @@ void Hero::step()
 		}
 
 		// Check if bomb needs to be exploded
-		else if (currentWeapon == W_BOMB && fireCooldown < weaponCooldown[W_BOMB] - 5)
+		else if (currentWeapon == W_BOMB && fireCooldown < weaponCooldown[W_BOMB] - BOMB_DETONATE_WAIT)
 		{
 			Bomb::detonate();
 		}

@@ -7,8 +7,9 @@
 //
 
 #pragma once
-
 #include "Object.h"
+
+#define SHAKE_MAGNITUDE 1.5 // The magnitude of the shake effect
 
 class ScreenShaker : public df::Object {
 

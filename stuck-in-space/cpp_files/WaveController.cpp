@@ -38,7 +38,7 @@ WaveController::WaveController() {
 	enemyOptions.push_back(enemy_data{ E_TOUGH, 10, 2 });
 	enemyOptions.push_back(enemy_data{ E_FAST, 15, 2 });
 	enemyOptions.push_back(enemy_data{ E_TRICKY, 20, 3 });
-	enemyOptions.push_back(enemy_data{ E_SWARM, 30, 10 });
+	enemyOptions.push_back(enemy_data{ E_SWARM, 30, 9 });
 	enemyOptions.push_back(enemy_data{ E_SHOOTER, 40, 5 });
 
 	// Set up ammo values
@@ -69,7 +69,7 @@ WaveController::WaveController() {
 	setAltitude(4);
 
 	// Center so UI elements won't go off screen
-	setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
+	setPosition(WM.getBoundary().getCorner() + Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 }
 
 WaveController::~WaveController()
@@ -232,6 +232,7 @@ void WaveController::spawnEnemy()
 
 		spawn_pos.setX((float)(rand() % (int)WM.getBoundary().getHorizontal()));
 	}
+	spawn_pos = spawn_pos + WM.getBoundary().getCorner();
 
 	// Spawn the selected enemy
 	switch (e_type) {

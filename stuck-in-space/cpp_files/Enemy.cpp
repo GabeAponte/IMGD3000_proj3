@@ -17,12 +17,12 @@
 #include "WorldManager.h"
 #include "../header_files/Velocity.h"
 #include "../header_files/Explosion.h"
-#include "../header_files/Points.h"
-#include "../header_files/Enemy.h"
+#include "../header_files/Bullet.h"
 #include "../header_files/EventEnemyDeath.h"
 #include "../header_files/EventPlayerDeath.h"
 #include "../header_files/EventOverloadShield.h"
 #include "../header_files/EnemyBullet.h"
+#include "../header_files/Enemy.h"
 
 using namespace df;
 
@@ -39,13 +39,13 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	case E_BASIC:
 	{
 		setSprite("basic-enemy");
-		setRealSpeed(.4);
+		setRealSpeed(.3);
 		break;
 	}
 	case E_TOUGH:
 	{
 		setSprite("tough-enemy");
-		setRealSpeed(.30);
+		setRealSpeed(.2);
 		hitPoints = 3;
 		break;
 	}
@@ -53,13 +53,13 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	{
 		setSprite("fast-enemy");
 		setBox(Box(Vector(-2.5, -1.5), 5, 3));
-		setRealSpeed(1.2);
+		setRealSpeed(1);
 		break;
 	}
 	case E_TRICKY:
 	{
 		setSprite("tricky-enemy");
-		setRealSpeed(0.7);
+		setRealSpeed(0.5);
 		break;
 	}
 	case E_SWARM:
@@ -67,13 +67,13 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 		setSprite("swarm-enemy");
 		setBox(Box(Vector(-3.5, -2), 7, 4));
 		setAnimationIndex(rand() % 4);
-		setRealSpeed(.25);
+		setRealSpeed(.2);
 		break;
 	}
 	case E_SHOOTER:
 	{
 		setSprite("shooter-enemy");
-		setRealSpeed(1);
+		setRealSpeed(0.8);
 		break;
 	}
 	}
@@ -89,9 +89,9 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	canZigZag = false;
 	stepCounter = 0;
 	rotationIndex = 0;
-	wasHit = false;
 	hitCooldown = 3;
 	killedByPlayer = false;
+	canTakeDamage = false;
 }
 
 Enemy::~Enemy() {
@@ -149,30 +149,27 @@ int Enemy::eventHandler(const df::Event* p_e)
 	// Regulate 'tough' sprite color
 	if (p_e->getType() == STEP_EVENT) {
 
-		// Check if damage needs to be taken and then reset toogle if so
-		if (takeDamage) {
-			hitPoints--;
-			takeDamage = false;
+		// Become vulnerable again every step
+		if (!canTakeDamage) {
+			canTakeDamage = true;
 		}
-
-		// If tough, set sprite when hit
+		
+		// If TOUGH, reset sprite after hit cooldown
 		if (type == E_TOUGH) {
 
-			if (wasHit) {
-				setSprite("tough-enemy-hit");
+			if (hitCooldown > 0)
+			{
 				hitCooldown--;
-			}
-			if (hitCooldown == 0) {
-				setSprite("tough-enemy");
-				hitCooldown = 3;
-				wasHit = false;
+				if (hitCooldown <= 0) {
+					setSprite("tough-enemy");
+				}
 			}
 		}
 
 		// If shooter, stop movement once close enough to the center of the screen
 		if (type == E_SHOOTER) {
 			Vector pixel_position = DM.spacesToPixels(getPosition());
-			Vector pixel_center = DM.spacesToPixels(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
+			Vector pixel_center = WM.getBoundary().getCorner() + DM.spacesToPixels(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 			if (canMove && abs(pixel_position.getY()-pixel_center.getY()) < SHOOTER_STOP_YDISTANCE && distance(pixel_position, pixel_center) < SHOOTER_STOP_RADIUS) {
 
 				setVelocity(Vector()); // stop movement
@@ -206,47 +203,70 @@ int Enemy::eventHandler(const df::Event* p_e)
 		return 1;
 	}
 	
-	// If get here, have ignored this event.
+	// If get here, we have ignored this event.
 	return 0;
 }
 
 // Called with Enemy collides, handles collisions
 void Enemy::hit(const df::EventCollision* p_collision_event) 
-{
+{	
+	bool first_bullet = (p_collision_event->getObject1()->getType() == "Bullet");
+	bool second_bullet = (p_collision_event->getObject2()->getType() == "Bullet");
 	// If Bullet, reduce health and/or die
-	if ((p_collision_event->getObject1()->getType() == "Bullet") ||
-		(p_collision_event->getObject2()->getType() == "Bullet")) {
+	if (first_bullet || second_bullet) {
 
-		// Remove hitpoints
-		takeDamage = true;
+		if (canTakeDamage)
+		{
+			// Take damage
+			hitPoints--;
 
-		// Set wasHit to true for 'tough' so that sprite updates and play tough hit sound if still has health
-		if (type == E_TOUGH) {
-			wasHit = true;
+			// Become invulnerable until next step
+			canTakeDamage = false;
 
-			if (hitPoints > 0) {
-				// Play tough-hit sound
-				df::Sound* p_sound = df::RM.getSound("tough-hit");
-				p_sound->play();
+			// Set wasHit to true for 'tough' so that sprite updates and play tough hit sound if still has health
+			if (type == E_TOUGH) {
+				// Instantly die to weapons its weak to
+				Bullet* p_bullet;
+				if (first_bullet)
+				{
+					p_bullet = dynamic_cast <Bullet*> (p_collision_event->getObject1());
+				}
+				else
+				{
+					p_bullet = dynamic_cast <Bullet*> (p_collision_event->getObject2());
+				}
+				if (p_bullet->getWeaponType() == W_LASER || p_bullet->getWeaponType() == W_BOMB)
+				{
+					hitPoints = 0;
+				}
+
+				// Show damage taken
+				if (hitPoints > 0) {
+					// Play tough-hit sound
+					df::Sound* p_sound = df::RM.getSound("tough-hit");
+					p_sound->play();
+					setSprite("tough-enemy-hit");
+					hitCooldown = HIT_COOLDOWN;
+				}
 			}
-		}
+			
+			// Check if now dead
+			if (hitPoints <= 0) {
 
-		// Check if now dead
-		if (hitPoints <= 0) {
+				// Create an explosion.
+				Explosion* p_explosion = new Explosion;
+				p_explosion->setPosition(this->getPosition());
 
-			// Create an explosion.
-			Explosion* p_explosion = new Explosion;
-			p_explosion->setPosition(this->getPosition());
+				// Play "explode" sound
+				df::Sound* p_sound = RM.getSound("explode");
+				p_sound->play();
 
-			// Play "explode" sound
-			df::Sound* p_sound = RM.getSound("explode");
-			p_sound->play();
+				// Mark killed by player
+				killedByPlayer = true;
 
-			// Mark killed by player
-			killedByPlayer = true;
-
-			// Delete self
-			WM.markForDelete(this);
+				// Delete self
+				WM.markForDelete(this);
+			}
 		}
 	}
 }
@@ -254,7 +274,7 @@ void Enemy::hit(const df::EventCollision* p_collision_event)
 // Set the direction of the enemy to point at the player (center of screen)
 void Enemy::targetHero(df::Vector position)
 {
-	df::Vector dir = (Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - position);
+	df::Vector dir = WM.getBoundary().getCorner() + Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - position;
 	dir = convertToDragonfly(dir);
 	dir.normalize();
 	dir.scale(realSpeed);
@@ -328,10 +348,10 @@ void Enemy::fire()
 	p_sound->play();
 
 	// Calculate bullet velocity
-	df::Vector v = Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - getPosition(); // calculate aim vector
+	df::Vector v = WM.getBoundary().getCorner() + Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - getPosition(); // calculate aim vector
 	v = convertToDragonfly(v);      // adjust aim for screen coordinates
 	v.normalize();                  // convert aim to direction
-	v.scale(0.5);                     // apply bullet speed
+	v.scale(0.5);                   // apply bullet speed
 	v = convertToReal(v);           // adjust velocity for screen coordinates
 
 	 // Fire Missile towards target

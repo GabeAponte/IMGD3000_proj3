@@ -52,7 +52,7 @@ int Explosion::eventHandler(const df::Event* p_e)
 // Count down until explosion finished.
 void Explosion::step() 
 {
-	// Decrement rate
+	// Decrement life timer
 	timeToLive--;
 
 	// Check if explosion is over

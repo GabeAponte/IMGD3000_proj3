@@ -19,12 +19,12 @@
 #define WAVE_BEGIN_DELAY    75		// The downtime between one wave ending and the next starting
 #define ENEMY_SPAWN_DELAY   15		// The delay before the first enemy of a wave appears
 #define MAX_ENEMY_SPAWN_DELAY 60    // The maximum delay before the first enemy of a wave appears
-#define SPAWN_X_OFFSET      8		// The horizontal distance off screen to spawn enemies at
+#define SPAWN_X_OFFSET      9		// The horizontal distance off screen to spawn enemies at
 #define SPAWN_Y_OFFSET      5		// The Vertical distance off screen to spawn enemies at
 #define SIDE_SPAWN_CHANCE   0.85	// The probability that a spawned enemy will appear from the side of the screen
 #define AMMO_QUOTA_FACTOR   0.1		// The factor the difficulty is multiplied by when calculating the ammo drop quota
 #define AMMO_SPAWN_CHANCE   0.08	// The probability that an ammo pickup will spawn when an enemy dies
-#define AMMO_NEGLECT_LIMIT	10		// If any ammo doesn't appear in this many ammo spawns, it is guaranteed to appear
+#define AMMO_NEGLECT_LIMIT	7		// If any ammo doesn't appear in this many ammo spawns, it is guaranteed to appear
 #define RAND_DICE_SIZE      100		// The size of the "die" rolled when choosing spawn chance (it picks a random int up to DICE_SIZE and divides it by DICE_SIZE)
 
 // Enum values for all the possible enemy types

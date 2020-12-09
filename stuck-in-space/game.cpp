@@ -114,6 +114,7 @@ void loadResources(void) {
 	RM.loadSound("../sounds/ammo-pickup.wav", "ammo-pickup");
 	RM.loadSound("../sounds/rapid.wav", "rapid");
 	RM.loadSound("../sounds/enemy-bullet.wav", "enemy-bullet");
+	RM.loadSound("../sounds/sfx_counter_bullet.wav", "counter-bullet");
 	RM.loadSound("../sounds/sfx_tough_hit.wav", "tough-hit");
 	RM.loadSound("../sounds/sfx_no_ammo.wav", "out-of-ammo");
 	RM.loadSound("../sounds/hero-died.wav", "hero-died");

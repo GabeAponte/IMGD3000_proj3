@@ -19,6 +19,8 @@
 #include <Object.h>
 #include "..\header_files\Reticle.h"
 
+#define LIVES				1
+#define SHIELD_INTEGRITY	100
 #define FAR_LOOK_THRESHOLD  8
 #define NEAR_LOOK_THRESHOLD 3
 #define HITBOX_WIDTH        10
@@ -26,11 +28,12 @@
 #define WEAPON_COUNT        6
 #define SPREAD_SPACING      10  // The spacing (in degrees) between Spread bullets
 #define SCROLL_COOLDOWN     3   // The number of steps to wait between detecting mouse scroll events
-#define OVERLOAD_COOLDOWN   8   // The number of steps to wait between using Shield Overload ability
-#define SHOW_OVERLOAD_COOLDOWN   15   // The number of steps to display that you used the Shield Overload ability
+#define OVERLOAD_COOLDOWN   12   // The number of steps to wait between using Shield Overload ability
+#define SHOW_OVERLOAD_COOLDOWN   25   // The number of steps to display that you used the Shield Overload ability
 #define HIT_COOLDOWN		3   // The number of steps to wait before being able to take damage again after a hit
-#define AMMO_PICKUP_TIMER	40  // The number of steps to display that an ammo type just got acquired
-#define WARNING_BLINK_TIMER 20	// The number of steps to wait before toggling the color of a warning
+#define AMMO_PICKUP_TIMER	50  // The number of steps to display that an ammo type just got acquired
+#define WARNING_BLINK_TIMER 30	// The number of steps to wait before toggling the color of a warning
+#define BOMB_DETONATE_WAIT  10  // The delay between launching a bomb and being able to detonate it
 
 // Enum to represent all possible player weapon types
 enum player_weapon {

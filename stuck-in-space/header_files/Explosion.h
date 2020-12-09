@@ -15,8 +15,7 @@
 class Explosion : public df::Object {
 
 protected:
-
-	int timeToLive; // Rate at which to show explosion
+	int timeToLive; // Duration to show explosion
 
 	// Handles the step event
 	void step();

@@ -28,9 +28,9 @@ MUSIC:
 game-music.wav - "Through Space", by maxstack
 https://opengameart.org/content/through-space
 
---------------
-SOUND EFFECTS:
---------------
+-------------------
+BASE SOUND EFFECTS:
+-------------------
 ammo-pickup.wav - "Spacey 1up/Power up", by GameAudio
 https://freesound.org/people/GameAudio/sounds/220173/
 
@@ -40,17 +40,47 @@ https://freesound.org/people/LeMudCrab/sounds/163458/
 bomb-explosion.wav - "Musket Explosion", by Willlewis
 https://freesound.org/people/Willlewis/sounds/244345/
 
+enemy-bullet.wav - "Retro_Laser_Shot_04", by Matrixxx_
+https://freesound.org/people/MATRIXXX_/sounds/414888/
+
 explode.wav - "Explosion", by Nbs Dark
 https://freesound.org/people/Nbs%20Dark/sounds/94185/
+
+hero-died.wav - "Distant Explosion", by Mozfoo
+https://freesound.org/people/Mozfoo/sounds/436871/
 
 laser.wav - "acid ray gun.wav", by djgriffin
 https://freesound.org/people/djgriffin/sounds/21999/
 
-missile.wav - "BLASTER (multiple)", by C3Sabertooth
+missile.wav - "BLASTER (multiple)", by C3Sabertooth (trimmed by Joseph Henry Stadolnik IV)
 https://freesound.org/people/C3Sabertooth/sounds/480872/
+
+out-of-ammo.wav - "Error_04", by distillerystudio
+https://freesound.org/people/distillerystudio/sounds/327735/
 
 plasma.wav - "05780 space missile.wav", by Robinhood76
 https://freesound.org/people/Robinhood76/sounds/273332/
+
+rapid.wav - "Laser2", by jobro
+https://freesound.org/people/jobro/sounds/35679/
+
+shield-hit.wav - "Sci-Fi Force Field Impact 15.wav", by StormwaveAudio
+https://freesound.org/people/StormwaveAudio/sounds/330629/
+
+shield-overload.wav - "ufo-shield.ogg", by jorgerosa
+https://freesound.org/people/jorgerosa/sounds/458690/
+
+spread.wav - "Laser Shot Silenced", by bubaproducer
+https://freesound.org/people/bubaproducer/sounds/151022/
+
+tough-hit.wav - "Sword Hit Heavy", by EminYildirim
+https://freesound.org/people/EminYildirim/sounds/536104/
+
+-------------------------
+CUSTOMIZED SOUND EFFECTS:
+-------------------------
+sfx_counter_bullet.wav - Modified sound by Joseph Henry Stadolnik IV
+Modified version of tough-hit.wav with added effects.
 
 sfx_no_ammo.wav - Modified sound by Joseph Henry Stadolnik IV
 Modified version of out-of-ammo.wav with added effects.
@@ -66,27 +96,3 @@ Combines shield-overload.wav and overload.wav with added effects.
 
 sfx_tough_hit.wav - Custom sound by Joseph Henry Stadolnik IV
 Combines tough_hit.wav and plasma.wav with added effects.
-
-shield-hit.wav - "Sci-Fi Force Field Impact 15.wav", by StormwaveAudio
-https://freesound.org/people/StormwaveAudio/sounds/330629/
-
-shield-overload.wav - "ufo-shield.ogg", by jorgerosa
-https://freesound.org/people/jorgerosa/sounds/458690/
-
-spread.wav - "Laser Shot Silenced", by bubaproducer
-https://freesound.org/people/bubaproducer/sounds/151022/
-
-rapid.wav - "Laser2", by jobro
-https://freesound.org/people/jobro/sounds/35679/
-
-enemy-bullet.wav - "Retro_Laser_Shot_04", by Matrixxx_
-https://freesound.org/people/MATRIXXX_/sounds/414888/
-
-tough-hit.wav - "Swoard Hit Heavy", by EminYildirim
-https://freesound.org/people/EminYildirim/sounds/536104/
-
-out-of-ammo.wav - "Error_04", by distillerystudio
-https://freesound.org/people/distillerystudio/sounds/327735/
-
-hero-died.wav - "Distant Explosion", by Mozfoo
-https://freesound.org/people/Mozfoo/sounds/436871/

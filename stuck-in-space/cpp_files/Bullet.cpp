@@ -5,20 +5,18 @@
 // Bullet.cpp
 //
 
-#include "LogManager.h"
-#include "WorldManager.h"
-#include "ResourceManager.h"
-#include "EventOut.h"
+#include <iostream>
+
+#include <LogManager.h>
+#include <WorldManager.h>
+#include <ResourceManager.h>
+#include <EventOut.h>
 #include "../header_files/Enemy.h"
 #include "../header_files/Bullet.h"
 
 using namespace df;
 
 Bullet::Bullet(player_weapon weapon_type) {
-
-	// Link to "bullet" sprite.
-	setSprite("w_bullet");
-
 	// Set other object properties.
 	setType("Bullet");
 

@@ -107,16 +107,7 @@ int Leaderboard::draw()
 	}
 
 	// Check if this leaderboard is being drawn after a player dies
-	if (latestScore != NULL) {
-
-		// Check if there are at least 15 scores already drawn
-		if (allScores.size() >= 15) {
-
-			// Set the 15th player and scores (14 in list cause index starts at 0).
-			lastTopScore = allScores[14]->score;
-			lastTopPlayer = allScores[14]->player;
-		}
-
+	if (latestPlayer != "") {
 		// Toggle the display of a lower score if it is not present in the top 15
 		if (!player_on_board)
 		{

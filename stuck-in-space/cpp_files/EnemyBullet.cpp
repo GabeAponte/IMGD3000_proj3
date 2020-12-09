@@ -65,10 +65,17 @@ void EnemyBullet::out()
 // If EnemyBullet hits hero or hero's bullet, mark for deletion.
 void EnemyBullet::hit(const df::EventCollision* p_collision_event) 
 {
+	bool hit_bullet = (p_collision_event->getObject1()->getType() == "Bullet") || (p_collision_event->getObject2()->getType() == "Bullet");
 	// Check if collided with hero or a bullet
-	if ((p_collision_event->getObject1()->getType() == "Hero") || (p_collision_event->getObject2()->getType() == "Hero")
-		|| (p_collision_event->getObject1()->getType() == "Bullet") || (p_collision_event->getObject2()->getType() == "Bullet")) {
+	if ((p_collision_event->getObject1()->getType() == "Hero") || (p_collision_event->getObject2()->getType() == "Hero") || hit_bullet) {
 
+		if (hit_bullet)
+		{
+			// Play "counter-bullet" sound
+			df::Sound* p_sound = RM.getSound("counter-bullet");
+			p_sound->play();
+		}
+	
 		WM.markForDelete(this);
 	}
 }

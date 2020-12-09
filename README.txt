@@ -15,6 +15,7 @@ You are a pilot of a ship stranded in space, under attack from enemy aliens with
 CONTROLS:
 * AIM: Move Mouse
 * SHOOT: Press or Hold Left Click
+* CYCLE WEAPON: Press Keys A or D or Scroll Mouse Wheel
 * SWAP WEAPON: Press Keys 1-6
 * OVERLOAD SHIELDS: Press Space
 
@@ -54,20 +55,20 @@ your name when you get a game over.
 Shield Overload
 ---------------
 As a special defensive ability, the player can pay 15 shield integrity points to destroy all enemies
-on screen. If the player takes damage while out of shield integrity, they get destroyed.
+on the screen. If the player takes damage while out of shield integrity, they get destroyed.
 ------------
 Ammo Pickups
 ------------
 Killing enemies has a chance to drop an ammo pickup. Shooting this will give the player some ammo
-of the type indicated by the letter on the ammo pickup.
+of the type indicated by the letter on the ammo pickup. There are systems in place to ensure the 
+player can't go too long without picking up ammo of every type, and there is a slowly-increasing minimum number of ammo pickups that will appear each wave.
 
 ====================================================================================================
 RUNNING THE GAME:
 To run the game, extract the .zip and set up its contents as shown below. This is intended to be run 
 with our version of Dragonfly, which is included in the file. Place the SFML-2.5 folder at the 
 appropriate location, open the .sln file in stuck-in-space/vs-2019, and build the program.
-You should be able to run it directly from Visual Studio now. 
-(Note that there are still some dev cout messages).
+You should be able to run it directly from Visual Studio now.
 ====================================================================================================
 
 FILE STRUCTURE:
@@ -99,6 +100,4 @@ Projects/            	Location of Visual Studio projects.
 | | |
 | | + Release/          Location of .exe that runs in Release mode.
 | |
-| - df-font.txt        	Fonts used by Dragonfly.
-| |
-| - df-config.txt      	Config file used by Dragonfly (optional).
+| - df-font.txt        	Font used by Dragonfly.

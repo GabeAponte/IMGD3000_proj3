@@ -17,7 +17,7 @@ ScreenShaker::ScreenShaker() {
 
 	// Invisible, SPECTRAL and set at center of screen
 	setSolidness(SPECTRAL);
-	setPosition(Vector(WM.getView().getHorizontal() / 2, WM.getView().getVertical() / 2));
+	setPosition(Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 	canShake = false;
 	shakeIndex = true;
 }
@@ -29,19 +29,19 @@ int ScreenShaker::eventHandler(const df::Event* p_e)
 	if (p_e->getType() == STEP_EVENT) {
 		if (canShake) {
 			if (shakeIndex == 0) {
-				setVelocity(Vector(2, 0));
+				setVelocity(Vector(SHAKE_MAGNITUDE, 0));
 				shakeIndex++;
 			}
 			else if (shakeIndex == 1) {
-				setVelocity(Vector(-2, -2));
+				setVelocity(Vector(-SHAKE_MAGNITUDE, -SHAKE_MAGNITUDE));
 				shakeIndex++;
 			}
 			else if (shakeIndex == 2) {
-				setVelocity(Vector(0, -2));
+				setVelocity(Vector(0, -SHAKE_MAGNITUDE));
 				shakeIndex++;
 			}
 			else if (shakeIndex == 3) {
-				setVelocity(Vector(2, 2));
+				setVelocity(Vector(SHAKE_MAGNITUDE, SHAKE_MAGNITUDE));
 				shakeIndex++;
 			}
 			else if (shakeIndex == 4) {
@@ -49,7 +49,7 @@ int ScreenShaker::eventHandler(const df::Event* p_e)
 				// Reset the view on last shake index step
 				setVelocity(Vector());
 				WM.setView(Box(Vector(0, 0), 120, 36));
-				setPosition(Vector(WM.getView().getHorizontal() / 2, WM.getView().getVertical() / 2));
+				setPosition(WM.getBoundary().getCorner() + Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2));
 				WM.setViewFollowing(this);
 				shakeIndex = 0;
 				canShake = false;
