@@ -10,7 +10,8 @@ Gabriel Aponte .............. gaaponte@wpi.edu
 Joseph Henry Stadolnik IV ... jhstadolnik@wpi.edu
 
 GAME: STUCK IN SPACE
-You are a pilot of a ship stranded in space, under attack from enemy aliens with no fuel left. Survive as long as you can against the horde using whatever ammo you can scrounge to power your arsenal of weapons!
+You are a pilot of a ship stranded in space, under attack from enemy aliens with no fuel left. 
+Survive as long as you can against the horde using whatever ammo you can scrounge to power your arsenal of weapons!
 
 CONTROLS:
 * AIM: Move Mouse
@@ -65,10 +66,11 @@ player can't go too long without picking up ammo of every type, and there is a s
 
 ====================================================================================================
 RUNNING THE GAME:
-To run the game, extract the .zip and set up its contents as shown below. This is intended to be run 
+To run the game, extract the .zip and set up its contents as shown below. This is intended to run 
 with our version of Dragonfly, which is included in the file. Place the SFML-2.5 folder at the 
 appropriate location, open the .sln file in stuck-in-space/vs-2019, and build the program.
-You should be able to run it directly from Visual Studio now.
+You should be able to run it directly from Visual Studio now. As the game is now complete,
+utilize the 'Release x64' configurations to build game. This will provide the most preformance.
 ====================================================================================================
 
 FILE STRUCTURE:
