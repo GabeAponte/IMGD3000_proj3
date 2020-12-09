@@ -45,22 +45,22 @@ Leaderboard::Leaderboard(string playerName, int score) {
 int Leaderboard::eventHandler(const df::Event* p_e)
 {
 	// Handles keyboard events
-	if (p_e->getType() == df::KEYBOARD_EVENT) {
-		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*) p_e;
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
+	if (p_e->getType() == KEYBOARD_EVENT) {
+		EventKeyboard* p_keyboard_event = (EventKeyboard*) p_e;
+		if (p_keyboard_event->getKeyboardAction() == KEY_PRESSED)
 
 			switch (p_keyboard_event->getKey()) {
 
 		    // Enter key and return to leave the leaderboard
-			case df::Keyboard::RETURN: {
+			case Keyboard::RETURN: {
 				Sound* p_sound = RM.getSound("select");
 				p_sound->play();
 				new GameStart();
-				df::WM.markForDelete(this);
+				WM.markForDelete(this);
 			}
 				break;
 			// Escape key to quit the game
-			case df::Keyboard::ESCAPE:
+			case Keyboard::ESCAPE:
 				GM.setGameOver();
 				break;
 
@@ -80,11 +80,11 @@ int Leaderboard::draw()
 {
 	float mid_x = WM.getView().getCorner().getX() + WM.getView().getHorizontal() / 2;
 	float bottom_y = WM.getView().getCorner().getY() + WM.getView().getVertical();
-	DM.drawString(Vector(mid_x, 3), "\\===\\  L E A D E R B O A R D  /===/", df::CENTER_JUSTIFIED);
-	DM.drawString(Vector(mid_x - 25, 6), "Waves Survived:", df::CENTER_JUSTIFIED);
-	DM.drawString(Vector(mid_x + 20, 6), "Player Name:", df::CENTER_JUSTIFIED);
-	DM.drawString(Vector(mid_x, bottom_y-3), "RETURN: [Enter]", df::CENTER_JUSTIFIED);
-	DM.drawString(Vector(mid_x, bottom_y-2), "QUIT: [Esc]", df::CENTER_JUSTIFIED);
+	DM.drawString(Vector(mid_x, 3), "\\===\\  L E A D E R B O A R D  /===/", CENTER_JUSTIFIED);
+	DM.drawString(Vector(mid_x - 25, 6), "Waves Survived:", CENTER_JUSTIFIED);
+	DM.drawString(Vector(mid_x + 20, 6), "Player Name:", CENTER_JUSTIFIED);
+	DM.drawString(Vector(mid_x, bottom_y-3), "RETURN: [Enter]", CENTER_JUSTIFIED);
+	DM.drawString(Vector(mid_x, bottom_y-2), "QUIT: [Esc]", CENTER_JUSTIFIED);
 
 	int index = 1;
 	float y_position = 8.0;
@@ -95,17 +95,17 @@ int Leaderboard::draw()
 	for (it = allScores.begin(); it != allScores.end() && index <= 15; it++) {
 
 		// Score color will be light gray
-		df::Color player_color = df::Color::LTGRAY;
+		Color player_color = Color::LTGRAY;
 
 		// If drawing current round's score, use a different color
 		if (latestScore != NULL && latestScore == (*it)->score && latestPlayer == (*it)->player)
 		{
-			player_color = df::Color::YELLOW;
+			player_color = Color::YELLOW;
 			player_on_board = true;
 		}
 
-		DM.drawString(Vector(mid_x - 25, y_position), std::to_string((*it)->score), df::CENTER_JUSTIFIED, player_color);
-		DM.drawString(Vector(mid_x + 20, y_position), (*it)->player, df::CENTER_JUSTIFIED, player_color);
+		DM.drawString(Vector(mid_x - 25, y_position), std::to_string((*it)->score), CENTER_JUSTIFIED, player_color);
+		DM.drawString(Vector(mid_x + 20, y_position), (*it)->player, CENTER_JUSTIFIED, player_color);
 		y_position += 1.5;
 		index++;
 	}
@@ -116,8 +116,8 @@ int Leaderboard::draw()
 		if (!player_on_board)
 		{
 			// Draws the lastest bad score underneath the top 15 in red
-			DM.drawString(Vector(mid_x - 25, bottom_y - 5), std::to_string(latestScore), df::CENTER_JUSTIFIED, df::Color::RED);
-			DM.drawString(Vector(mid_x + 20, bottom_y - 5), latestPlayer, df::CENTER_JUSTIFIED, df::Color::RED);
+			DM.drawString(Vector(mid_x - 25, bottom_y - 5), std::to_string(latestScore), CENTER_JUSTIFIED, Color::RED);
+			DM.drawString(Vector(mid_x + 20, bottom_y - 5), latestPlayer, CENTER_JUSTIFIED, Color::RED);
 		}
 	}
 

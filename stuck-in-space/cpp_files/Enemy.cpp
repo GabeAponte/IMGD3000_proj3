@@ -106,8 +106,8 @@ Enemy::~Enemy() {
 int Enemy::eventHandler(const df::Event* p_e) 
 {
 	// Collision event handler
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision* p_collision_event = dynamic_cast <df::EventCollision const*> (p_e);
+	if (p_e->getType() == COLLISION_EVENT) {
+		const EventCollision* p_collision_event = dynamic_cast <EventCollision const*> (p_e);
 		hit(p_collision_event);
 		return 1;
 	}
@@ -129,7 +129,7 @@ int Enemy::eventHandler(const df::Event* p_e)
 	}
 
 	// Out of bounds event handler
-	if (p_e->getType() == df::OUT_EVENT) {
+	if (p_e->getType() == OUT_EVENT) {
 		WM.markForDelete(this);
 		return 1;
 	}
@@ -246,7 +246,7 @@ void Enemy::hit(const df::EventCollision* p_collision_event)
 				if (hitPoints > 0) {
 
 					// Play tough-hit sound
-					df::Sound* p_sound = df::RM.getSound("tough-hit");
+					Sound* p_sound = RM.getSound("tough-hit");
 					p_sound->play();
 					setSprite("tough-enemy-hit");
 					hitCooldown = HIT_COOLDOWN;
@@ -261,7 +261,7 @@ void Enemy::hit(const df::EventCollision* p_collision_event)
 				p_explosion->setPosition(this->getPosition());
 
 				// Play "explode" sound
-				df::Sound* p_sound = RM.getSound("explode");
+				Sound* p_sound = RM.getSound("explode");
 				p_sound->play();
 
 				// Mark killed by player
@@ -277,7 +277,7 @@ void Enemy::hit(const df::EventCollision* p_collision_event)
 // Set the direction of the enemy to point at the player (center of screen)
 void Enemy::targetHero(df::Vector position)
 {
-	df::Vector dir = WM.getBoundary().getCorner() + Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - position;
+	Vector dir = WM.getBoundary().getCorner() + Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - position;
 	dir = convertToDragonfly(dir);
 	dir.normalize();
 	dir.scale(realSpeed);
@@ -289,7 +289,7 @@ void Enemy::targetHero(df::Vector position)
 // Last rotation will target enemy directly
 void Enemy::applyZigZagMovement()
 {
-	df::Vector v = convertToDragonfly(getVelocity());
+	Vector v = convertToDragonfly(getVelocity());
 
 	if (stepCounter >= 15 && rotationIndex == 0) {
 		v = rotateVector(v, 45);
@@ -347,11 +347,11 @@ void Enemy::fire()
 	fireCooldown = FIRE_COOLDOWN;
 
 	// Play enemy bullet sound
-	df::Sound* p_sound = df::RM.getSound("enemy-bullet");
+	Sound* p_sound = RM.getSound("enemy-bullet");
 	p_sound->play();
 
 	// Calculate bullet velocity
-	df::Vector v = WM.getBoundary().getCorner() + Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - getPosition(); // calculate aim vector
+	Vector v = WM.getBoundary().getCorner() + Vector(WM.getBoundary().getHorizontal() / 2, WM.getBoundary().getVertical() / 2) - getPosition(); // calculate aim vector
 	v = convertToDragonfly(v);      // adjust aim for screen coordinates
 	v.normalize();                  // convert aim to direction
 	v.scale(0.5);                   // apply bullet speed

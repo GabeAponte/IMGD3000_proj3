@@ -5,14 +5,16 @@
 // BombExplosion.cpp
 // Short-lived explosion 
 //
-#include <iostream>
 
+#include <iostream>
 #include <EventStep.h>
 #include <GameManager.h>
 #include <LogManager.h>
 #include <ResourceManager.h>
 #include <WorldManager.h>
 #include "../header_files/BombExplosion.h"
+
+using namespace df;
 
 BombExplosion::BombExplosion(df::Vector spawn_position) : Bullet(W_BOMB) {
 
@@ -22,14 +24,14 @@ BombExplosion::BombExplosion(df::Vector spawn_position) : Bullet(W_BOMB) {
 		timeToLive = getAnimation().getSprite()->getFrameCount() * 2;
 
 		// Use a big hitbox
-		setBox(df::Box(df::Vector(-9.5, -4.5), 19, 9));
+		setBox(Box(Vector(-9.5, -4.5), 19, 9));
 	}
 	else {
 		timeToLive = 0;
 	}
 
 	// Play explosion sound
-	df::Sound* p_sound = df::RM.getSound("bomb-explosion");
+	Sound* p_sound = RM.getSound("bomb-explosion");
 	p_sound->play();
 
 	// Set initial spawn position
@@ -44,7 +46,7 @@ BombExplosion::BombExplosion(df::Vector spawn_position) : Bullet(W_BOMB) {
 int BombExplosion::eventHandler(const df::Event* p_e)
 {
 	// Step handler
-	if (p_e->getType() == df::STEP_EVENT) {
+	if (p_e->getType() == STEP_EVENT) {
 		step();
 		return 1;
 	}
@@ -61,6 +63,6 @@ void BombExplosion::step()
 
 	// Check if explosion is over
 	if (timeToLive <= 0) {
-		df::WM.markForDelete(this);
+		WM.markForDelete(this);
 	}
 }

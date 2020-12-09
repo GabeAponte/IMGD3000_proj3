@@ -15,6 +15,8 @@
 #include "WorldManager.h"
 #include "../header_files/Explosion.h"
 
+using namespace df;
+
 Explosion::Explosion(std::string sprite) {
 
 	// Link to "explosion" sprite and regulate animation
@@ -29,7 +31,7 @@ Explosion::Explosion(std::string sprite) {
 	setType("Explosion");
 
 	// Set to SOFT
-	setSolidness(df::SPECTRAL);
+	setSolidness(SPECTRAL);
 
 	// Set altitude
 	setAltitude(3);
@@ -40,7 +42,7 @@ Explosion::Explosion(std::string sprite) {
 int Explosion::eventHandler(const df::Event* p_e) 
 {
 	// Step handler
-	if (p_e->getType() == df::STEP_EVENT) {
+	if (p_e->getType() == STEP_EVENT) {
 		step();
 		return 1;
 	}
@@ -57,6 +59,6 @@ void Explosion::step()
 
 	// Check if explosion is over
 	if (timeToLive <= 0) {
-		df::WM.markForDelete(this);
+		WM.markForDelete(this);
 	}
 }

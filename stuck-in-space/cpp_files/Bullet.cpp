@@ -6,7 +6,6 @@
 //
 
 #include <iostream>
-
 #include <LogManager.h>
 #include <WorldManager.h>
 #include <ResourceManager.h>
@@ -34,14 +33,14 @@ Bullet::Bullet(player_weapon weapon_type) {
 int Bullet::eventHandler(const df::Event* p_e) 
 {
 	// Out of bounds handler
-	if (p_e->getType() == df::OUT_EVENT) {
+	if (p_e->getType() == OUT_EVENT) {
 		out();
 		return 1;
 	}
 
 	// Collisions handler
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
+	if (p_e->getType() == COLLISION_EVENT) {
+		const EventCollision* p_collision_event = dynamic_cast <const EventCollision*> (p_e);
 		hit(p_collision_event);
 		return 1;
 	}

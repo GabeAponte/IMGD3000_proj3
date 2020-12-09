@@ -67,14 +67,14 @@ Ammo::Ammo(df::Vector position, player_weapon ammo_type, int ammo_value) {
 int Ammo::eventHandler(const df::Event* p_e) {
 
 	// Handle step event
-	if (p_e->getType() == df::STEP_EVENT) {
+	if (p_e->getType() == STEP_EVENT) {
 		step();
 		return 1;
 	}
 
 	// Handle collision event
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
+	if (p_e->getType() == COLLISION_EVENT) {
+		const EventCollision* p_collision_event = dynamic_cast <const EventCollision*> (p_e);
 		hit(p_collision_event);
 		return 1;
 	}

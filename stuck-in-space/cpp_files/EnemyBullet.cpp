@@ -32,14 +32,14 @@ EnemyBullet::EnemyBullet() {
 int EnemyBullet::eventHandler(const df::Event* p_e) 
 {
 	// Out of bounds event handler
-	if (p_e->getType() == df::OUT_EVENT) {
+	if (p_e->getType() == OUT_EVENT) {
 		out();
 		return 1;
 	}
 
 	// Collisions event handler
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
+	if (p_e->getType() == COLLISION_EVENT) {
+		const EventCollision* p_collision_event = dynamic_cast <const EventCollision*> (p_e);
 		hit(p_collision_event);
 		return 1;
 	}
@@ -73,7 +73,7 @@ void EnemyBullet::hit(const df::EventCollision* p_collision_event)
 		if (hit_bullet)
 		{
 			// Play "counter-bullet" sound
-			df::Sound* p_sound = RM.getSound("counter-bullet");
+			Sound* p_sound = RM.getSound("counter-bullet");
 			p_sound->play();
 		}
 	

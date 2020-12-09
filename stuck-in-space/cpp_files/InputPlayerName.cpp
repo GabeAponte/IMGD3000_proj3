@@ -12,9 +12,9 @@
 #include <WorldManager.h>
 #include <EventKeyboard.h>
 #include <EventStep.h>
+#include <ResourceManager.h>
 #include "..\header_files\Leaderboard.h"
 #include "..\header_files\InputPlayerName.h"
-#include <ResourceManager.h>
 
 using namespace df;
 
@@ -36,11 +36,11 @@ InputPlayerName::InputPlayerName(int wave) {
 int InputPlayerName::eventHandler(const df::Event* p_e)
 {
 	// Handle keyboard input for name entry
-	if (p_e->getType() == df::KEYBOARD_EVENT) {
+	if (p_e->getType() == KEYBOARD_EVENT) {
 
-		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*) p_e;
-		bool key_pressed = p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED;
-		bool key_held = p_keyboard_event->getKeyboardAction() == df::KEY_DOWN && keyRepeatWait <= 0;
+		EventKeyboard* p_keyboard_event = (EventKeyboard*) p_e;
+		bool key_pressed = p_keyboard_event->getKeyboardAction() == KEY_PRESSED;
+		bool key_held = p_keyboard_event->getKeyboardAction() == KEY_DOWN && keyRepeatWait <= 0;
 		if (key_pressed || key_held)
 		{
 			if (key_pressed)
@@ -52,7 +52,7 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
 				keyRepeatWait = KEY_REPEAT_WAIT;
 			}
 			switch (p_keyboard_event->getKey()) {
-			case df::Keyboard::RETURN: {
+			case Keyboard::RETURN: {
 
 				// Return key will bring player to the leaderboard
 				Sound* p_sound = RM.getSound("select");
@@ -60,124 +60,124 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
 
 				if (trim(playerName) != "") {
 					new Leaderboard(trim(playerName), wavesCompleted);
-					df::WM.markForDelete(this);
+					WM.markForDelete(this);
 				}
 				else {
 					new Leaderboard("ANONYMOUS", wavesCompleted);
-					df::WM.markForDelete(this);
+					WM.markForDelete(this);
 				}
 			}
 				break;
 
-			case(df::Keyboard::A):
+			case(Keyboard::A):
 				if (playerName.size() < 36)
 					playerName += "A";
 				break;
-			case(df::Keyboard::B):
+			case(Keyboard::B):
 				if (playerName.size() < 36)
 					playerName += "B";
 				break;
-			case(df::Keyboard::C):
+			case(Keyboard::C):
 				if (playerName.size() < 36)
 					playerName += "C";
 				break;
-			case(df::Keyboard::D):
+			case(Keyboard::D):
 				if (playerName.size() < 36)
 					playerName += "D";
 				break;
-			case(df::Keyboard::E):
+			case(Keyboard::E):
 				if (playerName.size() < 36)
 					playerName += "E";
 				break;
-			case(df::Keyboard::F):
+			case(Keyboard::F):
 				if (playerName.size() < 36)
 					playerName += "F";
 				break;
-			case(df::Keyboard::G):
+			case(Keyboard::G):
 				if (playerName.size() < 36)
 					playerName += "G";
 				break;
-			case(df::Keyboard::H):
+			case(Keyboard::H):
 				if (playerName.size() < 36)
 					playerName += "H";
 				break;
-			case(df::Keyboard::I):
+			case(Keyboard::I):
 				if (playerName.size() < 36)
 					playerName += "I";
 				break;
-			case(df::Keyboard::J):
+			case(Keyboard::J):
 				if (playerName.size() < 36)
 					playerName += "J";
 				break;
-			case(df::Keyboard::K):
+			case(Keyboard::K):
 				if (playerName.size() < 36)
 					playerName += "K";
 				break;
-			case(df::Keyboard::L):
+			case(Keyboard::L):
 				if (playerName.size() < 36)
 					playerName += "L";
 				break;
-			case(df::Keyboard::M):
+			case(Keyboard::M):
 				if (playerName.size() < 36)
 					playerName += "M";
 				break;
-			case(df::Keyboard::N):
+			case(Keyboard::N):
 				if (playerName.size() < 36)
 					playerName += "N";
 				break;
-			case(df::Keyboard::O):
+			case(Keyboard::O):
 				if (playerName.size() < 36)
 					playerName += "O";
 				break;
-			case(df::Keyboard::P):
+			case(Keyboard::P):
 				if (playerName.size() < 36)
 					playerName += "P";
 				break;
-			case(df::Keyboard::Q):
+			case(Keyboard::Q):
 				if (playerName.size() < 36)
 					playerName += "Q";
 				break;
-			case(df::Keyboard::R):
+			case(Keyboard::R):
 				if (playerName.size() < 36)
 					playerName += "R";
 				break;
-			case(df::Keyboard::S):
+			case(Keyboard::S):
 				if (playerName.size() < 36)
 					playerName += "S";
 				break;
-			case(df::Keyboard::T):
+			case(Keyboard::T):
 				if (playerName.size() < 36)
 					playerName += "T";
 				break;
-			case(df::Keyboard::U):
+			case(Keyboard::U):
 				if (playerName.size() < 36)
 					playerName += "U";
 				break;
-			case(df::Keyboard::V):
+			case(Keyboard::V):
 				if (playerName.size() < 36)
 					playerName += "V";
 				break;
-			case(df::Keyboard::W):
+			case(Keyboard::W):
 				if (playerName.size() < 36)
 					playerName += "W";
 				break;
-			case(df::Keyboard::X):
+			case(Keyboard::X):
 				if (playerName.size() < 36)
 					playerName += "X";
 				break;
-			case(df::Keyboard::Y):
+			case(Keyboard::Y):
 				if (playerName.size() < 36)
 					playerName += "Y";
 				break;
-			case(df::Keyboard::Z):
+			case(Keyboard::Z):
 				if (playerName.size() < 36)
 					playerName += "Z";
 				break;
-			case(df::Keyboard::SPACE):
+			case(Keyboard::SPACE):
 				if (playerName.size() < 36)
 					playerName += " ";
 				break;
-			case(df::Keyboard::BACKSPACE):
+			case(Keyboard::BACKSPACE):
 				if (playerName != "")
 					playerName.pop_back();
 				break;
@@ -187,7 +187,7 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
 		}
 		return 1;
 	}
-	if (p_e->getType() == df::STEP_EVENT) {
+	if (p_e->getType() == STEP_EVENT) {
 
 		// Update text repeat timer
 		if (keyRepeatWait > 0)
@@ -226,9 +226,9 @@ int InputPlayerName::draw()
 		text_cursor = "_";
 	}
 
-	DM.drawString(Vector(DM.getHorizontal() / 2, 8), "You survived " + std::to_string(wavesCompleted) + " wave" + plural + ".", df::CENTER_JUSTIFIED, df::Color::YELLOW);
-	DM.drawString(Vector(DM.getHorizontal() / 2, 10), "Enter your name and press enter to save your score:", df::CENTER_JUSTIFIED, df::Color::YELLOW);
-	DM.drawString(Vector(DM.getHorizontal() / 2, 12), playerName + text_cursor, df::CENTER_JUSTIFIED, df::Color::ORANGE);
+	DM.drawString(Vector(DM.getHorizontal() / 2, 8), "You survived " + std::to_string(wavesCompleted) + " wave" + plural + ".", CENTER_JUSTIFIED, Color::YELLOW);
+	DM.drawString(Vector(DM.getHorizontal() / 2, 10), "Enter your name and press enter to save your score:", CENTER_JUSTIFIED, Color::YELLOW);
+	DM.drawString(Vector(DM.getHorizontal() / 2, 12), playerName + text_cursor, CENTER_JUSTIFIED, Color::ORANGE);
 
 	return 0;
 }

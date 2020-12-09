@@ -38,7 +38,7 @@ GameStart::GameStart() {
 	setSprite("gamestart");
 
 	// Put in center of screen.
-	setLocation(df::CENTER_CENTER);
+	setLocation(CENTER_CENTER);
 
 	// Play game music.
 	MUSICPLAYER.playMusic();
@@ -49,28 +49,28 @@ GameStart::GameStart() {
 int GameStart::eventHandler(const df::Event* p_e) 
 {
 	// Keyboard handler
-	if (p_e->getType() == df::KEYBOARD_EVENT) {
-		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*) p_e;
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
+	if (p_e->getType() == KEYBOARD_EVENT) {
+		EventKeyboard* p_keyboard_event = (EventKeyboard*) p_e;
+		if (p_keyboard_event->getKeyboardAction() == KEY_PRESSED)
 			switch (p_keyboard_event->getKey()) {
 
 			// Enter : Play (P also supported)
-			case df::Keyboard::RETURN:
-			case df::Keyboard::P:
+			case Keyboard::RETURN:
+			case Keyboard::P:
 				start();
 				break;
 
 			// Escape : Quit
-			case df::Keyboard::ESCAPE:
+			case Keyboard::ESCAPE:
 				GM.setGameOver();
 				break;
 
 			// L : Show Leaderboard
-			case df::Keyboard::L: {
+			case Keyboard::L: {
 				Sound* p_sound = RM.getSound("select");
 				p_sound->play();
 				new Leaderboard();
-				df::WM.markForDelete(this);
+				WM.markForDelete(this);
 			}
 				break;
 			default:
@@ -106,6 +106,6 @@ void GameStart::start()
 // Override default draw so as not to display "value".
 int GameStart::draw() 
 {
-	df::Object::draw();
+	Object::draw();
 	return 0;
 }

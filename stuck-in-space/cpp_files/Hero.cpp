@@ -131,7 +131,7 @@ Hero::~Hero() {
 		for (int j = -2; j <= 2; j++) {
 			if (abs(i) != 2 || abs(j) != 2)
 			{
-				df::Vector temp_pos = this->getPosition();
+				Vector temp_pos = this->getPosition();
 				temp_pos.setX(this->getPosition().getX() + i * 7);
 				temp_pos.setY(this->getPosition().getY() + j * 3);
 				Explosion* p_explosion = new Explosion;
@@ -150,28 +150,28 @@ Hero::~Hero() {
 int Hero::eventHandler(const df::Event* p_e) 
 {
 	// Keyboard event handler
-	if (p_e->getType() == df::KEYBOARD_EVENT) {
-		const df::EventKeyboard* p_keyboard_event = dynamic_cast <const df::EventKeyboard*> (p_e);
+	if (p_e->getType() == KEYBOARD_EVENT) {
+		const EventKeyboard* p_keyboard_event = dynamic_cast <const EventKeyboard*> (p_e);
 		kbd(p_keyboard_event);
 		return 1;
 	}
 
 	// Mouse event handler
-	if (p_e->getType() == df::MSE_EVENT) {
-		const df::EventMouse* p_mouse_event = dynamic_cast <const df::EventMouse*> (p_e);
+	if (p_e->getType() == MSE_EVENT) {
+		const EventMouse* p_mouse_event = dynamic_cast <const EventMouse*> (p_e);
 		mouse(p_mouse_event);
 		return 1;
 	}
 
 	// Step event handler
-	if (p_e->getType() == df::STEP_EVENT) {
+	if (p_e->getType() == STEP_EVENT) {
 		step();
 		return 1;
 	}
 
 	// Collision event handler
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision* p_collision_event = dynamic_cast <df::EventCollision const*> (p_e);
+	if (p_e->getType() == COLLISION_EVENT) {
+		const EventCollision* p_collision_event = dynamic_cast <EventCollision const*> (p_e);
 		hit(p_collision_event);
 		return 1;
 	}
@@ -192,20 +192,20 @@ int Hero::eventHandler(const df::Event* p_e)
 void Hero::mouse(const df::EventMouse* p_mouse_event) 
 {
 	// Pressed button?
-	if (p_mouse_event->getMouseButton() == df::Mouse::LEFT)
+	if (p_mouse_event->getMouseButton() == Mouse::LEFT)
 	{
-		if (p_mouse_event->getMouseAction() == df::CLICKED)
+		if (p_mouse_event->getMouseAction() == CLICKED)
 		{
 			canFire = true;
 		}
-		else if (p_mouse_event->getMouseAction() == df::RELEASED)
+		else if (p_mouse_event->getMouseAction() == RELEASED)
 		{
 			canFire = false;
 		}
 	}
 
 	// Scrolled?
-	if (p_mouse_event->getMouseAction() == df::SCROLLED)
+	if (p_mouse_event->getMouseAction() == SCROLLED)
 	{
 		// Skip if on cooldown
 		if (changeWeaponCooldown > 0)
@@ -231,49 +231,49 @@ void Hero::mouse(const df::EventMouse* p_mouse_event)
 void Hero::kbd(const df::EventKeyboard* p_keyboard_event) 
 {
 	// handle key press events
-	if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+	if (p_keyboard_event->getKeyboardAction() == KEY_PRESSED) {
 
 		switch (p_keyboard_event->getKey()) {
 
 		// Escape : Quit
-		case df::Keyboard::ESCAPE:
+		case Keyboard::ESCAPE:
 			GM.setGameOver();
 			break;
 
 		// Space : Overload Shield
-		case df::Keyboard::SPACE:
+		case Keyboard::SPACE:
 			overloadShield();
 			break;
 
 		// 1-6 : Switch Weapon
-		case df::Keyboard::NUM1:
+		case Keyboard::NUM1:
 			changeWeapon(W_MISSILE);
 			break;
-		case df::Keyboard::NUM2:
+		case Keyboard::NUM2:
 			changeWeapon(W_LASER);
 			break;
-		case df::Keyboard::NUM3:
+		case Keyboard::NUM3:
 			changeWeapon(W_SPREAD);
 			break;
-		case df::Keyboard::NUM4:
+		case Keyboard::NUM4:
 			changeWeapon(W_BOMB);
 			break;
-		case df::Keyboard::NUM5:
+		case Keyboard::NUM5:
 			changeWeapon(W_PLASMA);
 			break;
-		case df::Keyboard::NUM6:
+		case Keyboard::NUM6:
 			changeWeapon(W_RAPID);
 			break;
 
 		// A : Previous Weapon (also supports Left Arrow)
-		case df::Keyboard::A:
-		case df::Keyboard::LEFTARROW:
+		case Keyboard::A:
+		case Keyboard::LEFTARROW:
 			previousWeapon();
 			break;
 
 		// D : Next Weapon (also supports Right Arrow)
-		case df::Keyboard::D:
-		case df::Keyboard::RIGHTARROW:
+		case Keyboard::D:
+		case Keyboard::RIGHTARROW:
 			nextWeapon();
 			break;
 		default:
@@ -294,7 +294,7 @@ void Hero::fire(df::Vector target, df::Vector origin)
 			// Play warning sound to indicate out of ammo
 			if (noAmmoCooldown <= 0) {
 
-				df::Sound* p_sound = RM.getSound("out-of-ammo");
+				Sound* p_sound = RM.getSound("out-of-ammo");
 				p_sound->play();
 
 				noAmmoCooldown = 15;
@@ -312,17 +312,17 @@ void Hero::fire(df::Vector target, df::Vector origin)
 	// Play appropriate fire sound for the current weapon
 	// Only play bomb sound if not detonating an active bomb
 	if (currentWeapon != W_BOMB) {
-		df::Sound* p_sound = RM.getSound(weaponSound[currentWeapon]);
+		Sound* p_sound = RM.getSound(weaponSound[currentWeapon]);
 		p_sound->play();
 	} 
 	else if (!Bomb::isActive()) {
-		df::Sound* p_sound = RM.getSound(weaponSound[currentWeapon]);
+		Sound* p_sound = RM.getSound(weaponSound[currentWeapon]);
 		p_sound->play();
 	}
 
 	// Calculate bullet velocity
-	df::Vector aim = target - origin;      // calculate aim vector
-	df::Vector v = makeRealVector(aim, 2); // convert to game vector
+	Vector aim = target - origin;      // calculate aim vector
+	Vector v = makeRealVector(aim, 2); // convert to game vector
 
 	// Create and position weapon attack
 	switch (currentWeapon) {
@@ -340,7 +340,7 @@ void Hero::fire(df::Vector target, df::Vector origin)
 	{
 		// Fire Laser towards target
 		Laser* p_laser = new Laser(origin);
-		df::Vector laser_vel = v;
+		Vector laser_vel = v;
 		laser_vel.scale(2);
 		p_laser->setVelocity(laser_vel);
 		return;
@@ -348,12 +348,12 @@ void Hero::fire(df::Vector target, df::Vector origin)
 	case W_SPREAD:
 	{
 		// Fire Spread of 4 bullets towards target
-		df::Vector pixel_aim = DM.spacesToPixels(aim);
+		Vector pixel_aim = DM.spacesToPixels(aim);
 		for (int i = 0; i < 4; i++)
 		{
 			Bullet* p_spread = new Bullet(W_SPREAD);
 			p_spread->setSprite("w_spread");
-			df::Vector spread_vel = rotateVector(pixel_aim, SPREAD_SPACING * (i - 1.5));
+			Vector spread_vel = rotateVector(pixel_aim, SPREAD_SPACING * (i - 1.5));
 			spread_vel.normalize();
 			spread_vel.scale(2);
 			p_spread->setVelocity(convertToReal(spread_vel));
@@ -371,7 +371,7 @@ void Hero::fire(df::Vector target, df::Vector origin)
 
 		// Fire Bomb towards target, exploding on impact
 		Bomb* p_bomb = new Bomb();
-		df::Vector bomb_vel = v;
+		Vector bomb_vel = v;
 		bomb_vel.scale(.5);
 		p_bomb->setVelocity(bomb_vel);
 		p_bomb->setPosition(origin);
@@ -382,7 +382,7 @@ void Hero::fire(df::Vector target, df::Vector origin)
 		// Fire a slow orb of Plasma towards target, dealing damage over time
 		Bullet* p_plasma = new Bullet(W_PLASMA);
 		p_plasma->setSprite("w_plasma");
-		df::Vector plasma_vel = v;
+		Vector plasma_vel = v;
 		plasma_vel.scale(0.3);
 		p_plasma->setVelocity(plasma_vel);
 		p_plasma->setPosition(origin);
@@ -457,7 +457,7 @@ void Hero::step()
 			overloadCooldown--;
 		}
 		if (overloadCooldown == 0) {
-			DM.setBackgroundColor(df::BLACK);
+			DM.setBackgroundColor(BLACK);
 			shieldOverloaded = false;
 		}
 	}
@@ -506,7 +506,7 @@ void Hero::overloadShield() {
 	if (shieldIntegrity <= 0)
 	{
 		// Alert player that they are out of shields
-		df::Sound* p_sound = RM.getSound("shield-error");
+		Sound* p_sound = RM.getSound("shield-error");
 		p_sound->play();
 		return;
 	}
@@ -515,7 +515,7 @@ void Hero::overloadShield() {
 	shieldOverloaded = true;
 	overloadCooldown = OVERLOAD_COOLDOWN;
 	showOverloadCooldown = SHOW_OVERLOAD_COOLDOWN;
-	DM.setBackgroundColor(df::TEAL);
+	DM.setBackgroundColor(TEAL);
 
 	// If shields are greater than 15, reduce by 15 
 	if (shieldIntegrity > 15)
@@ -535,7 +535,7 @@ void Hero::overloadShield() {
 	WM.onEvent(&overload);
 
 	// Play shield overload sound
-	df::Sound* p_sound = df::RM.getSound("shield-overload");
+	Sound* p_sound = RM.getSound("shield-overload");
 	p_sound->play();
 }
 
@@ -544,7 +544,7 @@ void Hero::changeWeapon(player_weapon new_weapon)
 {
 
 	// Play switch weapon sound
-	df::Sound* p_sound = RM.getSound("switch-weapon");
+	Sound* p_sound = RM.getSound("switch-weapon");
 	p_sound->play();
 
 	currentWeapon = new_weapon;
@@ -617,7 +617,7 @@ void Hero::hit(const df::EventCollision* p_collision_event) {
 		if (shieldIntegrity != 0 || (shieldIntegrity == 0 && lives == 1)) {
 
 			// Play shield hit sound
-			df::Sound* p_sound = df::RM.getSound("shield-hit");
+			Sound* p_sound = RM.getSound("shield-hit");
 			p_sound->play();
 
 			// Delete only the enemy
@@ -672,23 +672,23 @@ int Hero::draw()
 	hudWeapons->draw(0, Vector(mid_x, bottom_y-3));
 
 	// Draw shield integrity
-	Color shield_color = df::CYAN;
+	Color shield_color = CYAN;
 	float shield_x_offset = 0;
 	std::string shield_string = "SHIELD INTEGRITY: " + std::to_string(shieldIntegrity) + "%";
 	if (showOverloadCooldown > 0)
 	{
 		shield_string = "!!! SHIELD OVERLOADED !!!";
-		shield_color = df::YELLOW;
+		shield_color = YELLOW;
 	}
 	else if (shieldIntegrity <= 0)
 	{
 		if (warningBlink)
 		{
-			shield_color = df::CORAL;
+			shield_color = CORAL;
 		}
 		else
 		{
-			shield_color = df::RED;
+			shield_color = RED;
 		}
 	}
 	DM.drawString(Vector(mid_x, top_y + 0.5), shield_string, CENTER_JUSTIFIED, shield_color);
@@ -700,17 +700,17 @@ int Hero::draw()
 	{
 		player_weapon weapon = static_cast<player_weapon>(i);
 		float x_pos = (float)(mid_x - (WEAPON_COUNT - 1) * width / 2 + i * width -0.5);
-		Color color = df::WHITE;
+		Color color = WHITE;
 
 		// Draw selection indicator na duse selection color
 		if (currentWeapon == weapon)
 		{
 			hudSelectAnim.draw(Vector(x_pos+0.5, bottom_y - 3.5));
-			color = df::YELLOW;
+			color = YELLOW;
 		}
 		if (weaponAmmoPickup[weapon] > 0)
 		{
-			color = df::ORANGE;
+			color = ORANGE;
 		}
 
 		// Draw weapon name

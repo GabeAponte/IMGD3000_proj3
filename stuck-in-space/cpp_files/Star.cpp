@@ -24,14 +24,14 @@ Star::Star() {
 	setType("Star");
 
 	// Set to spectral
-	setSolidness(df::SPECTRAL);
+	setSolidness(SPECTRAL);
 
 	// Set velocity and altitude
 	setVelocity(Vector(0,(float) -(1+ rand() % 3)/200));
 	setAltitude(0);	// Make Stars in the background.
 
 	// Set start position randomly and the animation index
-	df::Vector p((float)(rand() % (int) WM.getBoundary().getHorizontal()),
+	Vector p((float)(rand() % (int) WM.getBoundary().getHorizontal()),
 		(float)(rand() % (int) WM.getBoundary().getVertical()));
 	setPosition(p);
 	setAnimationIndex(rand() % 3);
@@ -41,7 +41,7 @@ Star::Star() {
 // Return 0 if ignored, else 1.
 int Star::eventHandler(const df::Event* p_e) 
 {
-	if (p_e->getType() == df::OUT_EVENT) {
+	if (p_e->getType() == OUT_EVENT) {
 		out();
 		return 1;
 	}
@@ -53,6 +53,6 @@ int Star::eventHandler(const df::Event* p_e)
 // If Star moved off window, move back to top.
 void Star::out() 
 {
-	df::Vector p((float)(rand() % (int) WM.getBoundary().getHorizontal()), WM.getBoundary().getVertical());
+	Vector p((float)(rand() % (int) WM.getBoundary().getHorizontal()), WM.getBoundary().getVertical());
 	setPosition(p);
 }

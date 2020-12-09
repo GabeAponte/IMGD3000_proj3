@@ -365,12 +365,12 @@ int WaveController::draw()
 	float mid_y = top_y + WM.getView().getVertical() / 2;
 
 	// Display wave count over player HUD
-	DM.drawString(Vector(mid_x, top_y+2), "WAVE " + std::to_string(std::max(1,waveNumber)), df::CENTER_JUSTIFIED, df::Color::GREEN);
+	DM.drawString(Vector(mid_x, top_y+2), "WAVE " + std::to_string(std::max(1,waveNumber)), CENTER_JUSTIFIED, Color::GREEN);
 
 	// Display wave start message if it is toggled
 	if (displayWaveStart) {
 		if (messageCooldown > 0) {
-			DM.drawString(Vector(mid_x, mid_y - 10), "Wave " + std::to_string(waveNumber) + " starting...", df::CENTER_JUSTIFIED, df::Color::GREEN);
+			DM.drawString(Vector(mid_x, mid_y - 10), "Wave " + std::to_string(waveNumber) + " starting...", CENTER_JUSTIFIED, Color::GREEN);
 			messageCooldown--;
 		}
 
@@ -386,7 +386,7 @@ int WaveController::draw()
 	// Display wave end message if it is toggled
 	if (displayWaveEnd) {
 		if (messageCooldown > 0) {
-			DM.drawString(Vector(mid_x, mid_y - 10), "Wave " + std::to_string(waveNumber) + " cleared.", df::CENTER_JUSTIFIED, df::Color::GREEN);
+			DM.drawString(Vector(mid_x, mid_y - 10), "Wave " + std::to_string(waveNumber) + " cleared.", CENTER_JUSTIFIED, Color::GREEN);
 			messageCooldown--;
 		}
 

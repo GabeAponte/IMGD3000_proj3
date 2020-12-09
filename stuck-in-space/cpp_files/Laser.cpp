@@ -35,21 +35,21 @@ Laser::Laser(df::Vector position) {
 int Laser::eventHandler(const df::Event* p_e) 
 {
 	// Step handler
-	if (p_e->getType() == df::STEP_EVENT) {
+	if (p_e->getType() == STEP_EVENT) {
 		prevPos2 = prevPos1;
 		prevPos1 = getPosition() - getVelocity();
 		return 1;
 	}
 	
 	// Out of bounds handler
-	if (p_e->getType() == df::OUT_EVENT) {
+	if (p_e->getType() == OUT_EVENT) {
 		out();
 		return 1;
 	}
 
 	// Colisions handler
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
+	if (p_e->getType() == COLLISION_EVENT) {
+		const EventCollision* p_collision_event = dynamic_cast <const EventCollision*> (p_e);
 		hit(p_collision_event);
 		return 1;
 	}

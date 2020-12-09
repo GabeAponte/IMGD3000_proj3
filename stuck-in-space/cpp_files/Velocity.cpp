@@ -44,7 +44,7 @@ df::Vector convertToDragonfly(df::Vector real_velocity)
 // Y-component is automatically adjusted to accommodate the screen distortion
 df::Vector makeRealVector(df::Vector direction, float magnitude)
 {
-	df::Vector v = convertToDragonfly(direction); // adjust direction for screen coordinates
+	Vector v = convertToDragonfly(direction); // adjust direction for screen coordinates
 	v.normalize();				// convert to direction unit vector
 	v.scale(magnitude);			// set magnitude
 	v = convertToReal(v);	// adjust velocity for screen coordinates
@@ -63,6 +63,6 @@ df::Vector rotateVector(df::Vector base_vector, float degrees)
 
 	double direction = atan2(base_vector.getY(), base_vector.getX()) + degrees * PI / 180;
 	float magnitude = base_vector.getMagnitude();
-	df::Vector rv = Vector(magnitude * cos(direction), magnitude * sin(direction));
+	Vector rv = Vector(magnitude * cos(direction), magnitude * sin(direction));
 	return rv;
 }
