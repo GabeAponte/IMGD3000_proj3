@@ -10,7 +10,6 @@
 #include <Vector.h>
 #include <WorldManager.h>
 #include <DisplayManager.h>
-#include "../header_files/EventEnemyDeath.h"
 #include "../header_files/EventPlayerDeath.h"
 #include "../header_files/Enemy.h"
 #include "../header_files/Ammo.h"
@@ -39,8 +38,22 @@ WaveController::WaveController() {
 	enemyOptions.push_back(enemy_data{ E_TOUGH, 10, 2 });
 	enemyOptions.push_back(enemy_data{ E_FAST, 15, 2 });
 	enemyOptions.push_back(enemy_data{ E_TRICKY, 20, 3 });
-	enemyOptions.push_back(enemy_data{ E_SWARM, 30, 5 });
+	enemyOptions.push_back(enemy_data{ E_SWARM, 30, 10 });
 	enemyOptions.push_back(enemy_data{ E_SHOOTER, 40, 5 });
+
+	// Set up ammo values
+	ammoValue[W_LASER] =	8;
+	ammoValue[W_SPREAD] =	10;
+	ammoValue[W_BOMB] =		8;
+	ammoValue[W_PLASMA] =	4;
+	ammoValue[W_RAPID] =	15;
+
+	// Set up ammo "neglect" counters
+	ammoNeglect[W_LASER] =	0;
+	ammoNeglect[W_SPREAD] = 0;
+	ammoNeglect[W_BOMB] =	0;
+	ammoNeglect[W_PLASMA] = 0;
+	ammoNeglect[W_RAPID] =	0;
 
 	// Initialize vars
 	enemySpawnTotal = 0;
@@ -270,36 +283,35 @@ void WaveController::spawnEnemy()
 // Spawn an ammo drop at the location
 void WaveController::spawnAmmo(df::Vector position)
 {
-	player_weapon ammo_type = W_MISSILE;
-	int ammo_value = 0;
+	// Default to random weapon type
+	player_weapon ammo_type = ammo_type = (player_weapon)(1 + rand() % 5);
 
-	// randomly choose ammo type
-	switch (rand() % 5) {
-
-		// No case for W_MISSILE
-	case 0:
-		ammo_type = W_LASER;
-		ammo_value = 8;
-		break;
-	case 1:
-		ammo_type = W_SPREAD;
-		ammo_value = 10;
-		break;
-	case 2:
-		ammo_type = W_BOMB;
-		ammo_value = 8;
-		break;
-	case 3:
-		ammo_type = W_PLASMA;
-		ammo_value = 4;
-		break;
-	case 4:
-		ammo_type = W_RAPID;
-		ammo_value = 15;
-		break;
+	// Override with a "neglected" ammo type if any present
+	for (std::map<player_weapon, int>::iterator it = ammoNeglect.begin(); it != ammoNeglect.end(); it++)
+	{
+		if (it->second >= AMMO_NEGLECT_LIMIT)
+		{
+			ammo_type = it->first;
+		}
 	}
 
-	new Ammo(position, ammo_type, ammo_value);
+	// Update "neglect" counters
+	for (std::map<player_weapon, int>::iterator it = ammoNeglect.begin(); it != ammoNeglect.end(); it++)
+	{
+		if (it->first == ammo_type)
+		{
+			// reset "neglect" counter if ammo chosen
+			it->second = 0;
+		}
+		else
+		{
+			// increment "neglect" counter if ammo not dropped
+			it->second++;
+		}
+	}
+	
+	// Spawn ammo
+	new Ammo(position, ammo_type, ammoValue[ammo_type]);
 	ammoSpawnCount++;
 }
 
@@ -320,7 +332,7 @@ int WaveController::eventHandler(const Event* p_e) {
 
 	// Enemy Death event handler
 	if (p_e->getType() == ENEMY_DEATH_EVENT) {
-		const EventEnemyDeath* p_enemydeath_event = dynamic_cast <const EventEnemyDeath*> (p_e);
+		const EventEnemyDeath* p_enemydeath_event = dynamic_cast<const EventEnemyDeath*> (p_e);
 		enemyDead(p_enemydeath_event);
 		return 1;
 	}

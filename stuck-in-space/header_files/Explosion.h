@@ -24,7 +24,7 @@ protected:
 public:
 
 	// Constructor
-	Explosion();
+	Explosion(std::string type="explosion");
 
 	// Handles events
 	int eventHandler(const df::Event* p_e);

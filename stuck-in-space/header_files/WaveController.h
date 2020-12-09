@@ -11,6 +11,7 @@
 #include <map>
 #include <Object.h>
 #include <EventStep.h>
+#include "../header_files/Hero.h"
 #include "../header_files/EventEnemyDeath.h"
 
 #define START_DIFFICULTY    0	    // The starting difficulty.
@@ -23,6 +24,7 @@
 #define SIDE_SPAWN_CHANCE   0.85	// The probability that a spawned enemy will appear from the side of the screen
 #define AMMO_QUOTA_FACTOR   0.1		// The factor the difficulty is multiplied by when calculating the ammo drop quota
 #define AMMO_SPAWN_CHANCE   0.08	// The probability that an ammo pickup will spawn when an enemy dies
+#define AMMO_NEGLECT_LIMIT	10		// If any ammo doesn't appear in this many ammo spawns, it is guaranteed to appear
 #define RAND_DICE_SIZE      100		// The size of the "die" rolled when choosing spawn chance (it picks a random int up to DICE_SIZE and divides it by DICE_SIZE)
 
 // Enum values for all the possible enemy types
@@ -62,6 +64,8 @@ private:
 	bool displayWaveStart;  // Toggles the wave started message
 	std::vector<enemy_type> enemySpawnList;		 // The list of enemies to spawn
 	std::vector<struct enemy_data> enemyOptions; // Vector containg all enemy type spawn settings
+	std::map<player_weapon, int> ammoValue;		 // The amount of ammo of each type an ammo pack recovers
+	std::map<player_weapon, int> ammoNeglect;  // Tracks the number of times since each ammo type dropped. If any reaches the limit, it is gauranteed to drop next 
 
 	// Handle step event
 	void step();

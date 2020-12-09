@@ -31,7 +31,6 @@
 using namespace df;
 
 Hero::Hero() {
-
 	// Link to "player" sprite.
 	setSprite("player");
 	setAnimationState(false);
@@ -43,10 +42,13 @@ Hero::Hero() {
 	setType("Hero");
 
 	// Set starting location to center of screen.
-	setPosition(Vector(WM.getView().getHorizontal() /2, WM.getView().getVertical() /2));
+	setPosition(WM.getView().getCorner() + Vector(WM.getView().getHorizontal() / 2, (WM.getView().getVertical() / 2) - 1));
 
 	// Set altitude
 	setAltitude(MAX_ALTITUDE-1);
+
+	// Enable collision checking without velocity
+	setAlwaysCollide(true);
 
 	// Create reticle for firing bullets.
 	p_reticle = new Reticle();
@@ -65,10 +67,12 @@ Hero::Hero() {
 	hitCooldown = 3;
 	lives = 1;
 	shieldIntegrity = 100;
-	projectileStart = Vector();
+	projectileStart = getPosition();
 	shieldOverloaded = false;
 	wasHit = false;
 	noAmmoCooldown = 0;
+	warningBlink = false;
+	warningBlinkTimer = WARNING_BLINK_TIMER;
 
 	// Initialize weapon names
 	weaponName[W_MISSILE] = "MISSILE";
@@ -85,6 +89,14 @@ Hero::Hero() {
 	weaponAmmo[W_BOMB] = 0;
 	weaponAmmo[W_PLASMA] = 0;
 	weaponAmmo[W_RAPID] = 0;
+
+	// Initialize weapon ammo pickup timers
+	weaponAmmoPickup[W_MISSILE] = 0;
+	weaponAmmoPickup[W_LASER] = 0;
+	weaponAmmoPickup[W_SPREAD] = 0;
+	weaponAmmoPickup[W_BOMB] = 0;
+	weaponAmmoPickup[W_PLASMA] = 0;
+	weaponAmmoPickup[W_RAPID] = 0;
 
 	// Initialize weapon cooldowns
 	weaponCooldown[W_MISSILE] = 15;
@@ -165,6 +177,7 @@ int Hero::eventHandler(const df::Event* p_e)
 	if (p_e->getType() == AMMO_EVENT) {
 		const EventAmmo* p_ammo_event = dynamic_cast <EventAmmo const*> (p_e);
 		weaponAmmo[p_ammo_event->getAmmoType()] += p_ammo_event->getAmmoValue();
+		weaponAmmoPickup[p_ammo_event->getAmmoType()] = AMMO_PICKUP_TIMER;
 		return 1;
 	}
 
@@ -265,12 +278,6 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event)
 // Fire bullet towards target.
 void Hero::fire(df::Vector target, df::Vector origin) 
 {
-
-	// Don't fire if target is inside of the hero
-	if (boxContainsPosition(getWorldBox(this), target)) {
-		return;
-	}
-
 	// Update ammo (and skip firing if empty)
 	if (currentWeapon != W_MISSILE) {
 
@@ -392,6 +399,26 @@ void Hero::step()
 	// Update mouse scroll cooldown
 	if (changeWeaponCooldown > 0) {
 		changeWeaponCooldown--;
+	}
+
+	// Update ammo display timers
+	for (std::map<player_weapon, int>::iterator it = weaponAmmoPickup.begin(); it != weaponAmmoPickup.end(); it++)
+	{
+		if (it->second > 0)
+		{
+			it->second--;
+		}
+	}
+
+	// Update shield warning timer
+	if (shieldIntegrity <= 0)
+	{
+		warningBlinkTimer--;
+		if (warningBlinkTimer <= 0)
+		{
+			warningBlink = !warningBlink;
+			warningBlinkTimer = WARNING_BLINK_TIMER;
+		}
 	}
 
 	// If hero was hit, set the sprite color
@@ -539,47 +566,6 @@ void Hero::updateSprite()
 	}
 
 	this->setAnimationIndex(new_index);
-
-	// Set projectile spwan to match the sprite animation
-	setProjectileStart(new_index);
-}
-
-// Set the location for projectiles to start at based on the sprite 
-void Hero::setProjectileStart(int index)
-{
-	if (index == 2) {
-		if (p_reticle->getPosition().getY() > this->getPosition().getY()) {
-			projectileStart = (Vector(this->getPosition().getX(), this->getPosition().getY() + HITBOX_HEIGHT / 2));
-		}
-		else {
-			projectileStart = (Vector(this->getPosition().getX(), this->getPosition().getY() - HITBOX_HEIGHT / 2));
-		}
-	}
-	if (index == 0) {
-		projectileStart = (Vector(this->getPosition().getX() - 2 - HITBOX_WIDTH / 2, this->getPosition().getY()));
-	}
-
-	if (index == 4) {
-		projectileStart = (Vector(this->getPosition().getX() + 2 + HITBOX_WIDTH / 2, this->getPosition().getY()));
-	}
-
-	if (index == 1) {
-		if (p_reticle->getPosition().getY() > this->getPosition().getY()) {
-			projectileStart = (Vector(this->getPosition().getX() - HITBOX_WIDTH / 2, this->getPosition().getY() + HITBOX_HEIGHT / 2 - .75));
-		}
-		else {
-			projectileStart = (Vector(this->getPosition().getX() - HITBOX_WIDTH / 2, this->getPosition().getY() - HITBOX_HEIGHT / 2 + .75));
-		}
-	}
-
-	if (index == 3) {
-		if (p_reticle->getPosition().getY() > this->getPosition().getY()) {
-			projectileStart = (Vector(this->getPosition().getX() + HITBOX_WIDTH / 2, this->getPosition().getY() + HITBOX_HEIGHT / 2 - .75));
-		}
-		else {
-			projectileStart = (Vector(this->getPosition().getX() + HITBOX_WIDTH / 2, this->getPosition().getY() - HITBOX_HEIGHT / 2 + .75));
-		}
-	}
 }
 
 // Function for when a hero was hit, so remove shield and/or health
@@ -674,7 +660,14 @@ int Hero::draw()
 	}
 	else if (shieldIntegrity <= 0)
 	{
-		shield_color = df::RED;
+		if (warningBlink)
+		{
+			shield_color = df::CORAL;
+		}
+		else
+		{
+			shield_color = df::RED;
+		}
 	}
 	DM.drawString(Vector(mid_x, top_y + 0.5), shield_string, CENTER_JUSTIFIED, shield_color);
 
@@ -692,6 +685,10 @@ int Hero::draw()
 		{
 			hudSelectAnim.draw(Vector(x_pos+0.5, bottom_y - 3.5));
 			color = df::YELLOW;
+		}
+		if (weaponAmmoPickup[weapon] > 0)
+		{
+			color = df::ORANGE;
 		}
 
 		// Draw weapon name

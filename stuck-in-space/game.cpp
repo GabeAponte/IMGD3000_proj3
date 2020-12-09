@@ -8,11 +8,12 @@
 // game.cpp
 //
 
-#include "GameManager.h"
-#include "LogManager.h"
-#include "DisplayManager.h"
-#include "ResourceManager.h"
-#include "WorldManager.h"
+#include <time.h>
+#include <GameManager.h>
+#include <LogManager.h>
+#include <DisplayManager.h>
+#include <ResourceManager.h>
+#include <WorldManager.h>
 #include "header_files/GameStart.h"
 #include "header_files/Star.h"
 #include "header_files/ScoresIOStreamer.h"
@@ -25,6 +26,8 @@ void populateWorld(void);
 using namespace df;
 
 int main(int argc, char* argv[]) {
+	// Randomize values
+	srand(time(NULL));
 
 	// Set window dimensions and title BEFORE STARTUP
 	DM.setWindowTitle("STUCK IN SPACE");
@@ -89,6 +92,7 @@ void loadResources(void) {
 	RM.loadSprite("../sprites/spr_enemy_shooter.txt", "shooter-enemy");
 	RM.loadSprite("../sprites/spr_enemybullet.txt", "enemy-bullet");
 	RM.loadSprite("../sprites/spr_explosion.txt", "explosion");
+	RM.loadSprite("../sprites/spr_ammo_pickup.txt", "ammo-pickup");
 	RM.loadSprite("../sprites/spr_bombexplosion.txt", "bomb-explosion");
 	RM.loadSprite("../sprites/spr_gamestart.txt", "gamestart");
 	RM.loadSprite("../sprites/spr_gameover.txt", "gameover");

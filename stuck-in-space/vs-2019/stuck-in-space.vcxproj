@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\cpp_files\Ammo.cpp" />
+    <ClCompile Include="..\cpp_files\AmmoPickup.cpp" />
     <ClCompile Include="..\cpp_files\Bomb.cpp" />
     <ClCompile Include="..\cpp_files\BombExplosion.cpp" />
     <ClCompile Include="..\cpp_files\Bullet.cpp" />
@@ -48,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Ammo.h" />
+    <ClInclude Include="..\header_files\AmmoPickup.h" />
     <ClInclude Include="..\header_files\Bomb.h" />
     <ClInclude Include="..\header_files\BombExplosion.h" />
     <ClInclude Include="..\header_files\Bullet.h" />

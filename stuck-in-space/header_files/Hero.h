@@ -29,6 +29,8 @@
 #define OVERLOAD_COOLDOWN   8   // The number of steps to wait between using Shield Overload ability
 #define SHOW_OVERLOAD_COOLDOWN   15   // The number of steps to display that you used the Shield Overload ability
 #define HIT_COOLDOWN		3   // The number of steps to wait before being able to take damage again after a hit
+#define AMMO_PICKUP_TIMER	40  // The number of steps to display that an ammo type just got acquired
+#define WARNING_BLINK_TIMER 20	// The number of steps to wait before toggling the color of a warning
 
 // Enum to represent all possible player weapon types
 enum player_weapon {
@@ -57,9 +59,12 @@ private:
 	int noAmmoCooldown;             // The rate at which to play out of ammo sound
 	player_weapon currentWeapon;	// The weapon current equiped 
 	int changeWeaponCooldown;		// Cooldown between mouse scroll events
+	bool warningBlink;				// Toggles the player's armor indicator when low
+	int warningBlinkTimer;			// Cooldown between warningBlink toggling
 	df::Vector projectileStart;		// The position a projectile will spawn from (based on sprite animation)
 	std::map<player_weapon, std::string> weaponName;	// Maps the weapons to thier name
 	std::map<player_weapon, int> weaponAmmo;			// Maps the weapons to their ammo counts
+	std::map<player_weapon, int> weaponAmmoPickup;		// Maps the weapons to the timers for showing which ones got collected
 	std::map<player_weapon, int> weaponCooldown;		// Maps the weapons to their cooldown rates
 	std::map<player_weapon, std::string> weaponSound;	// Maps the weapons to their audo sounds
 	df::Sprite* hudStatus;			// Sprite for status HUD
@@ -95,9 +100,6 @@ private:
 
 	// Update the player's sprite based on the reticle location
 	void updateSprite();
-
-	// Update the position the player's projectiles spawn from
-	void setProjectileStart(int index);
 
 	// Set to a custom hitbox
 	void applyHitbox();
