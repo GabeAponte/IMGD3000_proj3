@@ -39,7 +39,6 @@ BombExplosion::BombExplosion(df::Vector spawn_position) : Bullet(W_BOMB) {
 	setAlwaysCollide(true);
 }
 
-
 // Handle event.
 // Return 0 if ignored, else 1.
 int BombExplosion::eventHandler(const df::Event* p_e)

@@ -39,13 +39,13 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	case E_BASIC:
 	{
 		setSprite("basic-enemy");
-		setRealSpeed(.3);
+		setRealSpeed(0.3);
 		break;
 	}
 	case E_TOUGH:
 	{
 		setSprite("tough-enemy");
-		setRealSpeed(.2);
+		setRealSpeed(0.2);
 		hitPoints = 3;
 		break;
 	}
@@ -59,7 +59,7 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	case E_TRICKY:
 	{
 		setSprite("tricky-enemy");
-		setRealSpeed(0.5);
+		setRealSpeed(0.7);
 		break;
 	}
 	case E_SWARM:
@@ -67,7 +67,7 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 		setSprite("swarm-enemy");
 		setBox(Box(Vector(-3.5, -2), 7, 4));
 		setAnimationIndex(rand() % 4);
-		setRealSpeed(.2);
+		setRealSpeed(0.25);
 		break;
 	}
 	case E_SHOOTER:
@@ -223,25 +223,28 @@ void Enemy::hit(const df::EventCollision* p_collision_event)
 			// Become invulnerable until next step
 			canTakeDamage = false;
 
-			// Set wasHit to true for 'tough' so that sprite updates and play tough hit sound if still has health
+			// Let 'tough' update its sprite and play tough hit sound if still has health
 			if (type == E_TOUGH) {
+
 				// Instantly die to weapons its weak to
 				Bullet* p_bullet;
-				if (first_bullet)
-				{
+
+				// Set a bullet object to compare the type with
+				if (first_bullet) {
 					p_bullet = dynamic_cast <Bullet*> (p_collision_event->getObject1());
 				}
-				else
-				{
+				else {
 					p_bullet = dynamic_cast <Bullet*> (p_collision_event->getObject2());
 				}
-				if (p_bullet->getWeaponType() == W_LASER || p_bullet->getWeaponType() == W_BOMB)
-				{
+
+				// Laser and bomb will always destroy the tough enemy
+				if (p_bullet->getWeaponType() == W_LASER || p_bullet->getWeaponType() == W_BOMB) {
 					hitPoints = 0;
 				}
 
 				// Show damage taken
 				if (hitPoints > 0) {
+
 					// Play tough-hit sound
 					df::Sound* p_sound = df::RM.getSound("tough-hit");
 					p_sound->play();

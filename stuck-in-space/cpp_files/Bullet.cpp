@@ -17,6 +17,7 @@
 using namespace df;
 
 Bullet::Bullet(player_weapon weapon_type) {
+
 	// Set other object properties.
 	setType("Bullet");
 

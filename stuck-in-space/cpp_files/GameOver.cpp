@@ -35,10 +35,10 @@ GameOver::GameOver() {
 	}
 
 	// Put in center of window.
-	setLocation(df::CENTER_CENTER);
+	setLocation(CENTER_CENTER);
 
 	// Play hero died sound.
-	df::Sound* p_sound = RM.getSound("hero-died");
+	Sound* p_sound = RM.getSound("hero-died");
 	p_sound->play();
 
 	// Gets how many waves the player cleared before dying
@@ -60,10 +60,10 @@ GameOver::~GameOver() {
 
 // Handle event.
 // Return 0 if ignored, else 1.
-int GameOver::eventHandler(const df::Event* p_e) 
+int GameOver::eventHandler(const Event* p_e) 
 {
 	// Step handler
-	if (p_e->getType() == df::STEP_EVENT) {
+	if (p_e->getType() == STEP_EVENT) {
 		step();
 		return 1;
 	}

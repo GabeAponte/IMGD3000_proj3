@@ -53,15 +53,18 @@ int GameStart::eventHandler(const df::Event* p_e)
 		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*) p_e;
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED)
 			switch (p_keyboard_event->getKey()) {
+
 			// Enter : Play (P also supported)
 			case df::Keyboard::RETURN:
 			case df::Keyboard::P:
 				start();
 				break;
+
 			// Escape : Quit
 			case df::Keyboard::ESCAPE:
 				GM.setGameOver();
 				break;
+
 			// L : Show Leaderboard
 			case df::Keyboard::L: {
 				Sound* p_sound = RM.getSound("select");
@@ -87,7 +90,7 @@ void GameStart::start()
 	MUSICPLAYER.pauseMusic();
 
 	// Play game start sound
-	df::Sound* p_sound = RM.getSound("game-start");
+	Sound* p_sound = RM.getSound("game-start");
 	p_sound->play();
 
 	// Create Wave Controller
@@ -95,8 +98,6 @@ void GameStart::start()
 
 	// Create hero.
 	new Hero;
-
-	
 
 	// When game starts, destroy this object.
 	WM.markForDelete(this);

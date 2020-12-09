@@ -14,6 +14,9 @@
 #include "../header_files/Explosion.h"
 
 class AmmoPickup : public Explosion {
+
 public:
+
+	// Constructor
 	AmmoPickup(df::Vector position);
 };

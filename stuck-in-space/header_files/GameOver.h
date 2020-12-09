@@ -18,7 +18,7 @@ private:
 
 	int timeToLive;			// Rate at which to show GameOver
 	df::Music* p_music;		// GameOver music
-	int wavesSurvived;       // Number of waves survived before the game ended
+	int wavesSurvived;      // Number of waves survived before the game ended
 
 	// Handles the step event
 	void step();

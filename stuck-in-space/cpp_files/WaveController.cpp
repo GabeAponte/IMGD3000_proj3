@@ -264,10 +264,10 @@ void WaveController::spawnEnemy()
 	case E_SWARM:
 	{
 		new Enemy(spawn_pos, E_SWARM);
-		new Enemy(spawn_pos + Vector(0, +3), E_SWARM);
-		new Enemy(spawn_pos + Vector(0, -3), E_SWARM);
-		new Enemy(spawn_pos + Vector(+8, 0), E_SWARM);
-		new Enemy(spawn_pos + Vector(-8, 0), E_SWARM);
+		new Enemy(spawn_pos + Vector(0, +4), E_SWARM);
+		new Enemy(spawn_pos + Vector(0, -4), E_SWARM);
+		new Enemy(spawn_pos + Vector(+9, 0), E_SWARM);
+		new Enemy(spawn_pos + Vector(-9, 0), E_SWARM);
 		enemySpawnCount += 5;
 		break;
 	}

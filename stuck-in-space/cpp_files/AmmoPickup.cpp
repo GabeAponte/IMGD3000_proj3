@@ -12,6 +12,7 @@
 #include "../header_files/AmmoPickup.h"
 
 AmmoPickup::AmmoPickup(df::Vector position) : Explosion("ammo-pickup") {
+
 	// Set position
 	setPosition(position);
 }

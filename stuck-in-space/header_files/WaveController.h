@@ -65,7 +65,7 @@ private:
 	std::vector<enemy_type> enemySpawnList;		 // The list of enemies to spawn
 	std::vector<struct enemy_data> enemyOptions; // Vector containg all enemy type spawn settings
 	std::map<player_weapon, int> ammoValue;		 // The amount of ammo of each type an ammo pack recovers
-	std::map<player_weapon, int> ammoNeglect;  // Tracks the number of times since each ammo type dropped. If any reaches the limit, it is gauranteed to drop next 
+	std::map<player_weapon, int> ammoNeglect;    // Tracks the number of times since each ammo type dropped. If any reaches the limit, it is gauranteed to drop next 
 
 	// Handle step event
 	void step();

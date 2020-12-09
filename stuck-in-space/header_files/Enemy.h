@@ -31,7 +31,7 @@ private:
 	int stepCounter;		// Tracks the step events this enemy has experienced
 	int rotationIndex;		// Tracks which rotation to apply when zig zaging
 	int hitCooldown;		// Rate at which to flicker the sprite chnage for 'tough' enemy
-	int canTakeDamage;			// Toggles the removal of a hit point;
+	int canTakeDamage;	    // Toggles the removal of a hit point
 
 	// Handle collision events between player and bullets
 	void hit(const df::EventCollision* p_collision_event);

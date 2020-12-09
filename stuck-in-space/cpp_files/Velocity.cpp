@@ -54,7 +54,7 @@ df::Vector makeRealVector(df::Vector direction, float magnitude)
 // Rotates a vector counterclockwise by the indicated amount in degrees
 df::Vector rotateVector(df::Vector base_vector, float degrees)
 {
-	// screen for 0 vector
+	// Screen for 0 vector
 	if (base_vector.getX() == 0 && base_vector.getY() == 0)
 	{
 		LM.writeLog(1, "ERROR: Tried to get direction of 0-vector!");

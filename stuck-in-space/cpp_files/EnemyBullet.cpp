@@ -66,6 +66,7 @@ void EnemyBullet::out()
 void EnemyBullet::hit(const df::EventCollision* p_collision_event) 
 {
 	bool hit_bullet = (p_collision_event->getObject1()->getType() == "Bullet") || (p_collision_event->getObject2()->getType() == "Bullet");
+	
 	// Check if collided with hero or a bullet
 	if ((p_collision_event->getObject1()->getType() == "Hero") || (p_collision_event->getObject2()->getType() == "Hero") || hit_bullet) {
 

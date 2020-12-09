@@ -31,6 +31,7 @@
 using namespace df;
 
 Hero::Hero() {
+
 	// Link to "player" sprite.
 	setSprite("player");
 	setAnimationState(false);
@@ -233,14 +234,17 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event)
 	if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 
 		switch (p_keyboard_event->getKey()) {
+
 		// Escape : Quit
 		case df::Keyboard::ESCAPE:
 			GM.setGameOver();
 			break;
+
 		// Space : Overload Shield
 		case df::Keyboard::SPACE:
 			overloadShield();
 			break;
+
 		// 1-6 : Switch Weapon
 		case df::Keyboard::NUM1:
 			changeWeapon(W_MISSILE);
@@ -260,11 +264,13 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event)
 		case df::Keyboard::NUM6:
 			changeWeapon(W_RAPID);
 			break;
+
 		// A : Previous Weapon (also supports Left Arrow)
 		case df::Keyboard::A:
 		case df::Keyboard::LEFTARROW:
 			previousWeapon();
 			break;
+
 		// D : Next Weapon (also supports Right Arrow)
 		case df::Keyboard::D:
 		case df::Keyboard::RIGHTARROW:
@@ -491,8 +497,8 @@ void Hero::step()
 // Send "overloadShield" event to all objects.
 void Hero::overloadShield() {
 
-	if (overloadCooldown > 0)
-	{
+	// Check can overload
+	if (overloadCooldown > 0) {
 		return;
 	}
 
@@ -712,7 +718,7 @@ int Hero::draw()
 		std::string str = weaponName[weapon];
 		if (str.length() % 2 == 0)
 		{
-			// even strings need offset
+			// Even strings need offset
 			x_offset = 0.5;
 		}
 		DM.drawString(Vector(x_pos+x_offset, bottom_y - 2.5), str, CENTER_JUSTIFIED, color);
@@ -730,7 +736,7 @@ int Hero::draw()
 		}
 		if (ammo_string.length() % 2 == 0)
 		{
-			// even strings need offset
+			// Even strings need offset
 			x_offset = 0.5;
 		}
 		else
