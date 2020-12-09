@@ -19,6 +19,7 @@ CONTROLS:
 * CYCLE WEAPON: Press Keys A or D or Scroll Mouse Wheel
 * SWAP WEAPON: Press Keys 1-6
 * OVERLOAD SHIELDS: Press Space
+* QUIT: Press Escape
 
 FEATURES:
 -----------
@@ -70,7 +71,7 @@ To run the game, extract the .zip and set up its contents as shown below. This i
 with our version of Dragonfly, which is included in the file. Place the SFML-2.5 folder at the 
 appropriate location, open the .sln file in stuck-in-space/vs-2019, and build the program.
 You should be able to run it directly from Visual Studio now. As the game is now complete,
-utilize the 'Release x64' configurations to build game. This will provide the most preformance.
+utilize the 'Release x64' configurations to build game. This will provide the most performance.
 ====================================================================================================
 
 FILE STRUCTURE:
