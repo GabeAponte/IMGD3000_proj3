@@ -536,6 +536,11 @@ void Hero::overloadShield() {
 // Change the player's currently-equipped weapon
 void Hero::changeWeapon(player_weapon new_weapon)
 {
+
+	// Play switch weapon sound
+	df::Sound* p_sound = RM.getSound("switch-weapon");
+	p_sound->play();
+
 	currentWeapon = new_weapon;
 }
 

@@ -14,6 +14,7 @@
 #include <EventStep.h>
 #include "..\header_files\Leaderboard.h"
 #include "..\header_files\InputPlayerName.h"
+#include <ResourceManager.h>
 
 using namespace df;
 
@@ -51,9 +52,12 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
 				keyRepeatWait = KEY_REPEAT_WAIT;
 			}
 			switch (p_keyboard_event->getKey()) {
-			case df::Keyboard::RETURN:
+			case df::Keyboard::RETURN: {
 
 				// Return key will bring player to the leaderboard
+				Sound* p_sound = RM.getSound("select");
+				p_sound->play();
+
 				if (trim(playerName) != "") {
 					new Leaderboard(trim(playerName), wavesCompleted);
 					df::WM.markForDelete(this);
@@ -62,7 +66,7 @@ int InputPlayerName::eventHandler(const df::Event* p_e)
 					new Leaderboard("ANONYMOUS", wavesCompleted);
 					df::WM.markForDelete(this);
 				}
-
+			}
 				break;
 
 			case(df::Keyboard::A):

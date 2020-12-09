@@ -63,9 +63,12 @@ int GameStart::eventHandler(const df::Event* p_e)
 				GM.setGameOver();
 				break;
 			// L : Show Leaderboard
-			case df::Keyboard::L:
+			case df::Keyboard::L: {
+				Sound* p_sound = RM.getSound("select");
+				p_sound->play();
 				new Leaderboard();
 				df::WM.markForDelete(this);
+			}
 				break;
 			default:
 				break;
@@ -80,14 +83,20 @@ int GameStart::eventHandler(const df::Event* p_e)
 // Starts the game
 void GameStart::start() 
 {
+	// Pause game music.
+	MUSICPLAYER.pauseMusic();
+
+	// Play game start sound
+	df::Sound* p_sound = RM.getSound("game-start");
+	p_sound->play();
+
 	// Create Wave Controller
 	new WaveController;
 
 	// Create hero.
 	new Hero;
 
-	// Pause game music.
-	MUSICPLAYER.pauseMusic();
+	
 
 	// When game starts, destroy this object.
 	WM.markForDelete(this);

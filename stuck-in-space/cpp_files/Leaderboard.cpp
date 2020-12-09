@@ -6,6 +6,7 @@
 // Handles the leaderboard display
 //
 
+#include <ResourceManager.h>
 #include <EventKeyboard.h>
 #include <WorldManager.h>
 #include <DisplayManager.h>
@@ -51,9 +52,12 @@ int Leaderboard::eventHandler(const df::Event* p_e)
 			switch (p_keyboard_event->getKey()) {
 
 		    // Enter key and return to leave the leaderboard
-			case df::Keyboard::RETURN:
+			case df::Keyboard::RETURN: {
+				Sound* p_sound = RM.getSound("select");
+				p_sound->play();
 				new GameStart();
 				df::WM.markForDelete(this);
+			}
 				break;
 			// Escape key to quit the game
 			case df::Keyboard::ESCAPE:
