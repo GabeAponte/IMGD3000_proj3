@@ -98,7 +98,7 @@ int Leaderboard::draw()
 		Color player_color = Color::LTGRAY;
 
 		// If drawing current round's score, use a different color
-		if (latestScore != NULL && latestScore == (*it)->score && latestPlayer == (*it)->player)
+		if (latestPlayer != "" && latestScore == (*it)->score && latestPlayer == (*it)->player)
 		{
 			player_color = Color::YELLOW;
 			player_on_board = true;
@@ -112,6 +112,7 @@ int Leaderboard::draw()
 
 	// Check if this leaderboard is being drawn after a player dies
 	if (latestPlayer != "") {
+
 		// Toggle the display of a lower score if it is not present in the top 15
 		if (!player_on_board)
 		{
