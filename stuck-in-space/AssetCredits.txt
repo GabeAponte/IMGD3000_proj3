@@ -70,11 +70,23 @@ https://freesound.org/people/StormwaveAudio/sounds/330629/
 shield-overload.wav - "ufo-shield.ogg", by jorgerosa
 https://freesound.org/people/jorgerosa/sounds/458690/
 
+overload.wav - "Energy Blast", by Kinoton
+https://freesound.org/people/Kinoton/sounds/369516/
+
 spread.wav - "Laser Shot Silenced", by bubaproducer
 https://freesound.org/people/bubaproducer/sounds/151022/
 
 tough-hit.wav - "Sword Hit Heavy", by EminYildirim
 https://freesound.org/people/EminYildirim/sounds/536104/
+
+game-start.wav - "Game Start", by plasterbrain
+https://freesound.org/people/plasterbrain/sounds/243020/
+
+select.wav - "Game Sound Selection", by Bertrof
+https://freesound.org/people/Bertrof/sounds/131658/
+
+switch-weapon.wav - "Bloop", by andersmmg
+https://freesound.org/people/andersmmg/sounds/523423/
 
 -------------------------
 CUSTOMIZED SOUND EFFECTS:
