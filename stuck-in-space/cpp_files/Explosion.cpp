@@ -15,10 +15,10 @@
 #include "WorldManager.h"
 #include "../header_files/Explosion.h"
 
-Explosion::Explosion() {
+Explosion::Explosion(std::string sprite) {
 
 	// Link to "explosion" sprite and regulate animation
-	if (setSprite("explosion") == 0) {
+	if (setSprite(sprite) == 0) {
 		timeToLive = getAnimation().getSprite()->getFrameCount();
 	}
 	else {

@@ -12,6 +12,7 @@
 #include <EventStep.h>
 #include <ResourceManager.h>
 #include "../header_files/EventAmmo.h"
+#include "../header_files/AmmoPickup.h"
 #include "../header_files/Bullet.h"
 #include "../header_files/Ammo.h"
 
@@ -133,6 +134,9 @@ void Ammo::hit(const df::EventCollision* p_collision_event) {
 	// Report that ammo was collected
 	EventAmmo ea(ammoType, ammoValue);
 	WM.onEvent(&ea);
+
+	// Create pickup effect
+	new AmmoPickup(getPosition());
 }
 
 // Draw the ammo box and its identifying character

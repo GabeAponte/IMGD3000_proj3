@@ -79,7 +79,7 @@ Enemy::Enemy(df::Vector start_pos, enemy_type e_type) {
 	}
 
 	// Initialize shared vars
-	setSolidness(SOFT);
+	setSolidness(TANGIBLE);
 	setAltitude(3);
 	setPosition(start_pos);
 	targetHero(start_pos);

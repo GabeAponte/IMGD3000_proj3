@@ -24,7 +24,7 @@ EnemyBullet::EnemyBullet() {
 	setType("EnemyBullet");
 
 	// Set to SOFT
-	setSolidness(SOFT);
+	setSolidness(TANGIBLE);
 }
 
 // Handle event.

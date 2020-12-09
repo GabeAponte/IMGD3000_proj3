@@ -92,6 +92,9 @@
     <ClCompile Include="..\cpp_files\MusicPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\cpp_files\AmmoPickup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\header_files\Star.h">
@@ -167,6 +170,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\header_files\MusicPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header_files\AmmoPickup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

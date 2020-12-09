@@ -19,6 +19,7 @@ namespace df {
 
 		ObjectList m_updates;	// All Objects in world to update
 		ObjectList m_deletions;	// All Objects in world to delete
+		ObjectList m_colliders; // Specially registered objects that collide without moving
 		int m_id_count = 0;		// Incremented whenever an object is made, ensuring they have unique ID numbers
 		Box m_boundary;			// Outer limit of the world dimensions
 		Box m_view;				// Player view of the game world

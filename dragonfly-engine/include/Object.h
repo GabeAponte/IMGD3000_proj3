@@ -10,6 +10,7 @@ namespace df {
 	enum Solidness {
 		HARD,		// Object causes collisions and impedes
 		SOFT,		// Object causes collisions, but doesn’t impede
+		TANGIBLE,	// Object recieves collisions, but doesn't detect its own
 		SPECTRAL,	// Object doesn’t cause collisions
 	};
 
@@ -23,6 +24,7 @@ namespace df {
 		float m_speed = 0;		// Magnitude of movement
 		int m_altitude = 0;		// Elevation for drawing
 		Solidness m_solidness = HARD; // Solidness of the object
+		bool m_always_collide = false; // Whether the object is set to always check for collisions
 		Box m_box; // Box for sprite boundary & collisions
 		Animation m_animation;	// Animation linked to this object
 
@@ -49,8 +51,15 @@ namespace df {
 		// Return 0 if ok, else −1
 		int setSolidness(Solidness new_solid);
 		Solidness getSolidness() const;
-		// True if HARD or SOFT, otherwise false
+		// True if HARD, SOFT, or TANGIBLE, otherwise false
 		bool isSolid() const;
+		// True only if HARD or SOFT
+		bool detectsCollisions() const;
+
+		// Set/get whether object always checks for collisions
+		// Return 0 if ok, else −1
+		int setAlwaysCollide(bool always_collide);
+		bool getAlwaysCollide() const;
 
 		// LOCATION AND PHYSICS
 
